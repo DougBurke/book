@@ -1211,7 +1211,7 @@ fromList ["blue","red"]</screen>
                     <para>
                         <equation>
                             <title>Type-token ratio</title>
-                            <xi:include href="eq-tt-ratio.xml"/>
+                            <xi:include href="eq-tt-ratio.mml"/>
                         </equation>
                     </para>
                     <para>For instance the phrase &quot;to be or not to be&quot; contains six
