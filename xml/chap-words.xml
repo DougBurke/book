@@ -1203,8 +1203,8 @@ Prelude> <userinput>:type ("hello",1)</userinput>
             empty map:
         </para>
         <para>
-            <screen>Prelude> <userinput>Data.Map.empty fromList</userinput>
-[]</screen>
+            <screen>Prelude> <userinput>Data.Map.empty</userinput>
+fromList []</screen>
         </para>
         <para>
             When you inspect the type signature of the empty map, you can see
