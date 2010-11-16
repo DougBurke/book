@@ -399,18 +399,12 @@ Prelude> <userinput>:type ["The", "cat", "is", "on", "the", "mat", "."]</userinp
             <screen>Prelude> <userinput>length "flying"</userinput>
 6</screen>
         </para>
-        <para>
-            Since you are lazy (and if not, you should spend more time on your
-            girlfriend!), you are not going to apply
-            <function>length</function> token by token manually. Moreover, in
-            our final function, this will not work anyway, since we do not know
-            the length of the sentence beforehand (how nice, Haskell wants us
-            to be lazy). Instead we want to say to Haskell &quot;Hey Haskell!
-            Please apply this length function to each element of the
-            list.&quot; It turns out that Haskell has a function to do this
-            called <function>map</function>. Time to inspect
-            <function>map</function>:
-        </para>
+        <para> Since you are lazy, you are not going to apply <function>length</function> token by
+            token manually. Moreover, in our final function, this will not work anyway, since we do
+            not know the length of the sentence beforehand (how nice, Haskell wants us to be lazy).
+            Instead we want to say to Haskell &quot;Hey Haskell! Please apply this length function
+            to each element of the list.&quot; It turns out that Haskell has a function to do this
+            called <function>map</function>. Time to inspect <function>map</function>: </para>
         <para>
             <screen>Prelude> <userinput>:type map</userinput>
 map :: (a -> b) -> [a] -> [b]</screen>
