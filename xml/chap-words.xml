@@ -10,7 +10,7 @@
         <para>Words are the most fundamental building blocks of our language. Although they may look
             simple on the surface, they are very ingenious devices that pack not only meaning, but
             also grammatical information. For our purposes, we will say that a word consists of a
-                <emphasis>stem</emphasis> and <emphasis>affixes</emphasis>. Lets look at three
+                <emphasis>stem</emphasis> and <emphasis>affixes</emphasis>. Let's look at three
             simple sentences: </para>
         <para>
             <itemizedlist>
@@ -190,11 +190,11 @@ Prelude> <userinput>"level" == reverse "level"</userinput>
 True </screen>
         </para>
         <para>The test that we devised for detecting palindromes seems to work. But it is a lot of
-            typing. Luckily, we can generalize this into a function. Lets replace both words by the
+            typing. Luckily, we can generalize this into a function. Let's replace both words by the
             symbolic name <emphasis>word</emphasis> (but don't execute this in <emphasis role="bold"
                 >ghci</emphasis> yet, since it does not know this symbolic name): </para>
         <screen>word == reverse word </screen>
-        <para>And as a next step, lets do some magic: </para>
+        <para>And as a next step, Let's do some magic: </para>
         <para>
             <screen>Prelude> <userinput>let palindrome word = word == reverse word</userinput> </screen>
         </para>
@@ -226,87 +226,62 @@ palindrome "racecar" = True</screen>
     </sect1>
     <sect1 xml:id="sec-words-to-sentences">
         <title>From words to sentences</title>
-        <para>
-            So far, we have looked at words in isolation. However, in language,
-            words are often combined to form a higher level of meaning
-            representation: a sentence. Provided what we have learned about
-            representing words in Haskell, the step towards representing
-            sentences should be a minor one. We could, for example, represent
-            sentences in the exactly the same way we represented words:
-        </para>
+        <para>So far, we have looked at words in isolation. However, in language, words are often
+            combined to form a higher level of meaning representation: a sentence. Provided what we
+            have learned about representing words in Haskell, the step towards representing
+            sentences should be a minor one. We could, for example, represent sentences in the
+            exactly the same way we represented words: </para>
         <para>
             <screen>Prelude> <userinput>"The cat is on the mat."</userinput>
 "The cat is on the mat." </screen>
         </para>
-        <para>
-            That's fine for a beginning, although not so convenient. Let us see
-            why. Assume we ask you to give us the first word of a sentence? In
-            the previous section, we learned that <function>head</function> can
-            be used to get the first element of a list. Let's try to apply that
-            here:
-        </para>
+        <para>That's fine for a beginning, although not so convenient. Let us see why. Assume we ask
+            you to give us the first word of a sentence. In the previous section, we learned that
+                <function>head</function> can be used to get the first element of a list. Let's try
+            to apply that here: </para>
         <para>
             <screen>Prelude> <userinput>head "The cat is on the mat."</userinput>
 'T' </screen>
         </para>
-        <para>
-            As you probably expected, that didn't work. We represented a
-            sentence as a list of characters (a string), and hence asking for
-            the first element will give the first character. But wait! What if
-            we represented a sentence as a list of words?
-        </para>
+        <para>As you probably expected, that didn't work. We represented a sentence as a list of
+            characters (a string), and hence asking for the first element will give the first
+            character. But wait! What if we represented a sentence as a list of words? </para>
         <para>
             <screen>Prelude> <userinput>["The", "cat", "is", "on", "the", "mat", "."]</userinput>
 ["The","cat","is","on","the","mat","."]
 Prelude> <userinput>:type ["The", "cat", "is", "on", "the", "mat", "."]</userinput>
 ["The", "cat", "is", "on", "the", "mat", "."] :: [[Char]]</screen>
         </para>
-        <para>
-            Nifty! We just constructed a list, of a list of characters. Though,
-            you may wonder why we made the punctation at the end of the
-            sentence a separate word. This is mostly a pragmatic choice,
-            because gluing this punctuation sign to <emphasis>mat</emphasis>
-            does not really form a word either. Having the period sign separate
-            is more practical for future processing. Hence, formally we say
-            that a sentence consists of tokens, where a token can be a word, a
-            number, and a punctuation sign.
-        </para>
-        <para>
-            Rinse and repeat:
-        </para>
+        <para>Nifty! We just constructed a list, of a list of characters. Though, you may wonder why
+            we made the punctuation at the end of the sentence a separate "word". Well, this is
+            mostly a pragmatic choice, because gluing this punctuation sign to
+                <emphasis>mat</emphasis> does not really form a word either. Having the period sign
+            separate is more practical for future processing. Hence, formally we say that a sentence
+            consists of tokens, where a token can be a word, a number, and a punctuation sign. </para>
+        <para>Rinse and repeat: </para>
         <para>
             <screen>Prelude> <userinput>head ["The", "cat", "is", "on", "the", "mat", "."]</userinput>
 "The"</screen>
         </para>
-        <para>
-            Since a word is also a list, we can apply a function to words as
-            well. For example, we can get the first character of the first word
-            by applying <function>head</function>, to the
-            <function>head</function> of a sentence:
-        </para>
+        <para>Since a word is also a list, we can apply a function to words as well. For example, we
+            can get the first character of the first word by applying <function>head</function>, to
+            the <function>head</function> of a sentence: </para>
         <para>
             <screen>Prelude> <userinput>head (head ["The", "cat", "is", "on", "the", "mat", "."])</userinput>
 'T'</screen>
         </para>
-        <para>
-            Note that we need parenthesis to force Haskell to evaluate the part
-            in parentheses first. If we do not enforce this order of
-            evaluation, Haskell will try to evaluate
-            <emphasis>head head</emphasis> first, which makes no sense.
-            Remember that <function>head</function> requires a list as its
-            argument, and <function>head</function> is not a list.
-        </para>
-        <para>
-            Now that we know how to represent sentence, this is a good time to
-            try to write yet another small program. This time, we will write a
-            function to compute the average token length in a corpus (a
-            collection of texts, not a part of an organ). Since we did not look
-            at real corpora yet, pick any sentence you like as
-            <emphasis>My First Corpus</emphasis>™. The authors will use
-            <emphasis>&quot;Oh, no, flying pink ponies.&quot;</emphasis> The
-            average token length is the sum of the lengths of all tokens,
-            divided by the number of tokens. So, stepwise, we have to:
-        </para>
+        <para>Note that we need parenthesis to force Haskell to evaluate the part in parentheses
+            first. If we do not enforce this order of evaluation, Haskell will try to evaluate
+                <emphasis>head head</emphasis> first, which makes no sense. Remember that
+                <function>head</function> requires a list as its argument, and
+                <function>head</function> is not a list. </para>
+        <para>Now that we know how to represent sentence, this is a good time to try to write yet
+            another small program. This time, we will write a function to compute the average token
+            length in a corpus (a collection of texts, not a part of an organ). Since we did not
+            look at real corpora yet, pick any sentence you like as <emphasis>My First
+                Corpus</emphasis>™. The authors will use <emphasis>&quot;Oh, no, flying pink
+                ponies.&quot;</emphasis> The average token length is the sum of the lengths of all
+            tokens, divided by the total number of tokens in the corpus. So, stepwise, we have to: </para>
         <orderedlist numeration="arabic">
             <listitem>
                 <para>
@@ -331,87 +306,62 @@ Prelude> <userinput>:type ["The", "cat", "is", "on", "the", "mat", "."]</userinp
             <screen>Prelude> <userinput>length "flying"</userinput>
 6</screen>
         </para>
-        <para> Since you are lazy, you are not going to apply <function>length</function> token by
-            token manually. Moreover, in our final function, this will not work anyway, since we do
-            not know the length of the sentence beforehand (how nice, Haskell wants us to be lazy).
-            Instead we want to say to Haskell &quot;Hey Haskell! Please apply this length function
-            to each element of the list.&quot; It turns out that Haskell has a function to do this
-            called <function>map</function>. Time to inspect <function>map</function>: </para>
+        <para>Since you are lazy, you are not going to apply <function>length</function> to every
+            token in the corpus manually. Instead we want tell Haskell &quot;Hey Haskell! Please
+            apply this length function to each element of the list.&quot; It turns out that Haskell
+            has a function to do this which is called <function>map</function>. Time to inspect
+                <function>map</function>: </para>
         <para>
             <screen>Prelude> <userinput>:type map</userinput>
 map :: (a -> b) -> [a] -> [b]</screen>
         </para>
-        <para>
-            And we are in for another surprise. The most surprising element is
-            probably the first element in the type signature,
-            <emphasis>(a -&gt; b)</emphasis>. Also surprising is that we now
-            see three types, <emphasis>(a -&gt; b)</emphasis>,
-            <emphasis>[a]</emphasis> and <emphasis>[b]</emphasis>. The latter
-            is simple: this function takes two arguments,
-            <emphasis>(a -&gt; b)</emphasis> and <emphasis>[a]</emphasis>, and
-            returns <emphasis>[b]</emphasis>. <emphasis>(a -&gt; b)</emphasis>
-            as the notation suggests, is a function taking an
-            <emphasis>a</emphasis> and returning a <emphasis>b</emphasis>. So,
-            <function>map</function> is actually a function that takes a
-            function as its argument, or in functional programming-speak: a
-            <emphasis>higher order</emphasis> function.
-        </para>
-        <para>
-            So, <function>map</function> is a function that takes a function
-            that maps from <emphasis>a</emphasis> to <emphasis>b</emphasis>,
-            takes a list of <emphasis>a</emphasis>s, and returns a list of
-            <emphasis>b</emphasis>s. That looks a suspiciously lot like what we
-            want! We have a list of tokens represented as strings, the function
-            length that takes a list and returns its length as an integer, and
-            we want to have a list of integers representing the lengths. Looks
-            like we have a winner!
-        </para>
+        <para>And we are in for another surprise. The most surprising element is probably the first
+            element in the type signature, <emphasis>(a -&gt; b)</emphasis>. Also surprising is that
+            we now see three types, <emphasis>(a -&gt; b)</emphasis>, <emphasis>[a]</emphasis> and
+                <emphasis>[b]</emphasis>. The latter is simple: this function takes two arguments,
+                <emphasis>(a -&gt; b)</emphasis> and <emphasis>[a]</emphasis>, and returns
+                <emphasis>[b]</emphasis>. <emphasis>(a -&gt; b)</emphasis> as the notation suggests,
+            is a function taking an <emphasis>a</emphasis> and returning a <emphasis>b</emphasis>.
+            So, <function>map</function> is actually a function that takes a function as its
+            argument, or in functional programming-speak: a <emphasis>higher order</emphasis>
+            function. </para>
+        <para>So, <function>map</function> is a function that takes a function that maps from
+                <emphasis>a</emphasis> to <emphasis>b</emphasis>, takes a list of
+                <emphasis>a</emphasis>s, and returns a list of <emphasis>b</emphasis>s. That looks a
+            suspicious lot like what we want! We have a list of tokens represented as strings, the
+            function length that takes a list and returns its length as an integer, and we want to
+            have a list of integers representing the lengths. Looks like we have a winner! </para>
         <para>
             <screen>Prelude> <userinput>map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"]</userinput>
 [2,1,2,1,6,1,4,6]</screen>
         </para>
-        <para>
-            We have now completed our first step: we have the length of each
-            token in the corpus. Next, we have to sum the lengths that we have
-            just retrieved. Fortunately, Haskell has a <function>sum</function>
-            function:
-        </para>
+        <para>We have now completed our first step: we have the length of each token in the corpus.
+            Next, we have to sum the lengths that we have just retrieved. Fortunately, Haskell has a
+                <function>sum</function> function: </para>
         <para>
             <screen>Prelude> <userinput>:type sum</userinput>
 sum :: (Num a) => [a] -> a</screen>
         </para>
-        <para>
-            Ok, sum takes a list of <emphasis>a</emphasis>s, and returns an
-            <emphasis>a</emphasis>. But where did the
-            <emphasis>(Num a) =&gt;</emphasis> come from? Well,
-            <emphasis>Num</emphasis> is a so-called typeclass. A type can
-            belong to one or more of such typeclasses. But belonging to a
-            typeclass does not come without cost. In fact, it requires that
-            certain functions need to be defined for types that belong to it.
-            For instance, the typeclass <emphasis>Num</emphasis> is a typeclass
-            for numbers, which requires amongst others, functions that define
-            addition or subtraction. Coming back to the type signature,
-            <function>sum</function> will sum a list of
-            <emphasis>a</emphasis>s, but not just any <emphasis>a</emphasis>s,
-            only those that belong to the typeclass <emphasis>Num</emphasis>.
-            And after all, this makes sense, doesn't it? We cannot sum strings
-            or planets, but we can sum numbers. In fact, we can only sum
-            numbers.
-        </para>
-        <para>
-            After this solemn introduction into typeclasses, feel free to take
-            a cup of tea (or coffee, as one of the authors prefers), and try
-            step two:
-        </para>
+        <para>This function takes a list of <emphasis>a</emphasis>s, and returns an
+                <emphasis>a</emphasis>. But where did the <emphasis>(Num a) =&gt;</emphasis> come
+            from? Well, <emphasis>Num</emphasis> is a so-called <emphasis role="italic"
+                >typeclass</emphasis>. A type can belong to one or more of such typeclasses. But
+            belonging to a typeclass does not come without cost. In fact, it requires that certain
+            functions need to be defined for types that belong to it. For instance, the typeclass
+                <emphasis>Num</emphasis> is a typeclass for numbers, which requires amongst others,
+            functions that define addition or subtraction. Coming back to the type signature,
+                <function>sum</function> will sum a list of <emphasis>a</emphasis>s, but not just
+            any <emphasis>a</emphasis>s, only those that belong to the typeclass
+                <emphasis>Num</emphasis>. And after all, this makes sense, doesn't it? We cannot sum
+            strings or planets, but we can sum numbers. In fact, we can only sum numbers. </para>
+        <para>After this solemn introduction into typeclasses, feel free to take a cup of tea (or
+            coffee, as one of the authors prefers), and try step two: </para>
         <para>
             <screen>Prelude> <userinput>sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"])</userinput>
 23</screen>
         </para>
-        <para>
-            By now, you will probably smell victory. The only step that remains
-            is to divide the sum by the length of the sentence using the
-            division operator (<emphasis>/</emphasis>):
-        </para>
+        <para>By now, you will probably smell victory. The only step that remains is to divide the
+            sum by the length of the sentence using the division operator (<emphasis>/</emphasis>): </para>
         <para>
             <screen>Prelude> <userinput>sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"]) /
   length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"]</userinput>
@@ -427,38 +377,31 @@ sum :: (Num a) => [a] -> a</screen>
         it = sum (map length ["Oh", ",", "no", ....])
            / length ["Oh", ",", "no", ....]</screen>
         </para>
-        <para>
-            I hope you poured yourself a cup of herb tea! (or alternatively:
-            espresso!) While this is all a bit cryptic, the second line
-            (<emphasis>No instance for (Fractional Int)</emphasis>) gives some
-            idea where this comes from. <emphasis>Fractional</emphasis> is
-            typeclass for fractional numbers, and Haskell complains that Int is
-            not defined to be of the typeclass <emphasis>Fractional</emphasis>.
-            This sounds obvious, since an integer is not a fractional number.
-            In other words, Haskell is trying to tell us that there is an
-            <emphasis>Int</emphasis> in some place where it expected a type
-            belonging to the typeclass <emphasis>Fractional</emphasis>. Since
-            the division is the only new component, it is the first suspect of
-            the breakdown:
-        </para>
+        <para>And we have... Failure! I hope you poured yourself a cup of herb tea! (again
+            alternatively: espresso!) While this is all a bit cryptic, the second line (<emphasis>No
+                instance for (Fractional Int)</emphasis>) gives some idea where the trouble stems
+            from. <emphasis>Fractional</emphasis> is typeclass for fractional numbers, and Haskell
+            complains that Int is not defined to be of the typeclass
+            <emphasis>Fractional</emphasis>. This sounds obvious, since an integer is not a
+            fractional number. In other words, Haskell is trying to tell us that there is an
+                <emphasis>Int</emphasis> in some place where it expected a type belonging to the
+            typeclass <emphasis>Fractional</emphasis>. Since the division is the only new component,
+            it is the first suspect of the breakdown: </para>
         <para>
             <screen>Prelude> <userinput>:type (/)</userinput>
 (/) :: (Fractional a) => a -> a -> a</screen>
         </para>
-        <para>
-            First off, we put the division operator in parentheses. We have
-            done this because the division operator is used as a so-called
-            <emphasis>infix function</emphasis>: it is a function that is put
-            between its arguments (like <emphasis>1.0 / 2.0</emphasis>). By
-            putting an infix operator in parentheses, you are stating that you
-            would like to use it as a regular function. This means you can do
-            things like this:
-        </para>
+        <para>First off, notice that we have put the division operator in parentheses. We have done
+            this because the division operator is used as a so-called <emphasis>infix
+                function</emphasis>: it is a function that is put between its arguments (like
+                <emphasis>1.0 / 2.0</emphasis>). By putting an infix operator in parentheses, you
+            are stating that you would like to use it as a regular function. This means you can do
+            things like this: </para>
         <para>
             <screen>Prelude> <userinput>(/) 1.0 2.0</userinput>
 0.5</screen>
         </para>
-        <para> Anyway, the verdict of the type signature of <function>(/)</function> is clear, it
+        <para>Anyway, the verdict of the type signature of <function>(/)</function> is clear, it
             requires two arguments that belong to the <emphasis>Fractional</emphasis> typeclass. The
             sum and length that we calculated clearly do not belong to this typeclass, since they
             are of the type <emphasis>Int</emphasis>: </para>
@@ -470,69 +413,49 @@ Prelude> <userinput>:type length ["Oh", ",", "no", ",", "flying", ",", "pink", "
 length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"]
   :: Int</screen>
         </para>
-        <para>
-            Fortunately, Haskell provides the function
-            <function>fromIntegral</function> that converts an integer to any
-            kind of number. Add <function>fromIntegral</function>, and you
-            surely do get the average token length of the corpus:
-        </para>
+        <para>Fortunately, Haskell provides the function <function>fromIntegral</function> that
+            converts an integer to any kind of number. Add <function>fromIntegral</function>, and
+            you surely do get the average token length of the corpus: </para>
         <para>
             <screen>Prelude> <userinput>fromIntegral (sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"])) /
   fromIntegral (length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"])</userinput>
 2.875</screen>
         </para>
-        <para>
-            Well, that was a bumpier ride than you may have expected. Don't
-            worry! During our first forays into Haskell, we were convinced that
-            were too stupid for this too (and here we are writing a book).
-            However, after more practice, you will learn that Haskell is
-            actually a very simple and logical language.
-        </para>
-        <para>
-            Maybe it will feel more like a victory after generalizing this to a
-            function. You can follow the same pattern as in the palindrome
-            example: replace the sentence with a symbolic name and transform it
-            into a function:
-        </para>
+        <para>Well, that was a bumpier ride than you might have expected. Don't worry! During our
+            first forays into Haskell, we were convinced that were too stupid for this too (and here
+            we are writing a book). However, after more practice, you will learn that Haskell is
+            actually a very simple and logical language. </para>
+        <para>Maybe it will feel more like a victory after generalizing this to a function. You can
+            follow the same pattern as in the palindrome example: replace the sentence with a
+            symbolic name and transform it into a function: </para>
         <para>
             <screen>Prelude> <userinput>let averageLength l = fromIntegral (sum (map length l)) / fromIntegral (length l)</userinput>
 Prelude> <userinput>averageLength ["Oh", ",", "no", ",", "flying", ",", "pink" ,"ponies"]</userinput>
 2.875</screen>
         </para>
-        <para>
-            Congratulations, you just wrote your second function! But wait, you
-            actually accomplished more than you may expect. Check the type
-            signature of <function>averageLength</function>.
-        </para>
+        <para>Congratulations, you just wrote your second function! But wait, you actually
+            accomplished more than you may expect. Check the type signature of
+                <function>averageLength</function>. </para>
         <para>
             <screen>Prelude> <userinput>:type averageLength</userinput>
 averageLength :: (Fractional b) => [[a]] -> b</screen>
         </para>
-        <para>
-            You made your first weird type signature. Show it off to your
-            colleague, significant other, or dog.
-            <function>averageLength</function> is a function that takes a list
-            of a list of <emphasis>a</emphasis>, and returns a
-            <emphasis>b</emphasis> that belongs to the
-            <emphasis>Fractional</emphasis> typeclass. But wait,
-            <emphasis>a</emphasis> can be anything, right? What happens if we
-            apply this function to a list of sentences?
-        </para>
+        <para>You made your first weird type signature. Show it off to your colleagues, significant
+            other, or dog. <function>averageLength</function> is a function that takes a list of a
+            list of <emphasis>a</emphasis>, and returns a <emphasis>b</emphasis> that belongs to the
+                <emphasis>Fractional</emphasis> typeclass. But wait, <emphasis>a</emphasis> can be
+            anything, right? What happens if we apply this function to a list of sentences? </para>
         <para>
             <screen>Prelude> <userinput>averageLength [["I", "like", "Haskell", "."],
   ["Ruby", "rocks", "the", "too", "."],
   ["Who", "needs", "Java", "?"]]</userinput>
 4.333333333333333</screen>
         </para>
-        <para>
-            That's the average sentence length, expressed in number of words.
-            It turns out that, although we set out to make a function to
-            calculate the average token length, we wrote a function that
-            calculates the average length of lists in a list (e.g., characters
-            in words, words in sentences, or sentences in a text). This happens
-            very often when you write Haskell programs: lots of functions are
-            generic and can be reused for other tasks.
-        </para>
+        <para>Woo! That's the average sentence length, expressed in number of words. It turns out
+            that, although we set out to make a function to calculate the average token length, we
+            wrote a function that calculates the average length of lists in a list (e.g., characters
+            in words, words in sentences, or sentences in a text). This happens very often when you
+            write Haskell programs: lots of functions are generic and can be reused for other tasks. </para>
     </sect1>
     
     <sect1 xml:id="sec-words-tokenization">
