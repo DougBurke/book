@@ -306,4 +306,64 @@ bigram xs = take 2 xs : bigram (tail xs)</programlisting>
         <title>From bigrams to n-grams</title>
         <para>Stub</para>
     </sect1>
+    <sect1>
+        <title>Suffix arrays</title>
+        <para>In this chapter, we have seen how you could extract an n-gram of a given <emphasis
+                role="italic">n</emphasis> from a list of words, characters, groceries, or whatever
+            you desire. You can also store n-gram frequencies in a <type>Map</type>, to build
+            applications that quickly need the frequency (or probability) of an n-gram in a corpus.
+            What if you would encounter an application where you need access to n-grams of any
+            length? Any! From unigrams to 'almost the length of your corpus'-grams. Obviously, if
+            your corpus contains <emphasis role="italic">m</emphasis> elements, storing frequencies
+            of all 1..m-grams would make your program a memory hog.</para>
+        <para>Fortunately, it turns out that there is a simple and smart trick to do this, using a
+            data structure called <emphasis role="italic">suffix arrays</emphasis>. First, we start
+            with the corpus, and a parallel list or array where each element contains an index that
+            can be seen as a pointer into the corpus. The left side of figure <xref
+                linkend="fig-suffixarray"/> shows the initial state for the phrase "to be or not to
+            be". We then sort the array of indices by comparing the elements they point to. For
+            instance, we could compare the element with index 2 ("or") and the element with index 3
+            ("not"). Since "not" is lexicographically ordered before "or", the list of indices
+            should be sorted such that the element holding index 3 comes before 2. When two indices
+            point to equal elements, e.g. 0 and 4 ("to"), we move on to the element that succeed
+            both instances of "to", respectively "be" and "be". And we continue such comparisons
+            recursively, until we find out that one n-gram is lexicographically sorted before the
+            other (in this case, 4 should come before 0, since "to be" is lexicographically sorted
+            before "to be or". The right side of figure <xref linkend="fig-suffixarray"/> shows how
+            the indices will be sorted after applying this sorting methodology.</para>
+        <figure xml:id="fig-suffixarray">
+            <title>Unsorted corpus</title>
+            <informaltable frame="all">
+                <tgroup cols="2">
+                    <colspec colname="c1" colnum="1" colwidth="1.0*"/>
+                    <colspec colname="c2" colnum="2" colwidth="1.0*"/>
+                    <tbody>
+                        <row>
+                            <entry>
+                                <mediaobject xml:id="fig-suffixarray-unsorted">
+                                    <imageobject>
+                                        <imagedata fileref="../images/suffixarray-unsorted.svg" format="svg" width="15em"/>
+                                    </imageobject>
+                                    <caption>
+                                        <para>Unsorted indices</para>
+                                    </caption>
+                                </mediaobject>
+                            </entry>
+                            <entry>
+                                <mediaobject>
+                                    <imageobject>
+                                        <imagedata fileref="../images/suffixarray-sorted.svg" width="15em"/>
+                                    </imageobject>
+                                    <caption>
+                                        <para>Sorted indices</para>
+                                    </caption>
+                                </mediaobject>
+                            </entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </informaltable>
+        </figure>
+        <para>Work in progress...</para>
+    </sect1>
 </chapter>

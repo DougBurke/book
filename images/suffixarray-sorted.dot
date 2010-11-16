@@ -1,0 +1,35 @@
+digraph structs {
+	node [shape=record];
+	rankdir=LR;
+	ranksep=1;
+
+	subgraph cluster0 {
+		style=dashed;
+    word0 [label="to"];
+    word1 [label="be"];
+    word2 [label="or"];
+    word3 [label="not"];
+    word4 [label="to"];
+    word5 [label="be"];
+    label = "Corpus";
+	}
+
+	subgraph cluster1{
+		style=dashed;
+		index5 [label="5"];
+		index1 [label="1"];
+		index3 [label="3"];
+		index2 [label="2"];
+		index4 [label="4"];
+		index0 [label="0"];
+		label = "Indices";
+	}
+
+  index0 -> word0 [weight=0, constraint=false];
+  index1 -> word1 [weight=0, constraint=false];
+  index2 -> word2 [weight=0, constraint=false];
+  index3 -> word3 [weight=0];
+  index4 -> word4 [weight=0, constraint=false];
+  index5 -> word5 [weight=0, constraint=false];
+}
+
