@@ -7,11 +7,11 @@
     <title>Words</title>
     <sect1 xml:id="sec-words-intro">
         <title>Introduction</title>
-        <para> Words are the most fundamental building blocks of our language. Although they may
-            look simple on the surface, they are very ingenious devices that pack not only meaning,
-            but also grammatical information. For our purposes, we will say that a word consists of
-            a <emphasis>stem</emphasis> and <emphasis>affixes</emphasis>. Let's look at three simple
-            sentences: </para>
+        <para>Words are the most fundamental building blocks of our language. Although they may look
+            simple on the surface, they are very ingenious devices that pack not only meaning, but
+            also grammatical information. For our purposes, we will say that a word consists of a
+                <emphasis>stem</emphasis> and <emphasis>affixes</emphasis>. Lets look at three
+            simple sentences: </para>
         <para>
             <itemizedlist>
                 <listitem>
@@ -25,34 +25,23 @@
                 </listitem>
             </itemizedlist>
         </para>
-        <para>
-            All three sentences contain some 'form' of
-            <emphasis>walk</emphasis>. We say that these instances are all
-            <emphasis>inflections</emphasis> of the verb
-            <emphasis>walk</emphasis>. The part of the inflections that is
-            shared (<emphasis>walk</emphasis>) is what we call the
-            <emphasis>stem</emphasis>. The parts that are not common are named
-            <emphasis>affixes</emphasis>. We inflect verbs to indicate tense
-            (present, past, etc.), the person of the verb's subject (first,
-            second, and third person), and the number (singular or plural). The
-            affix <emphasis>s</emphasis> in John walk<emphasis>s</emphasis>,
-            for instance, tells us (in combination with the subject John) that
-            the verb <emphasis>walk</emphasis> is in present tense, third
-            person singular.
-        </para>
-        <para>
-            Other types of words have inflections as well. For example, we
-            inflect nouns to distinguish singular and plural:
-        </para>
-        <para>
-            I saw one <emphasis role="bold">duck</emphasis>. I saw two
-            <emphasis role="bold">duck</emphasis>s.
-        </para>
-        <para>
-            Up to this point, we have just seen one kind of affix: one that is
-            glued to the end of the word. There are actually many kinds of
-            affixes. For now, you should only know about two:
-        </para>
+        <para>All three sentences contain some 'form' of <emphasis>walk</emphasis>. We say that
+            these instances are all <emphasis>inflections</emphasis> of the verb walk. The part of
+            the inflections that is shared (<emphasis>walk</emphasis>) is what we call the
+                <emphasis>stem</emphasis>. The parts that are not common are named
+                <emphasis>affixes</emphasis>. We inflect verbs to indicate tense (present, past,
+            etc.), the person of the verb's subject (first, second, and third), and the number
+            (singular or plural). The affix <emphasis>s</emphasis> in John
+                walk<emphasis>s</emphasis>, for instance, tells us (in combination with the subject
+            John) that the verb <emphasis>walk</emphasis> is in present tense, third person
+            singular. </para>
+        <para>Other types of words have inflections as well. For example, we inflect nouns to
+            distinguish singular and plural: </para>
+        <para>I saw one <emphasis role="bold">duck</emphasis>. I saw two <emphasis role="bold"
+                >duck</emphasis>s. </para>
+        <para>Up to this point, we have just seen one kind of affix: one that is glued to the end of
+            the word. There are actually many types of affixes. For now, you should only know about
+            two: </para>
         <itemizedlist>
             <listitem>
                 <para> Prefix: appears in front of the stem. For example, <emphasis role="bold"
@@ -63,47 +52,34 @@
                         >s</emphasis>. </para>
             </listitem>
         </itemizedlist>
-        <para>
-            Now, with that out of the way, let's get some work done.
-        </para>
+        <para>Now, with that out of the way, let's get some work done. </para>
     </sect1>
     <sect1 xml:id="sec-words-playwords">
         <title>Playing with words</title>
-        <para>
-            Written words consist of characters. We can write down characters
-            in Haskell with single quotes. If you type in a character in
-            <emphasis>ghci</emphasis>, it will simply echo back the character:
-        </para>
+        <para>Written words consist of characters. We can write down characters in Haskell with
+            single quotes. If you type in a character in <emphasis>ghci</emphasis>, it will simply
+            echo back the character: </para>
         <para>
             <screen>Prelude> <userinput>'h'</userinput>
 'h'</screen>
         </para>
-        <para>
-            This is all that <emphasis>ghci</emphasis> does, it evaluates
-            whatever you type. A character evaluates to... a character. We
-            confirm that Haskell agrees with us that this actually a character
-            by asking the type with <emphasis>:type</emphasis> or its shorthand
-            <emphasis>:t</emphasis>:
-        </para>
+        <para>This is all that <emphasis>ghci</emphasis> does, it evaluates whatever you type. A
+            character evaluates to... a character. We confirm that Haskell agrees with us that this
+            actually a character by asking the type with <emphasis>:type</emphasis> or its shorthand
+                <emphasis>:t</emphasis>: </para>
         <para>
             <screen>Prelude> <userinput>:t 'h'</userinput>
 'h' :: Char    </screen>
         </para>
-        <para>
-            Great. Haskell indeed confirms that 'h' is a character, or in
-            Haskell's words of type <emphasis>Char</emphasis>. Not all that
-            practical with the small amount of single-lettered words in English
-            though. Rather than a single character, we want a sequence of
-            characters. Not surprisingly, Haskell has a data types to build
-            sequences. The most commonly used sequence is the list. You can
-            have lists of many things: lists of groceries, lists of planets,
-            and lists of characters. We can make a literal list in Haskell by
-            enumerating its elements, separated by commas and surrounded by
-            square brackets. For instance, the list
-            <emphasis>1, 2, 3, 4, 5</emphasis> is written as
-            <emphasis>[1, 2, 3, 4, 5]</emphasis>. Let's try to make a list of
-            characters:
-        </para>
+        <para>Great. Haskell indeed confirms that 'h' is a character, or in Haskell's words: that
+            'h' is of type <emphasis>Char</emphasis>. Not all that practical with the small amount
+            of single-lettered words in English though. Rather than a single character, we want a
+            sequence of characters. Not surprisingly, Haskell has a data types to build sequences.
+            The most commonly used sequence is the list. You can have lists of many things: lists of
+            groceries, lists of planets, but also lists of characters. We can make a literal list in
+            Haskell by enumerating its elements, separated by commas and surrounded by square
+            brackets. For instance, the list <emphasis>1, 2, 3, 4, 5</emphasis> is written as
+                <emphasis>[1, 2, 3, 4, 5]</emphasis>. Let's try to make a list of characters: </para>
         <para>
             <screen>Prelude> <userinput>['h','e','l','l','o']</userinput>
 "hello" </screen>
@@ -117,96 +93,68 @@
         </para>
         <para>Its type is <emphasis>[Char]</emphasis>, which should be read as 'list of characters'.
             Such a list of characters is known as <emphasis>a string</emphasis> Of course, writing
-            down words in this manner is not very convenient. Fortunately, as the second to last
-            example already suggests, there is a more convenient notation: wrap the characters in
-            double quotes: </para>
+            down words in this manner is not very convenient. Fortunately, as the evaluation of the
+            second to last example already suggests, there is a more convenient notation. We can
+            represent strings by wrapping characters in double quotes:</para>
         <para>
             <screen>Prelude> <userinput>"hello"</userinput>
 "hello"
 Prelude> <userinput>:type "hello"</userinput>
 "hello" :: [Char] </screen>
         </para>
-        <para>
-            We will take this opportunity to seriously demolish some words, but
-            all with the noble cause of learning some commonly-used Haskell
-            list functions. The first function <function>length</function>
-            returns the length of a list:
-        </para>
+        <para>We will take this opportunity to seriously demolish some words, but all with the noble
+            cause of learning some commonly-used Haskell list functions. The first function
+                <function>length</function> returns the length of a list: </para>
         <para>
             <screen>Prelude> <userinput>length "hello"</userinput>
 5
 Prelude> <userinput>length [1,2,3]</userinput>
 3 </screen>
         </para>
-        <para>
-            To get a better impression of functions, it is often useful to look
-            at its type:
-        </para>
+        <para>To get a better impression of functions, it is often useful to look at its type: </para>
         <para>
             <screen>Prelude> <userinput>:type length</userinput>
 length :: [a] -> Int </screen>
         </para>
-        <para>
-            That's one heck of a type! Basically, it says 'give me a list of
-            something (denoted by the <emphasis>a</emphasis> between the list
-            brackets), then I will give you an Int'. In these so-called
-            <emphasis>type signatures</emphasis>, letters that are not
-            capitalized are generic, meaning that they can be of some
-            unspecified type. Consequently, <emphasis>[a]</emphasis> is a list
-            with elements of some type. <emphasis role="bold">But:</emphasis>
-            all elements should be of the same type. An
-            <emphasis>Int</emphasis> is an integral number: a positive or
-            negative whole number.
-        </para>
-        <para>
-            Two other basic list functions are <function>head</function> and
-            <function>tail</function>. <function>head</function> returns the
-            first element of a list, <function>tail</function> everything but
-            the first element:
-        </para>
+        <para>That's one heck of a type! Basically, it says 'give me a list of something (denoted by
+            the <emphasis>a</emphasis> between the list brackets), then I will give you an Int'. In
+            these so-called <emphasis>type signatures</emphasis>, letters that are not capitalized
+            are generic, meaning that they can be of some unspecified type. That is,
+                <emphasis>[a]</emphasis> is a list with elements of some type. <emphasis role="bold"
+                >But:</emphasis> all elements should be of the same type. An
+                <emphasis>Int</emphasis> is an integral number: a positive or negative whole number. </para>
+        <para>Two other basic list functions are <function>head</function> and
+                <function>tail</function>. <function>head</function> returns the first element of a
+            list, <function>tail</function> everything but the first element: </para>
         <para>
             <screen>Prelude> <userinput>head "hello"</userinput>
 'h'
 Prelude> <userinput>tail "hello"</userinput>
 "ello"</screen>
         </para>
-        <para>
-            The type of head is the following:
-        </para>
+        <para>The type of head is the following: </para>
         <para>
             <screen>Prelude> <userinput>:type head</userinput>
 head :: [a] -> a
             </screen>
         </para>
-        <para>
-            Hey, two <emphasis>a</emphasis>'s! Equipped with the knowledge we
-            have, we know that <function>head</function> is a function that
-            takes a list of something, and gives back something. But there is
-            an additional constraint here: although <emphasis>a</emphasis> is
-            some type, all <emphasis>a</emphasis>'s have to be the same type.
-            So, applying <function>head</function> to a list of numbers gives a
-            number, applying <function>head</function> to a list of characters
-            gives a character, etc.
-        </para>
-        <para>
-            The type of <function>tail</function> should now be easy to
-            understand:
-        </para>
+        <para>Hey, two <emphasis>a</emphasis>'s! Equipped with the knowledge we have, we know that
+                <function>head</function> is a function that takes a list of something, and gives
+            back something. But there is an additional constraint here: although
+                <emphasis>a</emphasis> is some type, all <emphasis>a</emphasis>'s have to be the
+            same type. So, applying <function>head</function> to a list of numbers gives a number,
+            applying <function>head</function> to a list of characters gives a character, etc. </para>
+        <para>In analogy, the type of <function>tail</function> should now be easy to understand: </para>
         <para>
             <screen>Prelude> <userinput>:type tail</userinput>
 tail :: [a] -> [a] </screen>
         </para>
-        <para>
-            We apply <function>tail</function> to a list of some type, and get
-            back a list with the same type.
-        </para>
-        <para>
-            Finally, the last function for now is <function>reverse</function>.
-            We have to admit presenting this function with a bit of joy, since
-            it will allow us to write our first little useful Haskell program.
-            As expected, <function>reverse</function> reverses the elements of
-            a list:
-        </para>
+        <para>We apply <function>tail</function> to a list of some type, and get back a list with
+            the same type. </para>
+        <para>Finally, the last function for now is <function>reverse</function>. We have to admit
+            presenting this function with a bit of joy, since it will allow us to write our first
+            little useful Haskell program. As expected, <function>reverse</function> reverses the
+            elements of a list: </para>
         <para>
             <screen>Prelude> <userinput>reverse "hello"</userinput>
 "olleh"</screen>
@@ -218,11 +166,12 @@ tail :: [a] -> [a] </screen>
             <screen>Prelude> <userinput>reverse "level"</userinput>
 "level"</screen>
         </para>
-        <para>We bumped into a <function>palindrome</function>, a word that can be read forward and
-            backward. Now, suppose we would like to write our own function to determine wether a
-            word is a palindrome? We first need to make a slightly more abstract definition of a
-            palindrome: a word is a palindrome if it is equal to its reverse. In Haskell we can
-            compare values using the <function>==</function> operator: </para>
+        <para>Hold on there! We bumped into a <function>palindrome</function>: a word that is read
+            the same way, no matter whether it is read forward or backward. Now, suppose we would
+            like to write our own function to determine whether a word is a palindrome. We first
+            need to make a slightly more formal definition of a palindrome: a word is a palindrome
+            if it is equal to its reverse. In Haskell we can compare values using the
+                <function>==</function> operator: </para>
         <para>
             <screen>Prelude> <userinput>"hello" == "hello"</userinput>
 True
@@ -240,29 +189,19 @@ False
 Prelude> <userinput>"level" == reverse "level"</userinput>
 True </screen>
         </para>
-        <para>
-            The test that we devised for detecting palindromes seems to work.
-            But it is a lot of typing. We can generalize this into a function.
-            Let's replace both words by the symbolic name
-            <emphasis>word</emphasis> (but don't execute this in
-            <emphasis role="bold">ghci</emphasis> yet, since it does not know
-            this symbolic name):
-        </para>
+        <para>The test that we devised for detecting palindromes seems to work. But it is a lot of
+            typing. Luckily, we can generalize this into a function. Lets replace both words by the
+            symbolic name <emphasis>word</emphasis> (but don't execute this in <emphasis role="bold"
+                >ghci</emphasis> yet, since it does not know this symbolic name): </para>
         <screen>word == reverse word </screen>
-        <para>
-            Let's do some magic:
-        </para>
+        <para>And as a next step, lets do some magic: </para>
         <para>
             <screen>Prelude> <userinput>let palindrome word = word == reverse word</userinput> </screen>
         </para>
-        <para>
-            This defines the function <function>palindrome</function> taking
-            one argument, and binds this argument to the symbolic name
-            <emphasis>word</emphasis>. To this function we assign the
-            expression <emphasis>word == reverse word</emphasis>. Play a little
-            with this function to be convinced that it actually works. Some
-            examples:
-        </para>
+        <para>This defines the function <function>palindrome</function> taking one argument, and
+            binds this argument to the symbolic name <emphasis>word</emphasis>. To this function we
+            assign the expression <emphasis>word == reverse word</emphasis>. Play a little with this
+            function to be convinced that it actually works. Some examples: </para>
         <para>
             <screen>Prelude> <userinput>palindrome "hello"</userinput>
 False
@@ -271,26 +210,19 @@ True
 Prelude> <userinput>palindrome "racecar"</userinput>
 True </screen>
         </para>
-        <para>
-            If this function is still a mystery to you, it may be useful two
-            write out application of the function stepwise, for a word that is
-            not a palindrome:
-        </para>
+        <para>If this function is still a mystery to you, it may be useful to write down the
+            application of the function stepwise for a word that is not a palindrome: </para>
         <screen>palindrome "hello"
 palindrome "hello" = "hello" == reverse "hello"
 palindrome "hello" = "hello" == "olleh"
 palindrome "hello" = False     </screen>
-        <para>
-            and a word that <emphasis>is</emphasis> a palindrome:
-        </para>
+        <para>and a word that <emphasis>is</emphasis> a palindrome: </para>
         <screen>palindrome "racecar"
 palindrome "racecar" = "racecar" == reverse "racecar"
 palindrome "racecar" = "racecar" == "racecar"
 palindrome "racecar" = True</screen>
-        <para>
-            Congratulations, you have made your first function, which is in
-            essence a small program!
-        </para>
+        <para>Congratulations, you have made your first function, which is in essence a small
+            program! </para>
     </sect1>
     <sect1 xml:id="sec-words-to-sentences">
         <title>From words to sentences</title>
@@ -399,18 +331,12 @@ Prelude> <userinput>:type ["The", "cat", "is", "on", "the", "mat", "."]</userinp
             <screen>Prelude> <userinput>length "flying"</userinput>
 6</screen>
         </para>
-        <para>
-            Since you are lazy (and if not, you should spend more time on your
-            girlfriend!), you are not going to apply
-            <function>length</function> token by token manually. Moreover, in
-            our final function, this will not work anyway, since we do not know
-            the length of the sentence beforehand (how nice, Haskell wants us
-            to be lazy). Instead we want to say to Haskell &quot;Hey Haskell!
-            Please apply this length function to each element of the
-            list.&quot; It turns out that Haskell has a function to do this
-            called <function>map</function>. Time to inspect
-            <function>map</function>:
-        </para>
+        <para> Since you are lazy, you are not going to apply <function>length</function> token by
+            token manually. Moreover, in our final function, this will not work anyway, since we do
+            not know the length of the sentence beforehand (how nice, Haskell wants us to be lazy).
+            Instead we want to say to Haskell &quot;Hey Haskell! Please apply this length function
+            to each element of the list.&quot; It turns out that Haskell has a function to do this
+            called <function>map</function>. Time to inspect <function>map</function>: </para>
         <para>
             <screen>Prelude> <userinput>:type map</userinput>
 map :: (a -> b) -> [a] -> [b]</screen>
@@ -532,13 +458,10 @@ sum :: (Num a) => [a] -> a</screen>
             <screen>Prelude> <userinput>(/) 1.0 2.0</userinput>
 0.5</screen>
         </para>
-        <para>
-            Anyway, the verdict of the typesignature of
-            <function>(/)</function> is clear, it requires two arguments that
-            belong to the <emphasis>Fractional</emphasis> typeclass. The sum
-            and length that we calculated clearly do not belong to this
-            typeclass, since they are of the type <emphasis>Int</emphasis>:
-        </para>
+        <para> Anyway, the verdict of the type signature of <function>(/)</function> is clear, it
+            requires two arguments that belong to the <emphasis>Fractional</emphasis> typeclass. The
+            sum and length that we calculated clearly do not belong to this typeclass, since they
+            are of the type <emphasis>Int</emphasis>: </para>
         <para>
             <screen>Prelude> <userinput>:type sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"])</userinput>
 sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"])
@@ -730,27 +653,21 @@ Prelude> <userinput>lines "This is Jack .\nHe is a Haskeller ."</userinput>
 Prelude> <userinput>splitTokenize "This is Jack .\nHe is a Haskeller ."</userinput>
 [["This","is","Jack","."],["He","is","a","Haskeller","."]]</screen>
         </para>
-        <para>
-            This is a good moment to beautify this function a bit. To make it
-            simpler, we first need to get rid of the parentheses. We use the
-            parentheses to tell Haskell that it should evaluate
-            <emphasis>lines text</emphasis> first, or otherwise it will try to
-            map over the function <function>lines</function>, which will fail,
-            because it is not a list. Very often, you will encounter function
-            applications of the form <emphasis>f(g(x))</emphasis>, or
-            <emphasis>f(g(h(x)))</emphasis>, etc. Haskell provides the
-            <emphasis>(.)</emphasis> function to combine such function
-            applications. So, <emphasis>f(g(x))</emphasis> can be rewritten to
-            <emphasis>(f . g) x</emphasis> (apply function
-            <emphasis>f</emphasis> to the outcome of <emphasis>g(x)</emphasis>)
-            and <emphasis>f(g(h(x)))</emphasis> as
-            <emphasis>(f . g . h) x</emphasis> (apply function
-            <emphasis>f</emphasis> to the outcome of a function
-            <emphasis>g</emphasis>, which is in turn applied to the outcome of
-            <emphasis>h(x)). As you can see, this so-called</emphasis>function
-            composition* makes things much easier to read. We can now rewrite
-            our tokenization function by using function composition:
-        </para>
+        <para> This is a good moment to beautify this function a bit. To make it simpler, we first
+            need to get rid of the parentheses. We use the parentheses to tell Haskell that it
+            should evaluate <emphasis>lines text</emphasis> first, or otherwise it will try to map
+            over the function <function>lines</function>, which will fail, because it is not a list.
+            Very often, you will encounter function applications of the form
+                <emphasis>f(g(x))</emphasis>, or <emphasis>f(g(h(x)))</emphasis>, etc. Haskell
+            provides the <emphasis>(.)</emphasis> function to combine such function applications.
+            So, <emphasis>f(g(x))</emphasis> can be rewritten to <emphasis>(f . g) x</emphasis>
+            (apply function <emphasis>f</emphasis> to the outcome of <emphasis>g(x)</emphasis>) and
+                <emphasis>f(g(h(x)))</emphasis> as <emphasis>(f . g . h) x</emphasis> (apply
+            function <emphasis>f</emphasis> to the outcome of a function <emphasis>g</emphasis>,
+            which is in turn applied to the outcome of <emphasis>h(x))</emphasis>. As you can see,
+            this so-called <emphasis role="italic">function composition</emphasis> makes things much
+            easier to read. We can now rewrite our tokenization function by using function
+            composition: </para>
         <para>
             <screen>Prelude> <userinput>let splitTokenize text = (map words . lines) text</userinput></screen>
         </para>
@@ -1217,13 +1134,14 @@ fromList ["blue","red"]</screen>
             <title>Exercises</title>
             <orderedlist numeration="arabic">
                 <listitem>
-                    <para>To measure the vocabulary of a writer, a so-called type-token ratio can
-                        be calculated. This is the number of different tokens occurring in a text
-                        (so-called 'types') divided by the number of tokens in that text.</para>
+                    <para>To measure the vocabulary of a writer, a so-called type-token ratio can be
+                        calculated. This is the number of different tokens occurring in a text
+                            (<emphasis role="italic">types</emphasis>) divided by the number of
+                        tokens in that text.</para>
                     <para>
                         <equation>
                             <title>Type-token ratio</title>
-                            <xi:include href="eq-tt-ratio.xml"/>
+                            <xi:include href="eq-tt-ratio.mml"/>
                         </equation>
                     </para>
                     <para>For instance the phrase &quot;to be or not to be&quot; contains six
@@ -1606,7 +1524,7 @@ lookupOrder1 customers orders customer =
             very
             simple:<programlisting>(Just x) >>= k = k x
 Nothing  >>= _ = Nothing</programlisting></para>
-        <para>That's all! If the left-hand side expressian evaluates to <type>Just x</type>, the
+        <para>That's all! If the left-hand side expression evaluates to <type>Just x</type>, the
             expression on the left hand side is evaluated with <varname>x</varname> as its argument.
             If the left-hand side evaluates to <type>Nothing</type>, the right-end side is not
             evaluated, and the whole expression returns <type>Nothing</type>.</para>
@@ -1637,7 +1555,7 @@ lookupOrder2 customers orders customer = do
     return orders</programlisting></para>
         <para>You can see that we added the <emphasis role="italic">do</emphasis> keyword to start
             the do-notation. Every expression that follows can be seen as just one element in a
-            squence of <type>(>>=)</type> expressions. Consquently, each line is governed by the
+            sequence of <type>(>>=)</type> expressions. Consequently, each line is governed by the
             'laws' of the monad. If the first lookup fails, no further evaluation is performed, and
                 <function>lookupOrder2</function> will return <type>Nothing</type>. Otherwise,
             computation continues. The do-notation also allows the use of the backward arrow
@@ -1676,7 +1594,7 @@ lookupOrder customers orders customer = do
                 >IO</emphasis> monad. The <type>IO</type> monad is not very different from the
                 <type>Maybe</type> monad, it implements the <function>(>>=)</function> and
                 <type>return</type> functions as required for monads. However, there is a subtle,
-            but very important difference. Rember that you can extract a value from a
+            but very important difference. Remember that you can extract a value from a
                 <type>Maybe</type> value using its <type>Just</type>
             constructor?<programlisting>value = case someMaybe of
   Just x = x</programlisting></para>
@@ -1697,8 +1615,8 @@ putStrLn "hello world!" :: IO ()</screen></para>
             <command>ghci</command>:<screen>Prelude> <userinput>let v = putStrLn "hello world!"</userinput>
 v :: IO ()</screen></para>
         <para>However, if we evaluate the value in <command>ghci</command>, it will execute this
-            so-called I/O
-            action:<screen>Prelude> <userinput>v</userinput>
+                <emphasis role="italic">I/O
+            action</emphasis>:<screen>Prelude> <userinput>v</userinput>
 hello world!</screen></para>
         <para>Of course, the same thing happens if we evaluate <function>putStrLn</function>
             directly:<screen>Prelude> <userinput>putStrLn "hello world!"</userinput>
