@@ -308,7 +308,7 @@ freqTagWord m t = M.lookup w t</programlisting></para>
     <sect1 xml:id="sec-tagging-evaluation">
         <title>Evaluation</title>
         <para>Now that you wrote your first tagger, the question is how well it work. Not only to
-            show it off to your colleague (it will do relatively well), but also to be able to see
+            show it off to your colleagues (it will do relatively well), but also to be able to see
             how future changes impact the performance of the tagger. To check the performance of the
             tagger, we will use an evaluation corpus. You should never evaluate a natural language
             processing component on the training data, because it is easy to perform well on seen
@@ -490,7 +490,7 @@ backoffTagger f bt t = let pick = f t in
                         rule is applied to the corpus.</para>
                 </listitem>
                 <listitem>
-                    <para>Select the a rule according to the following equation:<equation>
+                    <para>Select the best rule according to the following equation:<equation>
                             <title>Transformation rule selection criterion</title>
                             <xi:include href="eq-tbl-rule-score.mml"/>
                         </equation></para>

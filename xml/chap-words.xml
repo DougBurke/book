@@ -718,27 +718,21 @@ Prelude> <userinput>lines "This is Jack .\nHe is a Haskeller ."</userinput>
 Prelude> <userinput>splitTokenize "This is Jack .\nHe is a Haskeller ."</userinput>
 [["This","is","Jack","."],["He","is","a","Haskeller","."]]</screen>
         </para>
-        <para>
-            This is a good moment to beautify this function a bit. To make it
-            simpler, we first need to get rid of the parentheses. We use the
-            parentheses to tell Haskell that it should evaluate
-            <emphasis>lines text</emphasis> first, or otherwise it will try to
-            map over the function <function>lines</function>, which will fail,
-            because it is not a list. Very often, you will encounter function
-            applications of the form <emphasis>f(g(x))</emphasis>, or
-            <emphasis>f(g(h(x)))</emphasis>, etc. Haskell provides the
-            <emphasis>(.)</emphasis> function to combine such function
-            applications. So, <emphasis>f(g(x))</emphasis> can be rewritten to
-            <emphasis>(f . g) x</emphasis> (apply function
-            <emphasis>f</emphasis> to the outcome of <emphasis>g(x)</emphasis>)
-            and <emphasis>f(g(h(x)))</emphasis> as
-            <emphasis>(f . g . h) x</emphasis> (apply function
-            <emphasis>f</emphasis> to the outcome of a function
-            <emphasis>g</emphasis>, which is in turn applied to the outcome of
-            <emphasis>h(x)). As you can see, this so-called</emphasis>function
-            composition* makes things much easier to read. We can now rewrite
-            our tokenization function by using function composition:
-        </para>
+        <para> This is a good moment to beautify this function a bit. To make it simpler, we first
+            need to get rid of the parentheses. We use the parentheses to tell Haskell that it
+            should evaluate <emphasis>lines text</emphasis> first, or otherwise it will try to map
+            over the function <function>lines</function>, which will fail, because it is not a list.
+            Very often, you will encounter function applications of the form
+                <emphasis>f(g(x))</emphasis>, or <emphasis>f(g(h(x)))</emphasis>, etc. Haskell
+            provides the <emphasis>(.)</emphasis> function to combine such function applications.
+            So, <emphasis>f(g(x))</emphasis> can be rewritten to <emphasis>(f . g) x</emphasis>
+            (apply function <emphasis>f</emphasis> to the outcome of <emphasis>g(x)</emphasis>) and
+                <emphasis>f(g(h(x)))</emphasis> as <emphasis>(f . g . h) x</emphasis> (apply
+            function <emphasis>f</emphasis> to the outcome of a function <emphasis>g</emphasis>,
+            which is in turn applied to the outcome of <emphasis>h(x))</emphasis>. As you can see,
+            this so-called <emphasis role="italic">function composition</emphasis> makes things much
+            easier to read. We can now rewrite our tokenization function by using function
+            composition: </para>
         <para>
             <screen>Prelude> <userinput>let splitTokenize text = (map words . lines) text</userinput></screen>
         </para>
@@ -1205,9 +1199,10 @@ fromList ["blue","red"]</screen>
             <title>Exercises</title>
             <orderedlist numeration="arabic">
                 <listitem>
-                    <para>To measure the vocabulary of a writer, a so-called type-token ratio can
-                        be calculated. This is the number of different tokens occurring in a text
-                        (so-called 'types') divided by the number of tokens in that text.</para>
+                    <para>To measure the vocabulary of a writer, a so-called type-token ratio can be
+                        calculated. This is the number of different tokens occurring in a text
+                            (<emphasis role="italic">types</emphasis>) divided by the number of
+                        tokens in that text.</para>
                     <para>
                         <equation>
                             <title>Type-token ratio</title>
@@ -1685,8 +1680,8 @@ putStrLn "hello world!" :: IO ()</screen></para>
             <command>ghci</command>:<screen>Prelude> <userinput>let v = putStrLn "hello world!"</userinput>
 v :: IO ()</screen></para>
         <para>However, if we evaluate the value in <command>ghci</command>, it will execute this
-            so-called I/O
-            action:<screen>Prelude> <userinput>v</userinput>
+                <emphasis role="italic">I/O
+            action</emphasis>:<screen>Prelude> <userinput>v</userinput>
 hello world!</screen></para>
         <para>Of course, the same thing happens if we evaluate <function>putStrLn</function>
             directly:<screen>Prelude> <userinput>putStrLn "hello world!"</userinput>

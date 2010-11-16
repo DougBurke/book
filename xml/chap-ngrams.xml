@@ -118,9 +118,9 @@ take :: Int -> [a] -> [a]</screen>
             us... our first bigram:</para>
         <screen>Prelude> <userinput>take 2 ["Colorless", "green", "ideas", "sleep", "furiously"]</userinput>
 ["Colorless","green"]</screen>
-		<para>Great! That worked out nice! Now from here on off, the idea is to add this bigram to a list,
-            and to move the window one word to the right, so that we obtain the second bigram. Let
-            us first turn to the latter (as we will get the list part for free later on). How do we
+		<para>Great! That worked out nice! Now from here on, the idea is to add this bigram to a list, and
+            to move the window one word to the right, so that we obtain the second bigram. Let us
+            first turn to the latter (as we will get the list part for free later on). How do we
             move the window one word to the right? That is, how do we extract the second and third
             word in the list, instead of the first and second? A possible would be to use Haskell's
                 <emphasis role="italic">!!</emphasis> operator: </para>
@@ -250,7 +250,7 @@ bigram xs = take 2 xs : bigram (tail xs)</programlisting>
             result of this call will simply an empty list. Lets first proof that this indeed
             works:<screen>Prelude> <userinput>bigram ["Colorless", "green", "ideas", "sleep", "furiously"]</userinput>
 [["Colorless","green"],["green","ideas"],["ideas","sleep"],["sleep","furiously"]]</screen>It
-            did! To make the working of the use of pattern matching more insightful weagain can
+            did! To make the working of the use of pattern matching more insightful we can again
             write out an artificial example in
             steps:<screen>Prelude> <userinput>bigram [1,2,3,4]</userinput>
 bigram [1,2,3,4] = [1,2] : bigram (tail [1,2,3,4])
