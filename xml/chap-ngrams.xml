@@ -332,8 +332,8 @@ bigram xs = take 2 xs : bigram (tail xs)</programlisting>
             before "to be or". The right side of figure <xref linkend="fig-suffixarray"/> shows how
             the indices will be sorted after applying this sorting methodology.</para>
         <figure xml:id="fig-suffixarray">
-            <title>Unsorted corpus</title>
-            <informaltable frame="all">
+            <title>Constructing a suffix array</title>
+            <informaltable frame="none" colsep="0">
                 <tgroup cols="2">
                     <colspec colname="c1" colnum="1" colwidth="1.0*"/>
                     <colspec colname="c2" colnum="2" colwidth="1.0*"/>
@@ -342,7 +342,8 @@ bigram xs = take 2 xs : bigram (tail xs)</programlisting>
                             <entry>
                                 <mediaobject xml:id="fig-suffixarray-unsorted">
                                     <imageobject>
-                                        <imagedata fileref="../images/suffixarray-unsorted.svg" format="svg" width="15em"/>
+                                        <imagedata fileref="../images/suffixarray-unsorted.svg"
+                                            format="svg" width="10em"/>
                                     </imageobject>
                                     <caption>
                                         <para>Unsorted indices</para>
@@ -352,7 +353,8 @@ bigram xs = take 2 xs : bigram (tail xs)</programlisting>
                             <entry>
                                 <mediaobject>
                                     <imageobject>
-                                        <imagedata fileref="../images/suffixarray-sorted.svg" width="15em"/>
+                                        <imagedata fileref="../images/suffixarray-sorted.svg"
+                                            width="10em"/>
                                     </imageobject>
                                     <caption>
                                         <para>Sorted indices</para>
@@ -364,6 +366,84 @@ bigram xs = take 2 xs : bigram (tail xs)</programlisting>
                 </tgroup>
             </informaltable>
         </figure>
-        <para>Work in progress...</para>
+        <para>After sorting the list of indices in this manner, the index list represents an ordered
+            list of n-grams within the corpus. The length of the n-gram does not matter, since
+            elements and their suffixes were compared until one element could be sorted
+            lexicographically before the other. This ordering also implies that we can use a binary
+            search to check whether an n-gram occurred in the corpus, and if so, how often. But more
+            on that later...</para>
+        <para>Of course, as a working programmer you can't wait to fire up your text editor to
+            implement suffix arrays. It turns out to be simpler than you might expect. But, we need
+            to introduce another data type first, the vector. It is a data type that is comparable
+            to arrays in other programming languages. Vectors allow for random access to array
+            elements. So, if you want to access the <emphasis role="italic">n</emphasis>-th element
+            of a vector, it can be accessed directly, rather than first traversing the <emphasis
+                role="italic">n-1</emphasis> preceding elements as in a list. Vectors are provided
+            in Haskell as a part of the <package>vector</package> package that can be installed
+            using <command>cabal</command>. We can construct a <type>Vector</type> from a list and
+            convert a <type>Vector</type> to a
+            list:<screen>Prelude> <userinput>Data.Vector.fromList ["to","or","not","to","be"]</userinput>
+fromList ["to","or","not","to","be"] :: Data.Vector.Vector
+Prelude> <userinput>Data.Vector.toList $ Data.Vector.fromList ["to","or","not","to","be"]</userinput>
+["to","or","not","to","be"]</screen></para>
+        <para>The <function>(!)</function> function is used to access an
+            element:<screen>Prelude> <userinput>(Data.Vector.fromList ["to","or","not","to","be"]) Data.Vector.! 3</userinput>
+"to"</screen></para>
+        <para>There's also a safe access function, <function>(!?)</function>, that wraps the element
+            in a <type>Maybe</type>. <type>Nothing</type> is returned when you use an index that is
+            'outside' the
+            vector:<screen>Prelude> <userinput>(Data.Vector.fromList ["to","or","not","to","be"]) Data.Vector.! 20</userinput>
+"*** Exception: ./Data/Vector/Generic.hs:222 ((!)): index out of bounds (20,5)
+Prelude> <userinput>(Data.Vector.fromList ["to","or","not","to","be"]) Data.Vector.!? 20</userinput>
+Nothing
+Prelude> <userinput>(Data.Vector.fromList ["to","or","not","to","be"]) Data.Vector.!? 3</userinput>
+Just "to"</screen></para>
+        <para>That enough for now. The primary reason why <type>Vector</type> is a useful type here,
+            is because we want random access to the corpus during the construction of the suffix
+            array. After construction, it is also useful for most tasks to be able to access the
+            indices randomly. Alright, first we create a data type for the suffix
+            array:<programlisting>import qualified Data.Vector as V
+
+data SuffixArray a = SuffixArray (V.Vector a) (V.Vector Int)
+                     deriving Show</programlisting></para>
+        <para>It says exactly what we saw in the figure above: a suffix array consists of a data
+            vector (in our case a corpus) and a vector of indices, respectively <type>V.Vector
+                a</type> and <type>V.Vector Int</type>. Ideally, we would like to construct a suffix
+            array from a list. However, to do this, we need a sorting function. The <emphasis
+                role="italic">Data.List</emphasis> module contains the <function>sortBy</function>
+            function that sorts a list according to some ordering
+            function:<screen>*Main> <userinput>:type Data.List.sortBy</userinput>
+Data.List.sortBy :: (a -> a -> Ordering) -> [a] -> [a]</screen></para>
+        <para>So, it takes a comparison function that should compare two elements, and that returns
+                <type>Ordering</type>. <type>Ordering</type> is a data type that specifies... order.
+            There are three constructors: <type>LT</type>, <type>EQ</type>, and<type>GT</type>,
+            these constructors indicate respectively that the first argument is less than, equal to,
+            or greater than the second argument.</para>
+        <para>We will use <function>sortBy</function> to sort the list of indices. Since the
+            ordering of the indices is determined by elements of the data array, to which the
+            indices refer, the comparison function that we provide for sorting the index array
+            requires access to the data array. So, our function will compare (sub)vectors, indicated
+            by their indices. This will work, since the <type>Data.Vector</type> data type is of the
+                <type>Ord</type> type class, meaning that the operators necessary for comparisons
+            are provided. Our comparison function can be written like
+            this:<programlisting>saCompare :: Ord a => (V.Vector a -> V.Vector a -> Ordering) ->
+             V.Vector a -> Int -> Int -> Ordering
+saCompare cmp d a b = cmp (V.drop a d) (V.drop b d)</programlisting></para>
+        <para>To allow a user of our function to impose their own sorting order (maybe the want to
+            make a reversibly offered suffix array), we <function>saCompare</function> requires a
+            comparison function as its first argument. The second argument is the data vector, and
+            the final two arguments are the indices to be compared. We can get the subvectors
+            represented by the two indices by using the <function>Data.Vector.drop</function>
+            function. Suppose, if we want the element at index two, we can just drop the first two
+            arguments, since we start counting at zero. We then use the provided comparison function
+            to compare the two subvectors.</para>
+        <para>Now we can create the function that actually creates a suffix
+            array:<programlisting>suffixArrayBy :: Ord a => (V.Vector a -> V.Vector a -> Ordering) ->
+                 V.Vector a -> SuffixArray a
+suffixArrayBy cmp d = SuffixArray d (V.fromList srtIndex)
+    where uppBound = V.length d - 1
+          usrtIndex = [0..uppBound]
+          srtIndex = sortBy (saCompare cmp d) usrtIndex</programlisting></para>
+        <para><emphasis role="italic">Note: in progress...</emphasis></para>
     </sect1>
 </chapter>
