@@ -1349,8 +1349,9 @@ Just [128]</screen></para>
             wrapped in a <type>Maybe</type>, so that <type>Nothing</type> can be returned if the
             customer is not in the list or if the custromer had no orders. Your first attempt will
             probably be along the following
-            lines:<programlisting>lookupOrder0 :: Data.Map.Map String Int -> Data.Map.Map Int Int ->
-                String -> Maybe Int
+            lines:<programlisting>lookupOrder0 :: Data.Map.Map String Integer ->
+                Data.Map.Map Integer [Integer] ->
+                String -> Maybe [Integer]
 lookupOrder0 customers orders customer =
     case Data.Map.lookup customer customers of
       Nothing -> Nothing
