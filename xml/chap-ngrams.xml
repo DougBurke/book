@@ -124,7 +124,7 @@ take :: Int -> [a] -> [a]</screen>
             move the window one word to the right? That is, how do we extract the second and third
             word in the list, instead of the first and second? A possible would be to use Haskell's
                 <emphasis role="italic">!!</emphasis> operator: </para>
-		<screen>Prelude> <userinput>:t (++)</userinput>
+		<screen>Prelude> <userinput>:t (!!)</userinput>
 (!!) :: [a] -> Int -> a</screen>
         <para>This operator takes a list of <emphasis role="italic">a</emphasis>s, and returns the
                 <emphasis role="italic">n</emphasis>th element;</para>
