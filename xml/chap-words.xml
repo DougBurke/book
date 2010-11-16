@@ -271,11 +271,8 @@ True
 Prelude> <userinput>palindrome "racecar"</userinput>
 True </screen>
         </para>
-        <para>
-            If this function is still a mystery to you, it may be useful two
-            write out application of the function stepwise, for a word that is
-            not a palindrome:
-        </para>
+        <para> If this function is still a mystery to you, it may be useful to write down the
+            application of the function stepwise for a word that is not a palindrome: </para>
         <screen>palindrome "hello"
 palindrome "hello" = "hello" == reverse "hello"
 palindrome "hello" = "hello" == "olleh"
