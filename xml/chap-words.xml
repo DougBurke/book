@@ -616,20 +616,15 @@ Prelude> <userinput>splitTokenize "This is Jack .\nHe is a Haskeller ."</userinp
     </sect1>
     <sect1 xml:id="sec-words-lists">
         <title>Word lists</title>
-        <para>
-            In the following two sections, we will introduce two prototypical
-            tasks related words. The first is to make a word (or actually
-            token) list,the second task is making a word frequency.
-        </para>
-        <para>
-            A word list is a very simple data structure: it is just a list of
-            <emphasis>unique</emphasis> words or tokens that occur in a text.
-            Our corpus is also just a list of words, but since it contains
-            duplicates, it is not a word list. The obvious method to make a
-            word list is to go through a corpus word by word, and adding words
-            that we did not see yet to a second list. This requires some
-            functions we haven't seen yet:
-        </para>
+        <para>In the following two sections, we will introduce two prototypical tasks related words.
+            The first is to make a word (or actually token) list, the second task is making a word
+            frequency list.</para>
+        <para>A word list is a very simple data structure: it is just a list of
+                <emphasis>unique</emphasis> words or tokens that occur in a text. Our corpus is also
+            just a list of words, but since it contains duplicates, it is not a word list. The
+            obvious method to make a word list is to go through a corpus word by word, and adding
+            words that we have not yet seen to a second list. This requires some functions we
+            haven't seen yet: </para>
         <itemizedlist>
             <listitem>
                 <para>
@@ -647,15 +642,11 @@ Prelude> <userinput>splitTokenize "This is Jack .\nHe is a Haskeller ."</userinp
                 </para>
             </listitem>
         </itemizedlist>
-        <para>
-            We like easy things first, so let's start with the first item:
-            adding an element to a list. We have seen the
-            <function>head</function> function before that chops of the head of
-            the list and returns it. But we can also do the reverse: take a
-            list and give it a new head. The old head then becomes the head of
-            the tail (are you still following?). In Haskell, we can do this
-            using the <function>(:)</function> function:
-        </para>
+        <para>We like easy things first, so let's start with the first item: adding an element to a
+            list. We have seen the <function>head</function> function before that chops of the head
+            of the list and returns it. But we can also do the reverse: take a list and give it a
+            new head. The old head then becomes the head of the tail (are you still following?). In
+            Haskell, we can do this using the <function>(:)</function> function:</para>
         <para>
             <screen>Prelude> <userinput>2 : [3,4,5]</userinput>
 [2,3,4,5] </screen>
@@ -675,57 +666,44 @@ Prelude> <userinput>splitTokenize "This is Jack .\nHe is a Haskeller ."</userinp
             <screen>Prelude> <userinput>"Hi" : []</userinput>
 ["Hi"] </screen>
         </para>
-        <para>
-            With that covered, the next thing we need to be able to do is
-            checking whether some element belongs to a list. We can do this
-            using the <function>elem</function> function. It takes an element
-            as its first argument, and a list as its second. It will return a
-            Bool of the value <emphasis>True</emphasis> if the element was in
-            the list, or <emphasis>False</emphasis> otherwise. For example:
-        </para>
+        <para>With that covered, the next thing we need to be able to do is checking whether some
+            element belongs to a list. We can do this using the <function>elem</function> function.
+            It takes an element as its first argument, and a list as its second. It will return a
+            Bool of the value <emphasis>True</emphasis> if the element was in the list, or
+                <emphasis>False</emphasis> otherwise. For example: </para>
         <para>
             <screen>Prelude> <userinput>elem 2 [1,2,3,4,5]</userinput>
 True
 Prelude> <userinput>elem 6 [1,2,3,4,5]</userinput>
 False </screen>
         </para>
-        <para>
-            The function <function>notElem</function> is exactly the inverse of
-            <function>elem</function>, and returns <emphasis>True</emphasis> if
-            an element is not in the list, and <emphasis>False</emphasis>
-            otherwise:
-        </para>
+        <para>The function <function>notElem</function> is exactly the inverse of
+                <function>elem</function>, and returns <emphasis>True</emphasis> if an element is
+            not in the list, and <emphasis>False</emphasis> otherwise: </para>
         <para>
             <screen>Prelude> <userinput>notElem "foo" ["foo","bar","baz"]</userinput>
 False
 Prelude> <userinput>notElem "pony" ["foo","bar","baz"]</userinput>
 True</screen>
         </para>
-        <para>
-            Ok, so we want to add an element to a list if, but only if, it is
-            true that it is not yet a member of that list. Or in other words,
-            the addition is conditional. Haskell provides a set of keywords to
-            model conditionals, if..then..else. The structure is like this:
-        </para>
+        <para>Ok, so we want to add an element to a list if, but only if, it is true that it is not
+            yet a member of that list. Or in other words, the addition is conditional. Haskell
+            provides a set of keywords to model conditionals, if..then..else. The structure is like
+            this: </para>
         <para>
             <screen>if expr then a else b </screen>
         </para>
-        <para>
-            This whole structure itself is an expression. This expression
-            evaluates to <emphasis>a</emphasis> if <emphasis>expr</emphasis>
-            evaluates to <emphasis>True</emphasis> or to <emphasis>b</emphasis>
-            if <emphasis>expr</emphasis> evaluates to False. To give a working,
-            but useless example:
-        </para>
+        <para>This whole structure itself is an expression. This expression evaluates to
+                <emphasis>a</emphasis> if <emphasis>expr</emphasis> evaluates to
+                <emphasis>True</emphasis> or to <emphasis>b</emphasis> if <emphasis>expr</emphasis>
+            evaluates to False. To give a working, but useless example: </para>
         <para>
             <screen>Prelude> <userinput>if 1 == 2 then "cuckoo" else "egg"</userinput>
 "egg"
 Prelude> <userinput>if 1 == 1 then "cuckoo" else "egg"</userinput>
 "cuckoo"</screen>
         </para>
-        <para>
-            This looks exactly like what we need. Just fill in the blanks:
-        </para>
+        <para>This looks exactly like what we need. Just fill in the blanks: </para>
         <para>
             <screen>Prelude> <userinput>if elem "foo" ["foo","bar","baz"] then ["foo","bar","baz"]
   else "foo" : ["foo", "bar", "baz"]</userinput>
@@ -745,32 +723,24 @@ Prelude> <userinput>elemOrAdd "foo" ["foo", "bar", "baz"]</userinput>
 Prelude> <userinput>elemOrAdd "pony" ["foo", "bar", "baz"]</userinput>
 ["pony","foo","bar","baz"]</screen>
         </para>
-        <para>
-            Now we need to apply this to all words in a text, starting with an
-            empty list. Haskell provides a function to do this, but brace
-            yourself, the first time it may look a bit 'difficult'. It is named
-            <function>foldl</function> (a so-called) left-fold. A left fold
-            traverses a list from head to tail, applying a function to each
-            element, just like <function>map</function>. However, the
-            difference is that it can, but does not necessarily return a list.
-            As such, it is a generalization of the <function>map</function>
-            function. As usual, you can inspect the type signature to see the
-            arguments of <function>foldl</function>:
-        </para>
+        <para>Good, now we need to apply this to all words in a text, starting with an empty list.
+            Haskell provides a function to do this, but brace yourself, the first time it may look a
+            bit 'difficult'. It is named <function>foldl</function> (a so-called) left-fold. A left
+            fold traverses a list from head to tail, applying a function to each element, just like
+                <function>map</function>. However, the difference is that it can, but does not
+            necessarily return a list. As such, it is a generalization of the
+                <function>map</function> function. As usual, you can inspect the type signature to
+            see the arguments of <function>foldl</function>: </para>
         <para>
             <screen>Prelude> <userinput>:type foldl</userinput>
 foldl :: (a -> b -> a) -> a -> [b] -> a</screen>
         </para>
-        <para>
-            Now consider this example using <function>foldl</function>:
-        </para>
+        <para>Now consider this example using <function>foldl</function>: </para>
         <para>
             <screen>Prelude> <userinput>foldl (+) 0 [1,2,3,4,5]</userinput>
 15</screen>
         </para>
-        <para>
-            Stepwise, this fold is executed in the following manner:
-        </para>
+        <para>Stepwise, this fold is executed in the following manner: </para>
         <para>
             <screen>foldl (+) 0 [1,2,3,4,5]
 foldl (+) ((0)+1) [2,3,4,5]
@@ -780,48 +750,35 @@ foldl (+) (((((0)+1)+2)+3)+4) [5]
 foldl (+) ((((((0)+1)+2)+3)+4)+5)) []
 ((((((0)+1)+2)+3)+4)+5))</screen>
         </para>
-        <para>
-            So, it works by applying a function to some initial argument
-            (<emphasis>0</emphasis> in this case) as its first argument, and
-            the first element of the list as its second argument. When
-            processing the second element of the list, this expression is then
-            the first argument of the function, and the second element is the
-            second argument, etc. The first argument of the function that is
-            applied is also called the <emphasis>accumulator</emphasis>, since
-            it accumulates results up till that point.
-        </para>
-        <para>
-            This could also work for our <function>elemOrAdd</function>
-            function. Unfortunately, <function>elemOrAdd</function> requires
-            the accumulator as the second argument, and the function passed to
-            <function>foldl</function> as the first argument. Compare the type
-            signatures:
-        </para>
+        <para>So, it works by applying a function to some initial argument (<emphasis>0</emphasis>
+            in this case) as its first argument, and the first element of the list as its second
+            argument. When processing the second element of the list, this expression is then the
+            first argument of the function, and the second element is the second argument, etc. The
+            first argument of the function that is applied is also called the
+                <emphasis>accumulator</emphasis>, since it accumulates results up till that point. </para>
+        <para>This could also work for our <function>elemOrAdd</function> function. Unfortunately,
+                <function>elemOrAdd</function> requires the accumulator as the second argument, and
+            the function passed to <function>foldl</function> as the first argument. Compare the
+            type signatures: </para>
         <para>
             <screen>Prelude> <userinput>:type foldl</userinput>
 foldl :: (a -> b -> a) -> a -> [b] -> a
 Prelude> <userinput>:type elemOrAdd</userinput>
 elemOrAdd :: (Eq a) => a -> [a] -> [a]</screen>
         </para>
+        <para>In the function that is the first argument to <function>foldl</function>, the return
+            type is the same as the type of the first argument. In the case of
+                <function>elemOrAdd</function>, the type of the second argument corresponds to that
+            of the first. Of course, an easy 'hack' to solve this, is to redefine elemOrAdd,
+            switching its arguments, and plug it into foldl: </para>
         <para>
-            In the function that is the first argument to
-            <function>foldl</function>, the return type is the same as the type
-            of the first argument. In the case of
-            <function>elemOrAdd</function>, the type of the second argument
-            corresponds to that of the first. Of course, an easy 'hack' to
-            solve this, is to redefine elemOrAdd, switching its arguments, and
-            plug it into foldl:
+            <screen>Prelude> <userinput>let elemOrAdd l e = if elem e l then l else e:l</userinput></screen>
         </para>
-        <para>
-            <screen>Prelude> <userinput>let elemOrAdd l e = if elem e l then l else e:l</userinput>
-Prelude> <userinput>foldl elemOrAdd [] ["blue", "blue", "red", "blue", "red"]</userinput>
+        <para>Now, since we are building a list, we use the empty list (<emphasis>[]</emphasis>) as
+            the initial accumulator for this fold:</para>
+        <screen>Prelude> <userinput>foldl elemOrAdd [] ["blue", "blue", "red", "blue", "red"]</userinput>
 ["red","blue"]</screen>
-        </para>
-        <para>
-            Since we are building a list, we use the empty list
-            (<emphasis>[]</emphasis>) as the initial accumulator for this fold.
-            Stepwise, the fold works like this:
-        </para>
+        <para>That looks good! Stepwise, the fold works like this: </para>
         <para>
             <screen>foldl elemOrAdd [] ["blue", "blue", "red", "blue", "red"]
 foldl elemOrAdd ("blue":([])) ["blue", "blue", "red", "blue", "red"]
@@ -833,61 +790,43 @@ foldl elemOrAdd ("red":("blue":([]))) []
 ("red":("blue":([])))
 ["red","blue"]</screen>
         </para>
-        <para>
-            Now we wrap it up in another function, and you have constructed two
-            functions that, together, make word lists:
-        </para>
+        <para>Now we wrap it up in another function, and you have constructed two functions that,
+            together, make word lists: </para>
         <para>
             <screen>Prelude> <userinput>let wordList = foldl elemOrAdd []</userinput>
 Prelude> <userinput>wordList ["blue", "blue", "red", "blue", "red"]</userinput>
 ["red","blue"]</screen>
         </para>
-        <para>
-            While our little word list function works fine on small texts, it
-            will not be very efficient for big corpora. The reason is simple -
-            suppose that we have already found 100,000 different tokens. For
-            every word, it would have to check the list of 100,000 tokens.
-            There is no other way of doing this than to traverse the list word
-            by word. Or, on average, we compare a token to 100,000 / 2 = 50,000
-            elements in the list. As a computer scientist would say:
-            <function>elemOrAdd</function> works in linear time, its processing
-            time is linear to the number of different tokens that were seen.
-        </para>
-        <para>
-            This is a typical case of picking the wrong data structure for the
-            task. But for illustrative purposes, using lists was nice and
-            simple. But since you are a working programmer, you want workable
-            solutions. Bring in the sets! A set is, like the mathematical set,
-            a collection that does not contain duplicate elements. That is
-            good, because a word list does not contain duplicate elements.
-            Silly us, we were fooled by the word <emphasis>list</emphasis>.
-            What we actually want to build is a word set. It is just for
-            historical purposes, people used paper in a long gone past, that it
-            is called a word list.
-        </para>
-        <para>
-            Another nice property of sets, as they are normally implemented, is
-            that set membership can be checked rather quickly. In the sets that
-            we will use, membership checking is in logarithmic time. Or in
-            other words, if comparison took one second, we would on average
-            need 50,000 seconds to search the list mentioned earlier, but only
-            <emphasis>log(100,000)</emphasis> or approximately 11.5 seconds to
-            check whether the element in in a set. Talking about optimizations!
-        </para>
-        <para>
-            Haskell provides sets, but not in the so-called
-            <emphasis>Prelude</emphasis>. <emphasis>Prelude</emphasis> is a
-            module that contains functions. The <emphasis>Prelude</emphasis>
-            module is always loaded, so its functions are always available
-            (unless you explicitly ask Haskell to hide them). The functions
-            <function>map</function>, <function>head</function>,
-            <function>tail</function>, and <function>length</function>, for
-            instance, are defined in the <emphasis>Prelude</emphasis>.
-            Functions for set manipulation, on the other hand, are defined in a
-            module named <emphasis>Data.Set</emphasis>. For the time being, we
-            will access functions from modules by prefixing the name of the
-            module. For instance, this will give us the empty set:
-        </para>
+        <para>While our little word list function works fine on small texts, it will not be very
+            efficient for big corpora. The reason is simple - suppose that we have already found
+            100,000 different tokens. For every word, it would have to check the list of 100,000
+            tokens. There is no other way of doing this than to traverse the list word by word. Or,
+            on average, we compare a token to 100,000 / 2 = 50,000 elements in the list. As a
+            computer scientist would say: <function>elemOrAdd</function> works in linear time, its
+            processing time is linear to the number of different tokens that were seen. </para>
+        <para>This is a typical case of picking the wrong data structure for the task. But for
+            illustrative purposes, using lists was nice and simple. However, since you are a working
+            programmer, you want workable solutions. Bring in the sets! A set is, like the
+            mathematical set, a collection that does not contain duplicate elements. That's good,
+            because a word list does not contain duplicate elements. Silly us, we were fooled by the
+            word <emphasis>list</emphasis>. What we actually want to build is a word set. In fact,
+            it is just for historical purposes that it is called a word list. </para>
+        <para>Beside the uniqueness of elements, another nice property of sets, as they are normally
+            implemented, is that set membership can be checked rather quickly. In the sets that we
+            will use, membership checking is in logarithmic time. Or in other words, if comparison
+            took one second, we would on average need 50,000 seconds to search the list mentioned
+            earlier, but only <emphasis>log(100,000)</emphasis> or approximately 11.5 seconds to
+            check whether the element is in a set. Talking about optimizations! </para>
+        <para>Haskell provides set functionality, but not in the so-called
+                <emphasis>Prelude</emphasis>. <emphasis>Prelude</emphasis> is a module that contains
+            functions. The <emphasis>Prelude</emphasis> module is always loaded, so its functions
+            are always available (unless you explicitly ask Haskell to hide them). The functions
+                <function>map</function>, <function>head</function>, <function>tail</function>, and
+                <function>length</function>, for instance, are defined in the
+                <emphasis>Prelude</emphasis>. Functions for set manipulation, on the other hand, are
+            defined in a module named <emphasis>Data.Set</emphasis>. For the time being, we will
+            access functions from modules by prefixing the name of the module. For instance, this
+            will give us the empty set: </para>
         <para>
             <screen>Prelude> <userinput>Data.Set.empty</userinput>
 fromList []</screen>
@@ -901,78 +840,60 @@ fromList []</screen>
             <screen>Prelude> <userinput>:type Data.Set.empty</userinput>
 Data.Set.empty :: Data.Set.Set a</screen>
         </para>
-        <para>
-            <function>empty</function> returns a Set of some type
-            <emphasis>a</emphasis>. We can also construct a
-            <emphasis>Set</emphasis> from a list using the
-            <function>fromList</function> function:
-        </para>
+        <para><function>empty</function> returns a Set of some type <emphasis>a</emphasis>. We can
+            also construct a <emphasis>Set</emphasis> from a list using the
+                <function>fromList</function> function: </para>
         <para>
             <screen>Prelude> <userinput>Data.Set.fromList [5,2,5,8,1,1,23]</userinput>
 fromList [1,2,5,8,23]</screen>
         </para>
-        <para>
-            As you can see here, the set does not contain duplicates. Another
-            nice property of Haskell sets is that they are ordered. We can also
-            do the inverse, convert a set to a list using
-            <function>toList</function>:
-        </para>
+        <para>As you can see here, the set does not contain duplicates. Another nice property of
+            Haskell sets is that they are ordered. We can also do the inverse, convert a set to a
+            list using <function>toList</function>: </para>
         <para>
             <screen>Prelude> <userinput>Data.Set.toList (Data.Set.fromList [5,2,5,8,1,1,23])</userinput>
 [1,2,5,8,23]</screen>
         </para>
-        <para>
-            Elements can be added to or removed from a <emphasis>Set</emphasis>
-            using respectively the <function>insert</function> and
-            <function>delete</function> functions. Both functions return a set
-            with that element inserted or removed:
-        </para>
+        <para>Elements can be added to or removed from a <emphasis>Set</emphasis> using respectively
+            the <function>insert</function> and <function>delete</function> functions. Both
+            functions return a set with that element inserted or removed: </para>
         <para>
             <screen>Prelude> <userinput>Data.Set.insert 42 (Data.Set.fromList [5,2,5,8,1,1,23])</userinput>
 fromList [1,2,5,8,23,42]
 Prelude> <userinput>Data.Set.delete 5 (Data.Set.fromList [5,2,5,8,1,1,23])</userinput>
 fromList [1,2,8,23]</screen>
         </para>
-        <para>
-            Finally, we can check whether some value is a member of a set by
-            using the <function>member</function> function:
-        </para>
+        <para>Finally, we can check whether some value is a member of a set by using the
+                <function>member</function> function: </para>
         <para>
             <screen>Prelude> <userinput>Data.Set.member 23 (Data.Set.fromList [5,2,5,8,1,1,23])</userinput>
 True
 Prelude> <userinput>Data.Set.member 24 (Data.Set.fromList [5,2,5,8,1,1,23])</userinput>
 False</screen>
         </para>
-        <para>
-            We have now seen enough to change our word list function. Rather
-            than checking whether a value is in a list and adding it if not, we
-            check whether it is in a <emphasis>Set</emphasis> and add it if it
-            is not:
-        </para>
+        <para>We have now seen enough to change our word list function. Rather than checking whether
+            a value is in a list and adding it if not, we check whether it is in a
+                <emphasis>Set</emphasis> and add it in when it is not: </para>
         <para>
             <screen>Prelude> <userinput>let elemOrAdd s e = if Data.Set.member e s then s else Data.Set.insert e s</userinput>
 Prelude> <userinput>elemOrAdd (Data.Set.fromList [5,2,5,8,1,1,23]) 24</userinput>
 fromList [1,2,5,8,23,24]</screen>
         </para>
-        <para>
-            That was simple. But it feels a weird, right? The most vital
-            characteristic of a set is that it never contains duplicate
-            elements, why do we need to check for duplicates? We don't. So,
-            forget about <function>elemOrAdd</function>, we will only use
-            <emphasis>Data.Set.insert</emphasis> from this point. Our objective
-            now is to traverse a list of tokens, adding each token to a set,
-            starting with the empty set. Our first take is this:
-        </para>
+        <para>That was simple. But it feels a weird, right? The most vital characteristic of a set
+            is that it never contains duplicate elements, why do we need to check for duplicates? We
+            don't. So, forget about <function>elemOrAdd</function>, we will only use
+                <emphasis>Data.Set.insert</emphasis> from this point. Our objective now is to
+            traverse a list of tokens, adding each token to a set, starting with the empty set. Our
+            first take is this: </para>
         <para>
             <screen>Prelude> <userinput>let wordSet = foldl Data.Set.insert Data.Set.empty</userinput></screen>
         </para>
-        <para>
-            However, this will not work. Remember that in the function we give
-            to <function>foldl</function>, the accumulator has to be the first
-            argument? We are accumulating a <emphasis>Set</emphasis>, but the
-            set is the second argument to <emphasis>Data.Set.insert</emphasis>.
-            We will pull a little trick out of our hat.
-        </para>
+        <para>However, this will not work. Remember that in the function we give to
+                <function>foldl</function>, the accumulator has to be the first argument (the reason
+            why we swapped the elements of our initial <emphasis role="italic">elemOrAdd</emphasis>
+            function)? We are accumulating a <emphasis>Set</emphasis>, but the set is the second
+            argument to <emphasis>Data.Set.insert</emphasis>. We will pull a little trick out of our
+            hat. </para>
         <para>
             <screen>Prelude> <userinput>let wordSet = foldl (\s e -> Data.Set.insert e s) Data.Set.empty</userinput> </screen>
         </para>
@@ -989,44 +910,34 @@ fromList [1,2,5,8,23,24]</screen>
 (\s e -> Data.Set.insert e s)
   :: (Ord a) => Data.Set.Set a -> a -> Data.Set.Set a</screen>
         </para>
-        <para>
-            It is just a function, it takes a set of some type
-            <emphasis>a</emphasis>, a value of type <emphasis>a</emphasis>, and
-            returns <emphasis>a</emphasis>. The lambda has two arguments that
-            are bound to <emphasis>s</emphasis> and <emphasis>e</emphasis>. The
-            function body comes after the arrow. To emphasize that this is just
-            a function, the following functions are equivalent:
-        </para>
+        <para>It is just a function, it takes a set of some type <emphasis>a</emphasis>, a value of
+            type <emphasis>a</emphasis>, and returns <emphasis>a</emphasis>. The lambda has two
+            arguments that are bound to <emphasis>s</emphasis> and <emphasis>e</emphasis>. The
+            function body comes after the arrow. To emphasize that this is just a function, the
+            following functions are equivalent: </para>
         <para>
             <screen>myFun = (\s e -> Data.Set.insert e s)
 myFun s e = Data.Set.insert e ss </screen>
         </para>
-        <para>
-            Back to our <function>wordSet</function> function. We used the
-            lambda to swap the arguments of
-            <emphasis>Data.Set.insert</emphasis>.
-            <emphasis>Data.Set.insert</emphasis> takes a value and a set, our
-            lambda takes a set and a value. The rest of the function follows
-            the same pattern as <emphasis>wordList</emphasis>, except that we
-            start with an empty set rather than an empty list. The function
-            works as expected:
-        </para>
+        <para>Back to our <function>wordSet</function> function. We used the lambda to swap the
+            arguments of <emphasis>Data.Set.insert</emphasis>. <emphasis>Data.Set.insert</emphasis>
+            takes a value and a set, our lambda takes a set and a value. The rest of the function
+            follows the same pattern as <emphasis>wordList</emphasis>, except that we start with an
+            empty set rather than an empty list. The function works as expected: </para>
         <para>
             <screen>Prelude> <userinput>wordSet ["blue", "blue", "red", "blue", "red"]</userinput>
 fromList ["blue","red"]</screen>
         </para>
-        <para>
-            You have done it! You are now not only able to make a function that
-            creates a word list, but also one that is performant.
-        </para>
+        <para>You have done it! You are now not only able to make a function that creates a word
+            list, but also one that is performant. </para>
         <sect2>
             <title>Exercises</title>
             <orderedlist numeration="arabic">
                 <listitem>
                     <para>To measure the vocabulary of a writer, a so-called type-token ratio can be
-                        calculated. This is the number of different tokens occurring in a text
-                            (<emphasis role="italic">types</emphasis>) divided by the number of
-                        tokens in that text.</para>
+                        calculated. This is the number of distinct tokens occurring in a text
+                            (<emphasis role="italic">types</emphasis>) divided by the total number
+                        of tokens in that text.</para>
                     <para>
                         <equation>
                             <title>Type-token ratio</title>
@@ -1046,54 +957,38 @@ fromList ["blue","red"]</screen>
     </sect1>
     <sect1 xml:id="sec-words-source-file">
         <title>Storing functions in a file</title>
-        <para>
-            Now that we are writing longer and longer functions, it becomes
-            more convenient to define functions in a file rather than the
-            <emphasis role="bold">ghci</emphasis> prompt. You can do this by
-            creating a file using a plain-text editor with the
-            <emphasis>.hs</emphasis> extension. Functions can be written down
-            in the same manner as in <emphasis>ghci</emphasis>, but without the
-            preceding <emphasis>let</emphasis> keyword. It is also highly
-            recommended to add a type signature before the function. Haskell
-            will check the function against the type signature, and report an
-            error if they do not correspond. This will help you catch incorrect
-            function definitions.
-        </para>
-        <para>
-            The <function>palindrome</function> function discussed earlier in
-            this chapter can be written to a file like this:
-        </para>
+        <para>Now that we are writing longer and longer functions, it becomes more convenient to
+            define functions in a file rather than the <emphasis role="bold">ghci</emphasis> prompt.
+            You can do this by creating a file using a plain-text editor with the
+                <emphasis>.hs</emphasis> extension. Functions can be written down in the same manner
+            as in <emphasis>ghci</emphasis>, but without the preceding <emphasis>let</emphasis>
+            keyword. It is also highly recommended to add a type signature before the function.
+            Haskell will check the function against the type signature, and report an error if they
+            do not correspond. This will help you catch incorrect function definitions. </para>
+        <para>The <function>palindrome</function> function discussed earlier in this chapter can be
+            written to a file like this: </para>
         <para>
             <screen>palindrome :: (Eq a) => [a] -> Bool
 palindrome word = word == reverse word </screen>
         </para>
-        <para>
-            If you saved this file as <emphasis>chapter2.hs</emphasis>, you can
-            load it in <emphasis role="bold">ghci</emphasis> using the
-            <emphasis>:l</emphasis> (shorthand for <emphasis>:load</emphasis>)
-            command:
-        </para>
+        <para>If you saved this file as <emphasis>chapter2.hs</emphasis>, you can load it in
+                <emphasis role="bold">ghci</emphasis> using the <emphasis>:l</emphasis> (shorthand
+            for <emphasis>:load</emphasis>) command: </para>
             <screen>Prelude> <userinput>:l chapter1</userinput>
 [1 of 1] Compiling Main             ( chapter1.hs, interpreted )
 Ok, modules loaded: Main.
 *Main> palindrome "racecar"
 True </screen>
-        <para>
-            For code fragments that use a module other than the prelude, add an
-            import statement at the top of the file. For example, the
-            <function>wordSet</function> function from the previous section
-            should be saved to a text file in the following manner:
-        </para>
+        <para>For code fragments that use a module other than the prelude, add an import statement
+            at the top of the file. For example, the <function>wordSet</function> function from the
+            previous section should be saved to a text file in the following manner: </para>
         
         <programlisting>import qualified Data.Set
 
 wordSet :: Ord a => [a] -> Data.Set.Set a
 wordSet = foldl (\s e -> Data.Set.insert e s) Data.Set.empty </programlisting>
-        <para>
-            From now on, we assume that examples are written to a text file,
-            except when the <emphasis>Prelude&gt;</emphasis> occurs in the
-            example.
-        </para>
+        <para>From now on, we assume that examples are written to a text file, except when the
+                <emphasis>Prelude&gt;</emphasis> occurs in the example. </para>
     </sect1>
     <sect1 xml:id="sec-words-freq-list">
         <title>Word frequency lists</title>
