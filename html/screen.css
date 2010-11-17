@@ -8,6 +8,9 @@ body {
 p {
   text-align: justify;
 }
+div.caption p {
+        text-align: center;
+}
 
 table {
     border: 1px solid #000;
