@@ -7,8 +7,22 @@
     
     <sect1>
         <title>Acknowledgements</title>
-        <para> We would like to thank SyncRO Soft Ltd. for their <link
-            xlink:href="http://www.oxygenxml.com/">&lt;oXygen/> XML Editor</link>, which made
-            writing of this book very pleasant.</para>
+        <para> We would like to thank:</para>
+        <itemizedlist>
+            <listitem>
+                <para>SyncRO Soft Ltd. for their <link xlink:href="http://www.oxygenxml.com/"
+                        >&lt;oXygen/> XML Editor</link>, which made writing of this book very
+                    pleasant.</para>
+            </listitem>
+            <listitem>
+                <para>The <link
+                        xlink:href="http://www.rug.nl/let/onderzoek/onderzoekinstituten/clcg/onderzoek/compuling/index"
+                        >Computational Linguistics group</link> at the <link
+                        xlink:href="http://www.rug.nl/let/onderzoek/onderzoekinstituten/clcg/index"
+                        >Center of Language and Cognition Groningen</link> for their encouragement
+                    and support. But most of all, for introducing us to natural language processing
+                    in the first place.</para>
+            </listitem>
+        </itemizedlist>
     </sect1>
 </preface>
