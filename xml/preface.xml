@@ -21,7 +21,22 @@
                         xlink:href="http://www.rug.nl/let/onderzoek/onderzoekinstituten/clcg/index"
                         >Center of Language and Cognition Groningen</link> for their encouragement
                     and support. But most of all, for introducing us to natural language processing
-                    in the first place.</para>
+                    in the first place. More information about related educational programs can be
+                    found at:<itemizedlist>
+                        <listitem>
+                            <para><link
+                                    xlink:href="http://www.rug.nl/let/onderwijs/master/taalwetenschap/programmelanguageandcommunicationtechnologies/index"
+                                    >Erasmus Mundus programme Language and Communication
+                                    Technologies</link></para>
+                        </listitem>
+                        <listitem>
+                            <para><link
+                                    xlink:href="http://www.rug.nl/let/onderwijs/bachelor/informatiekunde/index"
+                                    >Bachelor Informatiekunde</link>/<link
+                                    xlink:href="http://www.rug.nl/let/onderwijs/master/informatiekunde/index"
+                                    >Master Informatiekunde</link> (Dutch)</para>
+                        </listitem>
+                    </itemizedlist></para>
             </listitem>
         </itemizedlist>
     </sect1>
