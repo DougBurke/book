@@ -343,7 +343,7 @@ bigram xs = take 2 xs : bigram (tail xs)</programlisting>
                                 <mediaobject xml:id="fig-suffixarray-unsorted">
                                     <imageobject>
                                         <imagedata fileref="../images/suffixarray-unsorted.svg"
-                                            format="svg" width="10em"/>
+                                            format="svg" width="15em"/>
                                     </imageobject>
                                     <caption>
                                         <para>Unsorted indices</para>
@@ -354,7 +354,7 @@ bigram xs = take 2 xs : bigram (tail xs)</programlisting>
                                 <mediaobject>
                                     <imageobject>
                                         <imagedata fileref="../images/suffixarray-sorted.svg"
-                                            width="10em"/>
+                                            width="15em"/>
                                     </imageobject>
                                     <caption>
                                         <para>Sorted indices</para>
@@ -438,12 +438,97 @@ saCompare cmp d a b = cmp (V.drop a d) (V.drop b d)</programlisting></para>
             arguments, since we start counting at zero. We then use the provided comparison function
             to compare the two subvectors.</para>
         <para>Now we can create the function that actually creates a suffix
-            array:<programlisting>suffixArrayBy :: Ord a => (V.Vector a -> V.Vector a -> Ordering) ->
+            array:<programlisting>import qualified Data.List as L
+
+suffixArrayBy :: Ord a => (V.Vector a -> V.Vector a -> Ordering) ->
                  V.Vector a -> SuffixArray a
 suffixArrayBy cmp d = SuffixArray d (V.fromList srtIndex)
     where uppBound = V.length d - 1
           usrtIndex = [0..uppBound]
-          srtIndex = sortBy (saCompare cmp d) usrtIndex</programlisting></para>
-        <para><emphasis role="italic">Note: in progress...</emphasis></para>
+          srtIndex = L.sortBy (saCompare cmp d) usrtIndex</programlisting></para>
+        <para>This function is fairly simple, first we create the unsorted list of indices and bind
+            it to <varname>usrtIndex</varname>. We construct this list by using a range. A range
+            contains the indicated lower bound and upper bound, and all integers in
+            between;<screen>*Main> <userinput>[0..9]</userinput>
+[0,1,2,3,4,5,6,7,8,9,10]</screen></para>
+        <para>We retrieve the upper bound using the <function>Data.Vector.length</function> function
+            by subtracting one, since we are counting from zero. We then obtain the sorted index
+                (<varname>srtIndex</varname>) by using the <function>Data.List.sortBy</function>
+            function. This function takes a comparison function as its first argument and a list as
+            its second
+            argument:<screen>*Main> <userinput>:type Data.List.sortBy</userinput>
+Data.List.sortBy :: (a -> a -> Ordering) -> [a] -> [a]</screen></para>
+        <para>We can just plug in our <function>saCompare</function> function, which we pass a
+            comparison function, and the data vector. Finally, we use the <type>SuffixArray</type>
+            constructor to construct a <type>SuffixArray</type>, converting the list of indices to a
+            vector. For convenience, we can also add a function that uses Haskell's
+                <function>compare</function> function that uses the default sorting order that is
+            imposed by the <type>Ord</type> typeclass:</para>
+        <programlisting>suffixArray :: Ord a => V.Vector a -> SuffixArray a
+suffixArray = suffixArrayBy compare</programlisting>
+        <para>Neat! But as you have noticed by now, every serious data type has
+                <function>fromList</function> and <function>toList</function> functions, so ours
+            should have those as well. <function>fromList</function> is really simple;  we can
+            already construct a suffix array from a <type>Vector</type> using the
+                <function>suffixArray</function> function. So, we just need to convert a list to a
+                <type>Vector</type>, and pass it to
+            <function>suffixArray</function>:<screen>fromList :: Ord a => [a] -> SuffixArray a
+fromList = suffixArray . V.fromList</screen></para>
+        <para>Easy huh? The <function>toList</function> is a bit more involved. First we have to
+            decide what it should actually return. Providing the data vector as a list is not very
+            useful, it's probably what someone started with. Returning a list of indices is more
+            useful, but then we shift the burden off retrieving the n-grams that every index
+            represents to the user of our suffix array. The most useful thing would be to return a
+            list of all n-grams (of any length). So, for the phrase "to be or not to be", we want to
+            return the following elements:<itemizedlist>
+                <listitem>
+                    <para>["be"]</para>
+                </listitem>
+                <listitem>
+                    <para>["be","or","not","to","be"]</para>
+                </listitem>
+                <listitem>
+                    <para>["not","to","be"]</para>
+                </listitem>
+                <listitem>
+                    <para>["or","not","to","be"]</para>
+                </listitem>
+                <listitem>
+                    <para>["to","be"]</para>
+                </listitem>
+                <listitem>
+                    <para>["to","be","or","not","to","be"]</para>
+                </listitem>
+            </itemizedlist></para>
+        <para>To achieve this, we need to extract the subvector for each index, in the order that
+            the sorted vector of indices indicates. We can then convert each subvector to a list. We
+            can use <function>Data.Vector.foldr</function> function to traverse the vector,
+            constructing a list for each index. We will accumulate these lists in (yet another)
+            list. Please welcome
+            <function>toList</function>:<programlisting>toList :: SuffixArray a -> [[a]]
+toList (SuffixArray d i) = V.foldr vecAt [] i
+    where vecAt idx l = V.toList (V.drop idx d) : l</programlisting></para>
+        <para>The <function>vecAt</function> function extracts a subvector starting at index
+                <varname>idx</varname>, converts it to a list. We form a new list, with the
+            accumulator as the tail, and the newly constructed 'subvector list' as the head. We use
+                <function>foldr</function> to ensure that the list that is being constructed is in
+            the correct order - since the accumulator becomes the tail, a <function>foldl</function>
+            would make the first subarray the last in the list. Time to play with our new data type
+            a
+            bit:<screen>*Main> <userinput>toList $ fromList ["to","be","or","not","to","be"]</userinput>
+[["be"],
+["be","or","not","to","be"],
+["not","to","be"],
+["or","not","to","be"],
+["to","be"],
+["to","be","or","not","to","be"]]</screen></para>
+        <para>Excellent, just as we want it: we get an ordered list of all n-grams in the corpus,
+            for the maximum possible <emphasis role="italic">n</emphasis>. We can use this function
+            to extract all
+            bigrams:<screen>*Main> <userinput>filter ((== 2) . length) $ map (take 2) $ toList $ \
+  fromList ["to","be","or","not","to","be"]</userinput></screen></para>
+        <para>We extract the first two elements of each n-gram. This also gives us one unigram (the
+            last token of the corpus), so we also have to filter the list for lists that contain two
+            elements.</para>
     </sect1>
 </chapter>
