@@ -530,5 +530,17 @@ toList (SuffixArray d i) = V.foldr vecAt [] i
         <para>We extract the first two elements of each n-gram. This also gives us one unigram (the
             last token of the corpus), so we also have to filter the list for lists that contain two
             elements.</para>
+        <para>After some celebrations and a cup of tea, it is time to use suffix arrays to find the
+            frequency of a word. To do this, we use a binary search. For quick accessibility, we
+            create a function comparable to the <function>toList</function> method, but returning a
+                <type>Vector</type> of <type>Vector</type>, rather than a list of
+            list:<programlisting>elems :: SuffixArray a -> V.Vector (V.Vector a)
+elems (SuffixArray d i) = V.map vecAt i
+    where vecAt idx = V.drop idx d</programlisting></para>
+        <para>Note that we can use <function>Data.Vector.map</function> in this case, since it maps
+            a function over all elements of vector, returning a
+            vector:<screen>*Main> <userinput>:type Data.Vector.map</userinput>
+Data.Vector.map :: (a -> b) -> V.Vector a -> V.Vector b</screen></para>
+        <para>More to come...</para>
     </sect1>
 </chapter>
