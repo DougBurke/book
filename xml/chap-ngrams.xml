@@ -3,7 +3,7 @@
 <chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="chap-ngrams">
     <title>N-grams</title>
-    <sect1>
+    <sect1 xml:id="chap-ngrams-intro">
         <title>Introduction</title>
         <para>In the previous chapter, we have looked at words, and the combination of words into a
             higher level of meaning representation: a sentence. As you might recall being told by
@@ -55,7 +55,7 @@
                 <emphasis role="italic">n</emphasis> is two (a <emphasis role="italic"
                 >bigram</emphasis>) or greater. Let us start with bigrams.</para>
     </sect1>
-    <sect1>
+    <sect1 xml:id="chap-ngrams-bigrams">
         <title>Bigrams</title>
         <para>An unigram can be thought of as a window placed over a text, such that we only look at
             one word at a time. In similar fashion, a bigram can be thought of as a window that
@@ -293,20 +293,20 @@ bigram xs = take 2 xs : bigram (tail xs)</programlisting>
         </para>
         <para>Good, we are all set! We have our bigram function now... time for some applications of
             a bigram language model!</para>
-	</sect1>
-    <sect1>
+    </sect1>
+    <sect1 xml:id="chap-ngrams-pattern-matching">
         <title>A few words on Pattern Matching</title>
         <para>Stub</para>
     </sect1>
-    <sect1>
+    <sect1 xml:id="chap-ngrams-collocations">
         <title>Collocations</title>
         <para>Stub</para>
     </sect1>
-    <sect1>
+    <sect1 xml:id="chap-ngrams-to-ngrams">
         <title>From bigrams to n-grams</title>
         <para>Stub</para>
     </sect1>
-    <sect1>
+    <sect1 xml:id="chap-ngrams-suffixarrays">
         <title>Suffix arrays</title>
         <para>In this chapter, we have seen how you could extract an n-gram of a given <emphasis
                 role="italic">n</emphasis> from a list of words, characters, groceries, or whatever

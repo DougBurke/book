@@ -5,7 +5,7 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="preface">
     <title>Preface</title>
     
-    <sect1>
+    <sect1 xml:id="preface-ack">
         <title>Acknowledgements</title>
         <para> We would like to thank:</para>
         <itemizedlist>
