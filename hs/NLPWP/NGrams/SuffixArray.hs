@@ -32,7 +32,7 @@ saCompare :: Ord a => (V.Vector a -> V.Vector a -> Ordering) ->
 saCompare cmp d a b = cmp (V.drop a d) (V.drop b d)
 
 binarySearch :: (Ord a) => V.Vector a -> a -> Maybe Int
-binarySearch v n = binarySearchBounded v n 0 (V.length v - 1)
+binarySearch v e = binarySearchBounded v e 0 (V.length v - 1)
 
 binarySearchBounded :: (Ord a) => V.Vector a -> a -> Int -> Int -> Maybe Int
 binarySearchBounded = binarySearchByBounded compare

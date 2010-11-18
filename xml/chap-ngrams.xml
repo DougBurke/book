@@ -623,7 +623,7 @@ binarySearchBy :: (Ord a) => (a -> a -> Ordering) -> V.Vector a -> a ->
 binarySearchBy cmp v n = binarySearchByBounded cmp v n 0 (V.length v - 1)
 
 binarySearch :: (Ord a) => V.Vector a -> a -> Maybe Int
-binarySearch v n = binarySearchBounded v n 0 (V.length v - 1)</programlisting></para>
+binarySearch v e = binarySearchBounded v e 0 (V.length v - 1)</programlisting></para>
         <para><function>binarySearchBounded</function> calls
                 <function>binarySearchByBounded</function>, using Haskell's standard compare
             function. <function>binarySearchBy</function> calls
