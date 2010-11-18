@@ -12,7 +12,8 @@ html/index.xhtml: $(XML)
 		--skip-validation xhtml $(BOOKXML)
 
 pdf/nlpwp.fo: $(XML)
-	xmlto -o pdf/ --skip-validation fo $(BOOKXML)
+	xmlto -o pdf/ -x xsl/fo.xsl \
+		--noautosize --skip-validation fo $(BOOKXML)
 
 %.pdf: %.fo
 	fop $< $@

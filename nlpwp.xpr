@@ -11,24 +11,13 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="name">
-                                    <String xml:space="preserve">NLPWP PDF</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XSL</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">xml/chap-intro.xml</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
                                     <String xml:space="preserve">NLPWP XHTML</String>
                                 </field>
                                 <field name="type">
                                     <String xml:space="preserve">XSL</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">xml/nlpwp.xml</String>
+                                    <String xml:space="preserve">xml/chap-words.xml</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -39,7 +28,7 @@
                                     <String xml:space="preserve">XSL</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">xml/chap-tagging.xml</String>
+                                    <String xml:space="preserve">xml/chap-ngrams.xml</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -61,7 +50,18 @@
                                     <String xml:space="preserve">XSL</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">xml/chap-words.xml</String>
+                                    <String xml:space="preserve">xml/nlpwp.xml</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">NLPWP PDF</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XSL</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">xml/chap-intro.xml</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -84,6 +84,17 @@
                                 </field>
                                 <field name="url">
                                     <String xml:space="preserve">xsl/untitled.xml</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">NLPWP PDF</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XSL</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">xml/chap-tagging.xml</String>
                                 </field>
                             </scenarioAssociation>
                         </scenarioAssociation-array>
@@ -114,7 +125,7 @@
                                     <String xml:space="preserve"></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String xml:space="preserve">${frameworks}/docbook/xsl/fo/docbook_custom.xsl</String>
+                                    <String xml:space="preserve">${pdu}/xsl/fo.xsl</String>
                                 </field>
                                 <field name="inputXMLURL">
                                     <String xml:space="preserve">${pdu}/xml/nlpwp.xml</String>
@@ -480,6 +491,7 @@
         <file name="xml/chap-words.xml"/>
         <file name="xml/eq-tbl-rule-score.mml"/>
         <file name="xml/eq-tt-ratio.mml"/>
+        <file name="xsl/fo.xsl"/>
         <file name="xsl/html-chunk.xsl"/>
         <file name="xml/nlpwp.xml"/>
         <file name="xml/preface.xml"/>
