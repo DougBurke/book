@@ -92,8 +92,8 @@
             of two words (bigrams). Represented in such a way, the list of bigrams in the sentence
                 <emphasis role="italic">Colorless green ideas sleep furiously</emphasis> would look
             like this:</para>
-	<screen><userinput>[["Colorless","green"],["green","ideas"],["ideas","sleep"],["sleep","furiously"]]</userinput></screen>
-		<para>To arrive at such a list, we could start out with a list of words (yes indeed, the
+        <screen><userinput>[["Colorless","green"],["green","ideas"],["ideas","sleep"],["sleep","furiously"]]</userinput></screen>
+        <para>To arrive at such a list, we could start out with a list of words (yes indeed, the
             unigrams), and complete the following sequence of steps: <orderedlist>
                 <listitem>
                     <para>Place a window on the first bigram, and add it to our bigram list</para>
@@ -107,10 +107,10 @@
             </orderedlist>Provided these steps, we first need a way to place a window on the first
             bigram, that is, we need to isolate the first two items of the list of words. In its
             prelude, Haskell defines a function named <emphasis role="italic">take</emphasis> that
-            seems to suit our needs: </para> 
-		<screen>Prelude> <userinput>:type take</userinput> 
+            seems to suit our needs: </para>
+        <screen>Prelude> <userinput>:type take</userinput> 
 take :: Int -> [a] -> [a]</screen>
-		<para>This function takes an <emphasis role="italic">Integer</emphasis> denoting <emphasis
+        <para>This function takes an <emphasis role="italic">Integer</emphasis> denoting <emphasis
                 role="italic">n</emphasis> number of elements, and a list of some type <emphasis
                 role="italic">a</emphasis>. Given these arguments, it returns the first <emphasis
                 role="italic">n</emphasis> elements of a list of <emphasis role="italic"
@@ -118,35 +118,35 @@ take :: Int -> [a] -> [a]</screen>
             us... our first bigram:</para>
         <screen>Prelude> <userinput>take 2 ["Colorless", "green", "ideas", "sleep", "furiously"]</userinput>
 ["Colorless","green"]</screen>
-		<para>Great! That worked out nice! Now from here on, the idea is to add this bigram to a list, and
-            to move the window one word to the right, so that we obtain the second bigram. Let us
-            first turn to the latter (as we will get the list part for free later on). How do we
-            move the window one word to the right? That is, how do we extract the second and third
-            word in the list, instead of the first and second? A possible would be to use Haskell's
-                <emphasis role="italic">!!</emphasis> operator: </para>
-		<screen>Prelude> <userinput>:t (!!)</userinput>
+        <para>Great! That worked out nice! Now from here on, the idea is to add this bigram to a
+            list, and to move the window one word to the right, so that we obtain the second bigram.
+            Let us first turn to the latter (as we will get the list part for free later on). How do
+            we move the window one word to the right? That is, how do we extract the second and
+            third word in the list, instead of the first and second? A possible would be to use
+            Haskell's <emphasis role="italic">!!</emphasis> operator: </para>
+        <screen>Prelude> <userinput>:t (!!)</userinput>
 (!!) :: [a] -> Int -> a</screen>
         <para>This operator takes a list of <emphasis role="italic">a</emphasis>s, and returns the
                 <emphasis role="italic">n</emphasis>th element;</para>
-		<screen>Prelude> <userinput>["Colorless", "green", "ideas", "sleep", "furiously"] !! 1</userinput> 
+        <screen>Prelude> <userinput>["Colorless", "green", "ideas", "sleep", "furiously"] !! 1</userinput> 
 "green"
 Prelude> <userinput>["Colorless", "green", "ideas", "sleep", "furiously"] !! 2</userinput> 
 "ideas"</screen>
-		<para>Great, this gives us the two words that make up the second bigram. Now all we have to do is
-            stuff them together in a list: </para>
-		<screen>Prelude> <userinput>["Colorless", "green", "ideas", "sleep", "furiously"] !! 1 : 
+        <para>Great, this gives us the two words that make up the second bigram. Now all we have to
+            do is stuff them together in a list: </para>
+        <screen>Prelude> <userinput>["Colorless", "green", "ideas", "sleep", "furiously"] !! 1 : 
 ["Colorless", "green", "ideas", "sleep", "furiously"] !! 2 : []</userinput> 
-["green","ideas"]</screen>		
-		<para>Well, this does the trick. However, it is not very convenient to wrap this up in a function,
-            and moreover, this approach is not very Haskellish. In fact, there is a better and more
-            elegant solution, namely to move the list instead of the window. Wait! What? Yes, move
-            the list instead of the window. But how? Well, we could just look at the first and
-            second word in the list again, after getting rid of the (previous) first word. In other
-            words, we could look at the first two words of the tail of the list of words: </para>
-		<screen>Prelude> <userinput>take 2 (tail ["Colorless", "green", "ideas", "sleep", "furiously"])</userinput>
 ["green","ideas"]</screen>
-        <para>Now that looks Haskellish! What about the next bigram? and the one after that? Well, we
-            could apply the same trick over and over again. We can look at the first two words of
+        <para>Well, this does the trick. However, it is not very convenient to wrap this up in a
+            function, and moreover, this approach is not very Haskellish. In fact, there is a better
+            and more elegant solution, namely to move the list instead of the window. Wait! What?
+            Yes, move the list instead of the window. But how? Well, we could just look at the first
+            and second word in the list again, after getting rid of the (previous) first word. In
+            other words, we could look at the first two words of the tail of the list of words: </para>
+        <screen>Prelude> <userinput>take 2 (tail ["Colorless", "green", "ideas", "sleep", "furiously"])</userinput>
+["green","ideas"]</screen>
+        <para>Now that looks Haskellish! What about the next bigram? and the one after that? Well,
+            we could apply the same trick over and over again. We can look at the first two words of
             the tail of the tails of the list of words:</para>
         <screen>Prelude> <userinput>take 2 (tail (tail ["Colorless", "green", "ideas", "sleep", "furiously"]))</userinput>
 ["ideas","sleep"]</screen>
@@ -541,6 +541,130 @@ elems (SuffixArray d i) = V.map vecAt i
             a function over all elements of vector, returning a
             vector:<screen>*Main> <userinput>:type Data.Vector.map</userinput>
 Data.Vector.map :: (a -> b) -> V.Vector a -> V.Vector b</screen></para>
-        <para>More to come...</para>
+        <para><emphasis role="italic">Note: if you have a computer science background, you might
+                want to skip the next paragraphs.</emphasis></para>
+        <para>To be able to count the number of occurrences of an n-gram in the suffix array, we
+            need to locate the n-gram in the suffix array first. We could just traverse the array
+            from beginning to the end, comparing each element to the n-gram that we are looking for.
+            However, this is not very inefficient. During every search step, we exclude just one
+            element. For instance, if we have the numbers 0 to 9 and have to find the location of
+            the number 7, the first search step would just exclude the number 0, leaving eight
+            potential candidates (<xref linkend="fig-linear-search-step"/>).<figure
+                xml:id="fig-linear-search-step">
+                <title>Linear search step</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="../images/linear-search.svg" width="15em"/>
+                    </imageobject>
+                </mediaobject>
+            </figure></para>
+        <para>However, if we know that the vector of numbers is sorted, we can devise a more
+            intelligent strategy. As a child, you probably played number guessing games. In one
+            variant of the game, you would guess a number, and the person knowing the correct number
+            would shout "smaller", "larger" or "correct". Being a smart kid, you would probably not
+            start guessing at 1 if you had to guess a number between 1 and 100. Usually, you'd start
+            somewhere halfway the range (say 50), and continue halfway the 1..50 or 51..100 range if
+            the number was smaller or greater than 50.</para>
+        <para>The same trick can be applied when searching a sorted vector. If you compare a value
+            to the element in the middle, you remove cut half of the search space (if initial guess
+            was not correct). This procedure is called a <emphasis role="italic">binary
+                search</emphasis>. For instance, <xref linkend="fig-binary-search"/> shows the first
+            search step when applying a binary search to the example in <xref
+                linkend="fig-linear-search-step"/>.<figure xml:id="fig-binary-search">
+                <title>Binary search step</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="../images/binary-search.svg" width="15em"/>
+                    </imageobject>
+                </mediaobject>
+            </figure></para>
+        <para>The performance of binary search compared to linear search should not be
+            underestimated: the time of a linear search grows linearly with the number of elements
+            (yes, we like pointing out the obvious), while time of a binary search grows
+            logarithmically. Suppose that we have a sorted vector of 1048576 elements, a linear
+            search would at most take 1048576 steps, while a binary search takes at most 20 steps.
+            Pretty impressive right?</para>
+        <para>On to our binary search function. <function>binarySearchByBounded</function> finds the
+            index of an element in a <type>Vector</type>, wrapped in <type>Maybe</type>. If the
+            element has multiple occurrences in the <type>Vector</type>, just one index is returned.
+            If the element is not in the <type>Vector</type>, <type>Nothing</type> is
+            returned.<screen>binarySearchByBounded :: (Ord a) => (a -> a -> Ordering) -> V.Vector a ->
+                         a -> Int -> Int -> Maybe Int
+binarySearchByBounded cmp v e lower upper
+    | upper &lt; lower = Nothing
+    | otherwise = case cmp e (v V.! middle) of
+                    LT -> binarySearchByBounded cmp v e lower (middle - 1)
+                    EQ -> Just middle
+                    GT -> binarySearchByBounded cmp v e (middle + 1) upper
+    where middle = (lower + upper) `div` 2</screen></para>
+        <para><function>binarySearchByBounded</function> takes a host of arguments: a comparison
+            function, the (sorted) vector (<varname>v</varname>, the element to search for
+                (<varname>e</varname>), and lower (<varname>lower</varname>) and upper bound
+                (<varname>upper</varname>) indices of the search space. The function works just like
+            we described above. First we have to find the middle of the current search space, we do
+            this by averaging the upper and lower bounds and binding it to
+            <varname>middle</varname>. We then compare the element at index
+                <varname>middle</varname> in the vector to <varname>e</varname> . If both are equal
+                (<type>EQ</type>), then we are done searching, and return <code>Just middle</code>
+            as the index. If <varname>e</varname> is smaller than (<type>LT</type>) the current
+            element, we search in the lower half of the search space
+                (<varname>lower</varname>..<varname>middle</varname>-1). If <varname>e</varname> is
+            greater than (<type>GT</type>) the current element, we search in the upper half of the
+            search space (<varname>middle</varname>+1..<varname>upper</varname>). If
+                <varname>e</varname> does not occur in the search space, <varname>upper</varname>
+            will become smaller than <varname>lower</varname> when we have exhausted the search
+            space.</para>
+        <para>Let's define two convenience functions to make binary searches a bit
+            simpler:<programlisting>binarySearchBounded :: (Ord a) => V.Vector a -> a -> Int -> Int -> Maybe Int
+binarySearchBounded = binarySearchByBounded compare
+
+binarySearchBy :: (Ord a) => (a -> a -> Ordering) -> V.Vector a -> a ->
+                  Maybe Int
+binarySearchBy cmp v n = binarySearchByBounded cmp v n 0 (V.length v - 1)
+
+binarySearch :: (Ord a) => V.Vector a -> a -> Maybe Int
+binarySearch v n = binarySearchBounded v n 0 (V.length v - 1)</programlisting></para>
+        <para><function>binarySearchBounded</function> calls
+                <function>binarySearchByBounded</function>, using Haskell's standard compare
+            function. <function>binarySearchBy</function> calls
+                <function>binarySearchByBounded</function>, binding the upper and lower bounds to
+            the lowest index of the array (0) and the highest (the size of the <type>Vector</type>
+            minus one). Finally, <function>binarySearch</function> combines the functionality of
+                <function>binarySearchBounded</function> and <function>binarySearchBy</function>,
+            Let's give the binary search functionality a
+            try:<screen>*Main> binarySearch (V.fromList [1,2,3,5,7,9]) 9
+Just 1
+*Main> binarySearch (V.fromList [1,2,3,5,7,9]) 10
+Just 5
+*Main> binarySearch (V.fromList [1,2,3,5,7,9]) 10</screen></para>
+        <para>Great! Let's make a step in between, returning to suffix arrays. Say that you would
+            want to write a <function>contains</function> function that returns <type>True</type> if
+            an n-gram is in the suffix array, or <type>False</type> otherwise. Easy right? Your
+            first attempt may be something
+            like:<screen>*Main> <userinput>let corpus = ["to","be","or","not","to","be"]</userinput>
+*Main> binarySearch (elems $ fromList corpus) $ Data.Vector.fromList ["or","not", "to", "be"]
+Just 3</screen></para>
+        <para>Nice, right? But try this
+            example:<screen>*Main> binarySearch (elems $ fromList corpus) $ Data.Vector.fromList ["or","not"]
+Nothing</screen></para>
+        <para>That sounds awfully familiar for Roger in <emphasis role="italic">Roger Wilco and the
+                Time Rippers</emphasis>, right? Right! Of course, the element that we are looking
+            for contains the n-gram of the maximum length ("or not to be"). That is why the first
+            example worked, while the second did not. So, we have to apply the binary search to
+            something that only contains bigrams in this
+            case:<screen>*Main> <userinput>:{</userinput>
+*Main| <userinput>binarySearch</userinput>
+*Main|   <userinput>(Data.Vector.map (Data.Vector.take 2) $ elems $ fromList corpus) $</userinput>
+*Main|   <userinput>Data.Vector.fromList ["or","not"]</userinput>
+*Main| <userinput>:}</userinput>
+Just 3</screen></para>
+        <para>That did the trick. Writing the contains function is now
+            simple:<programlisting>contains :: Ord a => SuffixArray a -> V.Vector a -> Bool
+contains s e = case binarySearch (restrict eLen s) e of
+                 Just _  -> True
+                 Nothing -> False
+    where eLen = V.length e
+          restrict len = V.map (V.take len) . elems</programlisting></para>
+        <para><emphasis role="italic">More to be done...</emphasis></para>
     </sect1>
 </chapter>

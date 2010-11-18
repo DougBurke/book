@@ -31,26 +31,29 @@ saCompare :: Ord a => (V.Vector a -> V.Vector a -> Ordering) ->
              V.Vector a -> Int -> Int -> Ordering
 saCompare cmp d a b = cmp (V.drop a d) (V.drop b d)
 
-contains :: Ord a => SuffixArray a -> V.Vector a -> Bool
-contains a n = restrict V.! index == n
-    where index = binarySearch restrict n
-          restrict = V.map (V.take needleLength) $ elems a
-          needleLength = V.length n
-
-binarySearch :: (Ord a) => V.Vector (V.Vector a) -> V.Vector a -> Int
+binarySearch :: (Ord a) => V.Vector a -> a -> Maybe Int
 binarySearch v n = binarySearchBounded v n 0 (V.length v - 1)
 
-binarySearchBounded :: (Ord a) => V.Vector (V.Vector a) -> V.Vector a ->
-                       Int -> Int -> Int
+binarySearchBounded :: (Ord a) => V.Vector a -> a -> Int -> Int -> Maybe Int
 binarySearchBounded = binarySearchByBounded compare
 
-binarySearchByBounded :: (Ord a) => (V.Vector a -> V.Vector a -> Ordering) ->
-                         V.Vector (V.Vector a) -> V.Vector a -> Int -> Int ->
-                         Int
+binarySearchBy :: (Ord a) => (a -> a -> Ordering) -> V.Vector a -> a ->
+                  Maybe Int
+binarySearchBy cmp v n = binarySearchByBounded cmp v n 0 (V.length v - 1)
+
+binarySearchByBounded :: (Ord a) => (a -> a -> Ordering) -> V.Vector a ->
+                         a -> Int -> Int -> Maybe Int
 binarySearchByBounded cmp v e lower upper
-    | upper <= lower = lower
+    | upper < lower = Nothing
     | otherwise = case cmp e (v V.! middle) of
-                    LT -> binarySearchByBounded cmp v e lower middle
-                    EQ -> middle
+                    LT -> binarySearchByBounded cmp v e lower (middle - 1)
+                    EQ -> Just middle
                     GT -> binarySearchByBounded cmp v e (middle + 1) upper
     where middle = (lower + upper) `div` 2
+
+contains :: Ord a => SuffixArray a -> V.Vector a -> Bool
+contains s e = case binarySearch (restrict eLen s) e of
+                 Just _  -> True
+                 Nothing -> False
+    where eLen = V.length e
+          restrict len = V.map (V.take len) . elems
