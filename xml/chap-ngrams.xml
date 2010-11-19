@@ -22,7 +22,7 @@
         </itemizedlist>
         <para>The sentence <emphasis role="italic">Colorless green ideas sleep furiously</emphasis>
             (made famous by the linguist Noam Chomsky), for instance, is grammatically perfectly
-            acceptable, but of course entirely non-sensical (unless you ate wrong/weird mushrooms,
+            acceptable, but of course entirely nonsensical (unless you ate wrong/weird mushrooms,
             that is). If you compare this sentence to the other two sentences, this grammaticality
             becomes evident. The sentence <emphasis role="italic">Furiously sleep ideas green
                 colorless</emphasis> is grammatically unacceptable, and so is <emphasis
@@ -591,12 +591,13 @@ Data.Vector.map :: (a -> b) -> V.Vector a -> V.Vector b</screen></para>
             returned.<screen>binarySearchByBounded :: (Ord a) => (a -> a -> Ordering) -> V.Vector a ->
                          a -> Int -> Int -> Maybe Int
 binarySearchByBounded cmp v e lower upper
+    | V.null v      = Nothing
     | upper &lt; lower = Nothing
-    | otherwise = case cmp e (v V.! middle) of
-                    LT -> binarySearchByBounded cmp v e lower (middle - 1)
-                    EQ -> Just middle
-                    GT -> binarySearchByBounded cmp v e (middle + 1) upper
-    where middle = (lower + upper) `div` 2</screen></para>
+    | otherwise     = case cmp e (v V.! middle) of
+                        LT -> binarySearchByBounded cmp v e lower (middle - 1)
+                        EQ -> Just middle
+                        GT -> binarySearchByBounded cmp v e (middle + 1) upper
+    where middle    = (lower + upper) `div` 2</screen></para>
         <para><function>binarySearchByBounded</function> takes a host of arguments: a comparison
             function, the (sorted) vector (<varname>v</varname>, the element to search for
                 (<varname>e</varname>), and lower (<varname>lower</varname>) and upper bound
@@ -645,7 +646,7 @@ Just 5
 *Main> binarySearch (elems $ fromList corpus) $ Data.Vector.fromList ["or","not", "to", "be"]
 Just 3</screen></para>
         <para>Nice, right? But try this
-            example:<screen>*Main> binarySearch (elems $ fromList corpus) $ Data.Vector.fromList ["or","not"]
+            example:<screen>*Main> <userinput>binarySearch (elems $ fromList corpus) $ Data.Vector.fromList ["or","not"]</userinput>
 Nothing</screen></para>
         <para>That sounds awfully familiar for Roger in <emphasis role="italic">Roger Wilco and the
                 Time Rippers</emphasis>, right? Right! Of course, the element that we are looking
@@ -665,6 +666,106 @@ contains s e = case binarySearch (restrict eLen s) e of
                  Nothing -> False
     where eLen = V.length e
           restrict len = V.map (V.take len) . elems</programlisting></para>
-        <para><emphasis role="italic">More to be done...</emphasis></para>
+        <para>To find the frequency of an element in a <type>Vector</type>, we have to do a bit more
+            than locating one instance of that element. One first intuition could be to find the
+            element, and scan upwards and downwards to find how many instances of the element there
+            are in the <type>Vector</type>. However, there could be millions of such elements. Doing
+            a linear search is, again, not very efficient. So, we should apply a binary search, but
+            not just to find one instance of the element, but specifically the first and the
+            last.</para>
+        <para>Such search functions are very comparable to the
+                <function>binarySearchByBounds</function> function that we wrote earlier. Let's
+            start with finding the first index in the <type>Vector</type> where a specified element
+            occurs. Suppose that we do a binary search again: if the element in the middle of our
+            search space is greater than the element, we want to continue searching in the lower
+            half of the search space. If the element in the middle is smaller than the element, we
+            want to continue searching in the upper half of the search space. If the middle is
+            however equal to the element, we do not stop searching, but continue searching the lower
+            half. We still keep the element that was equal in the search space, since it may have
+            been the only instance of that element. This gives us the following
+                <function>lowerBoundByBounds</function> function and corresponding
+            helpers:<programlisting>lowerBoundByBounds :: Ord a => (a -> a -> Ordering) -> V.Vector a -> a ->
+                      Int -> Int -> Maybe Int
+lowerBoundByBounds cmp v e lower upper
+    | V.null v = Nothing
+    | upper == lower = case cmp e (v V.! lower) of
+                         EQ -> Just lower
+                         _  -> Nothing
+    | otherwise = case cmp e (v V.! middle) of
+                    GT -> lowerBoundByBounds cmp v e (middle + 1) upper
+                    _  -> lowerBoundByBounds cmp v e lower middle
+    where middle = (lower + upper) `div` 2
+
+lowerBoundBounds :: Ord a => V.Vector a -> a -> Int -> Int -> Maybe Int
+lowerBoundBounds = lowerBoundByBounds compare
+
+lowerBoundBy :: Ord a => (a -> a -> Ordering) -> V.Vector a -> a -> Maybe Int
+lowerBoundBy cmp v e = lowerBoundByBounds cmp v e 0 (V.length v - 1)
+
+lowerBound :: Ord a => V.Vector a -> a -> Maybe Int
+lowerBound = lowerBoundBy compare</programlisting></para>
+        <para>Searching the last index in the <type>Vector</type> where the element occurs, follows
+            a comparable procedure. We search as normal, however if the element is equal to the
+            middle we search the upper half of the search space including the element that we found
+            to be equal. Give the floor to <function>upperBoundByBounds</function> and
+            helpers:<programlisting>upperBoundByBounds :: Ord a => (a -> a -> Ordering) -> V.Vector a -> a ->
+                      Int -> Int -> Maybe Int
+upperBoundByBounds cmp v e lower upper
+    | V.null v       = Nothing
+    | upper &lt;= lower = case cmp e (v V.! lower) of
+                         EQ -> Just lower
+                         _  -> Nothing
+    | otherwise      = case cmp e (v V.! middle) of
+                         LT -> upperBoundByBounds cmp v e lower (middle - 1)
+                         _  -> upperBoundByBounds cmp v e middle upper
+    where middle     = ((lower + upper) `div` 2) + 1
+
+upperBoundBounds :: Ord a => V.Vector a -> a -> Int -> Int -> Maybe Int
+upperBoundBounds = upperBoundByBounds compare
+
+upperBoundBy :: Ord a => (a -> a -> Ordering) -> V.Vector a -> a -> Maybe Int
+upperBoundBy cmp v e = upperBoundByBounds cmp v e 0 (V.length v - 1)
+
+upperBound :: Ord a => V.Vector a -> a -> Maybe Int
+upperBound = upperBoundBy compare</programlisting></para>
+        <para>Note that we add one to the middle in this case. This is to avoid landing in an
+            infinite recursion when <varname>middle</varname> is <varname>lower</varname> plus one,
+            and the element is larger than or equal to the element at <varname>middle</varname>.
+            Under those circumstances, <varname>lower</varname> and <varname>upper</varname> would
+            be unchanged in the next recursion.</para>
+        <para>Great. I guess you will now be able to write that function in terms of
+                <function>lowerBoundByBounds</function> and
+            <function>upperBoundByBounds</function>:<programlisting>frequencyByBounds :: Ord a => (a -> a -> Ordering) -> V.Vector a -> a ->
+                     Int -> Int -> Maybe Int
+frequencyByBounds cmp v e lower upper = do
+  lower &lt;- lowerBoundByBounds cmp v e lower upper
+  upper &lt;- upperBoundByBounds cmp v e lower upper
+  return $ upper - lower + 1
+
+frequencyBy :: Ord a => (a -> a -> Ordering) -> V.Vector a -> a ->
+               Maybe Int
+frequencyBy cmp v e = frequencyByBounds cmp v e 0 (V.length v - 1)
+
+frequencyBounds :: Ord a => V.Vector a -> a -> Int -> Int -> Maybe Int
+frequencyBounds = frequencyByBounds compare
+
+frequency :: Ord a => V.Vector a -> a -> Maybe Int
+frequency = frequencyBy compare</programlisting>This
+            function works as
+            expected:<screen>*Main> <userinput>frequency (V.fromList [1,3,3,4,7,7,7,10]) 7</userinput>
+Just 3
+*Main> <userinput>frequency (V.fromList [1,3,3,4,7,7,7,10]) 5</userinput>
+Nothing</screen></para>
+        <para>We can use this with our suffix array
+            now:<screen>*Main> <userinput>let corpus = ["to","be","or","not","to","be"]</userinput>
+*Main> <userinput>let sa = fromList corpus</userinput>
+*Main> <userinput>containsWithFreq sa $ Data.Vector.fromList ["not"]</userinput>
+Just 2
+*Main> <userinput>containsWithFreq sa $ Data.Vector.fromList ["not"]</userinput>
+Just 1
+*Main> <userinput>containsWithFreq sa $ Data.Vector.fromList ["jazz","is","not","dead"]</userinput>
+Nothing
+*Main> <userinput>containsWithFreq sa $ Data.Vector.fromList ["it","just","smells","funny"]</userinput>
+Nothing</screen></para>
     </sect1>
 </chapter>
