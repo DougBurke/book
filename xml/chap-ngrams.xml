@@ -648,11 +648,11 @@ Just 3</screen></para>
         <para>Nice, right? But try this
             example:<screen>*Main> <userinput>binarySearch (elems $ fromList corpus) $ Data.Vector.fromList ["or","not"]</userinput>
 Nothing</screen></para>
-        <para>That sounds awfully familiar for Roger in <emphasis role="italic">Roger Wilco and the
-                Time Rippers</emphasis>, right? Right! Of course, the element that we are looking
-            for contains the n-gram of the maximum length ("or not to be"). That is why the first
-            example worked, while the second did not. So, we have to apply the binary search to
-            something that only contains bigrams in this
+        <para>You can almost hear the commentator of <emphasis role="italic">Roger Wilco and the
+                Time Rippers</emphasis> in the background, right? Right! Of course, the element that
+            we are looking for contains the n-gram of the maximum length ("or not to be"). That is
+            why the first example worked, while the second did not. So, we have to apply the binary
+            search to something that only contains bigrams in this
             case:<screen>*Main> <userinput>:{</userinput>
 *Main| <userinput>binarySearch</userinput>
 *Main|   <userinput>(Data.Vector.map (Data.Vector.take 2) $ elems $ fromList corpus) $</userinput>
