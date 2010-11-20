@@ -120,12 +120,12 @@
             </equation></para>
         <para>Since <inlineequation>
                 <mml:math>
-                    <mml:row>
+                    <mml:mrow>
                         <mml:mi>p(x,y)</mml:mi>
                         <mml:mo>≡</mml:mo>
                         <mml:mi>p(x)</mml:mi>
                         <mml:mi>p(y|x)</mml:mi>
-                    </mml:row>
+                    </mml:mrow>
                 </mml:math>
             </inlineequation>, and the model only estimates the conditional probability <emphasis
                 role="italic">p(y|x)</emphasis>, the probability of the context in the training
