@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
 <chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="chap-classification">
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mml="http://www.w3.org/1998/Math/MathML"
+    version="5.0" xml:id="chap-classification">
     <title>Classification</title>
     
     <sect1>
@@ -80,6 +81,64 @@
     </sect1>
     <sect1>
         <title>Maximum entropy classification</title>
-        <para>Stub</para>
+        <para>An important disadvantage of naive Bayes modelling is that it has strong feature
+            independence assumptions. Often, it is not clear whether features are dependent, or you
+            simply do not want to care. For instance, coming back to the task of authorship
+            attribution. Suppose that you made a model that uses the average sentence length as a
+            feature amongst others. Now you got a fantastic idea, you want to add some features
+            modeling syntactic complexity of sentences in a text. Such features may add new cues to
+            the model, but syntactic complexity also has a correlation with sentence length. In such
+            situations, naive Bayes models may fail, since they see these features as independent
+            contributors to a classification.</para>
+        <para>One class of models that do not assume independent features are maximum entropy
+            models. We can almost hear you think "isn't classification supposed to minimize
+            uncertainty"? That's a very good question, that we will come to in a moment. First, we
+            have to ask a basic question: given a collection of training instances, what is a good
+            model? Think about this for a moment, without diving into theory and
+            technicalities.</para>
+        <para>The answer is pretty simple: since the training data is (supposed to be) a
+            representative sample of reality, a good model would predict the training data. What
+            does it mean to predict the training data? You may remember from high school math that
+            you could calculate the expected value of a random variable given a probability
+            distribution. For instance, if you play a coin tossing game, you can calculate the
+            (average) profit or loss given enough tosses. Suppose that a friend has a biased coin,
+            with <emphasis role="italic">p(heads) = 0.7</emphasis> and <emphasis role="italic"
+                >p(tails) = 0.3</emphasis>. Winning gives you Euro 1.50, when losing, you pay 1
+            Euro. The expected outcome of choosing tails is <emphasis role="italic">0.7 * -1 + 0.3 *
+                1.50 ≅ -0.25</emphasis>. Not such a good bet, huh?</para>
+        <para>What if we can do the same for features? We can calculate the feature value in the
+            training data:
+            
+            <equation><xi:include href="eq-empirical-value.mml"/></equation></para>
+        <para>It's easier than it looks: the empirical value of a feature <emphasis role="italic"
+                    >f<subscript>i</subscript></emphasis> is the sum of the multiplication joint
+            probability of a context and an event in the training data and the value of <emphasis
+                role="italic">f<subscript>i</subscript></emphasis> for that context and event. We
+            can also calculate the expected value of a feature <emphasis role="italic"
+                    >f<subscript>i</subscript></emphasis> according to the conditional model p(y|x):<equation>
+                <xi:include href="eq-expected-value.mml"/>
+            </equation></para>
+        <para>Since <inlineequation>
+                <mml:math>
+                    <mml:row>
+                        <mml:mi>p(x,y)</mml:mi>
+                        <mml:mo>≡</mml:mo>
+                        <mml:mi>p(x)</mml:mi>
+                        <mml:mi>p(y|x)</mml:mi>
+                    </mml:row>
+                </mml:math>
+            </inlineequation>, and the model only estimates the conditional probability <emphasis
+                role="italic">p(y|x)</emphasis>, the probability of the context in the training
+            data, <inlineequation>
+                <mml:math>
+                    <mml:mrow>
+                        <mml:mi>p̃(x)</mml:mi>
+                    </mml:mrow>
+                </mml:math>
+            </inlineequation>, is used. To make the model predict the training data, a constraint is
+            added for each feature <emphasis role="italic">f<subscript>i</subscript></emphasis>
+            during the training of the model, such that:<equation>
+                <xi:include href="eq-maxent-constraint.mml"/>
+            </equation></para>
     </sect1>
 </chapter>
