@@ -33,5 +33,11 @@
     <xi:include href="chap-intro.xml"/>
     <xi:include href="chap-words.xml"/>
     <xi:include href="chap-ngrams.xml"/>
+    <xi:include href="chap-similarity.xml"/>
+    <xi:include href="chap-classification.xml"/>
+    <xi:include href="chap-ir.xml"/>
     <xi:include href="chap-tagging.xml"/>
+    <xi:include href="chap-reglang.xml"/>
+    <xi:include href="chap-cfg.xml"/>
+    <xi:include href="chap-performance.xml"/>
 </book>

@@ -11,13 +11,13 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="name">
-                                    <String xml:space="preserve">NLPWP XHTML</String>
+                                    <String xml:space="preserve">NLPWP PDF</String>
                                 </field>
                                 <field name="type">
                                     <String xml:space="preserve">XSL</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">xml/chap-words.xml</String>
+                                    <String xml:space="preserve">xsl/fo.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -44,35 +44,13 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="name">
-                                    <String xml:space="preserve">NLPWP XHTML</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XSL</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">xml/nlpwp.xml</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
                                     <String xml:space="preserve">NLPWP PDF</String>
                                 </field>
                                 <field name="type">
                                     <String xml:space="preserve">XSL</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">xml/chap-intro.xml</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">docbook/docbook5.framework/DocBook 5/Docbook PDF</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XSL</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">chap-words.xml</String>
+                                    <String xml:space="preserve">xml/chap-tagging.xml</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -88,13 +66,46 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="name">
+                                    <String xml:space="preserve">docbook/docbook5.framework/DocBook 5/Docbook PDF</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XSL</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">chap-words.xml</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
                                     <String xml:space="preserve">NLPWP PDF</String>
                                 </field>
                                 <field name="type">
                                     <String xml:space="preserve">XSL</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">xml/chap-tagging.xml</String>
+                                    <String xml:space="preserve">xml/chap-intro.xml</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">NLPWP XHTML</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XSL</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">xml/nlpwp.xml</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">NLPWP XHTML</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XSL</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">xml/chap-words.xml</String>
                                 </field>
                             </scenarioAssociation>
                         </scenarioAssociation-array>
@@ -485,8 +496,14 @@
         </options>
     </meta>
     <projectTree name="nlpwp.xpr">
+        <file name="xml/chap-cfg.xml"/>
+        <file name="xml/chap-classification.xml"/>
         <file name="xml/chap-intro.xml"/>
+        <file name="xml/chap-ir.xml"/>
         <file name="xml/chap-ngrams.xml"/>
+        <file name="xml/chap-performance.xml"/>
+        <file name="xml/chap-reglang.xml"/>
+        <file name="xml/chap-similarity.xml"/>
         <file name="xml/chap-tagging.xml"/>
         <file name="xml/chap-words.xml"/>
         <file name="xml/eq-tbl-rule-score.mml"/>
