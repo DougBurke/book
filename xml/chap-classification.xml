@@ -62,6 +62,13 @@
                     </imageobject>
                 </mediaobject>
             </figure></para>
+        <para>How do we find such functions? Doing it manually is not practical - realistic models
+            for natural language processing classification use thousands to millions of features.
+            Finding such functions is an art in itself, and is usually called <emphasis
+                role="italic">machine learning</emphasis>. Machine learning methods learn such
+            classifiers through training material. Machine learning methods are a topic by
+            themselves, so in this chapter we will mainly look at the application of classifiers
+            obtained through machine learning.</para>
         <para>This may all seem somewhat abstract at this point, but things will get clearer as we
             dive into real classifiers. The thing to remember now is that we want to attach a
             particular class label to instances, based on features of that instance, and we will do
