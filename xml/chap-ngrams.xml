@@ -767,5 +767,38 @@ Just 1
 Nothing
 *Main> <userinput>containsWithFreq sa $ Data.Vector.fromList ["it","just","smells","funny"]</userinput>
 Nothing</screen></para>
+        <sect2>
+            <title>Exercises</title>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>Write a function <function>mostFrequentNgram</function> with the
+                            following type
+                            signature:<programlisting>mostFrequentNgram :: Ord a => SuffixArray a -> Int -> Maybe (V.Vector a, Int)</programlisting></para>
+                        <para>This function extracts the most frequent n-gram from a suffix array,
+                            where the suffix array and <emphasis role="italic">n</emphasis> are
+                            given as arguments. The function should continue a pair of the n-gram
+                            and the frequency as a typle wrapped in Maybe. If no n-gram could be
+                            extracted (for instance, because the suffix array contains to few
+                            elements), return <type>Nothing</type>.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Use <function>mostFrequentNgram</function> to find the most frequent
+                            bigram and trigram in the Brown corpus.</para>
+                    </listitem>
+                    <listitem>
+                        <para><type>frequencyByBounds</type> is not as efficient as it could be: it
+                            performs a search of the full <type>Vector</type> twice. A more
+                            efficient solution would be to narrow down the search space until the
+                            first match is found, and then using
+                                <function>lowerBoundByBounds</function> and
+                                <function>upperBoundByBounds</function> to search the lower and
+                            upper half of the search space. Modify
+                                <function>frequencyByBounds</function> to use this
+                            methodology.</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+        </sect2>
     </sect1>
 </chapter>
