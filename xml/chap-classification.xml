@@ -2,7 +2,77 @@
 <?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
 <chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="chap-classification">
-    <title>Classification (proposed)</title>
+    <title>Classification</title>
     
-    <para/>
+    <sect1>
+        <title>Introduction</title>
+        <para>Many natural language processing tasks require classification, you want to find out to
+            which class a particular instance belongs. To make this more concrete, we give three examples:<itemizedlist>
+                <listitem>
+                    <para><emphasis role="bold">Authorship attribution</emphasis>: suppose that you
+                        were given a text, and have to pick the correct author of the text from
+                        three proposed authors.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">Part of speech tagging</emphasis>: in part of speech
+                        tagging, words are classified morphosyntactically. For instance, we could
+                        classify the word 'loves' in the statement "John loves Mary" to be a
+                        verb.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">Fluency ranking</emphasis>: in natural language
+                        generation, we want to find out whether a sentence produced by a generation
+                        system is fluent or not fluent.</para>
+                </listitem>
+            </itemizedlist></para>
+        <para>Such classifications can be made based on specific characteristics of the instance
+            that we want to specify. These characteristics are called <emphasis role="italic"
+                >features</emphasis> in natural language processing jargon. Suppose that you were
+            asked to determine the author of a text, and know that Jack tends to write short
+            sentences, while Steven and Marie tend to write long sentences. Now, if you were given a
+            text with mainly short sentences, who would you attribute the text to? Probably Jack,
+            right? Average sentence length is one possible feature to classify the text by its
+            author.</para>
+        <para>More formally speaking, we want to estimate <inlineequation>
+                <mathphrase>p(y|x)</mathphrase>
+            </inlineequation>, the probability of an <emphasis role="italic">event</emphasis>
+            (classification), given a <emphasis role="italic">context</emphasis>. For instance, in
+            authorship attribution, the classification being a specific author is an event, while
+            the text is the context. In part of speech tagging, the classification of a word as verb
+            is an event, the word and surrounding words are the context.</para>
+        <para>In this chapter, we will look at <emphasis role="italic">linear
+            classifiers</emphasis>. A linear classification can make a classification based on a
+            linear combination of features. To give an example, consider <xref
+                linkend="fig-linear-nonlinear-classifier"/>. Here we see two classes of objects,
+            that can be separated using just two features (<emphasis role="italic">f1</emphasis> and
+                <emphasis role="italic">f2</emphasis>). One class is tends to have high <emphasis
+                role="italic">f1</emphasis> values, the other high <emphasis role="italic"
+                >f2</emphasis> values. The figure also shows two classifiers, <emphasis
+                role="italic">c1</emphasis> and <emphasis role="italic">c2</emphasis>, that
+            successfully separate both classes. <emphasis role="italic">c1</emphasis> is a linear
+            classifier, as it is a linear combination of <emphasis role="italic">f1</emphasis> and
+                <emphasis role="italic">f2</emphasis>. <emphasis role="italic">c2</emphasis>, on the
+            other hand, is not a linear classifier: the effect of <emphasis role="italic"
+                >f1</emphasis> becomes weaker as <emphasis role="italic">f2</emphasis>
+                increases.<figure xml:id="fig-linear-nonlinear-classifier">
+                <title>Linear and non-linear classifiers</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="../images/linear-classifier.svg" width="30em"/>
+                    </imageobject>
+                </mediaobject>
+            </figure></para>
+        <para>This may all seem somewhat abstract at this point, but things will get clearer as we
+            dive into real classifiers. The thing to remember now is that we want to attach a
+            particular class label to instances, based on features of that instance, and we will do
+            this using linear classifiers.</para>
+    </sect1>
+    <sect1>
+        <title>Naive Bayes classification</title>
+        <para>Stub</para>
+    </sect1>
+    <sect1>
+        <title>Maximum entropy classification</title>
+        <para>Stub</para>
+    </sect1>
 </chapter>
