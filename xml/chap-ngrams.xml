@@ -300,7 +300,7 @@ bigram xs = take 2 xs : bigram (tail xs)</programlisting>
     </sect1>
     <sect1 xml:id="chap-ngrams-collocations">
         <title>Collocations</title>
-        <para>A straightforward applications of bigrams is the identification of so-called <emphasis
+        <para>A straightforward application of bigrams is the identification of so-called <emphasis
                 role="italic">collocations</emphasis>. Recall that bigram language models exploit
             the observations that words do not simply combine in any random order, that is, word
             order is constraint by grammatical structure. However, some combinations of words are
