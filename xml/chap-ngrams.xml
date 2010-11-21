@@ -408,8 +408,9 @@ bigram xs = take 2 xs : bigram (tail xs)</programlisting>
 1165169</screen></para>
         <para>That looks great! Next we need to determine the relative frequency of each of these
             bigrams in the corpus. That is, for each bigram we need to determine the observed chance
-            of observing it. We could start by determining the frequency of each bigram. In can
-            reuse the freqList function defined in the previous chapter to
+            of observing it. We could start by determining the frequency of each bigram. We can
+            reuse the <emphasis role="italic">freqList</emphasis> function defined in the previous
+            chapter to
             so:<screen>*Main> <userinput>Data.Map.lookup ["United","States"] (freqList bgs)</userinput>
 Just 392</screen></para>
         <para>Todo: finish this section</para>
