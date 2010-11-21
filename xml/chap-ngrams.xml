@@ -344,15 +344,77 @@ bigram xs = take 2 xs : bigram (tail xs)</programlisting>
             observing this combination in our corpus is <emphasis role="italic">P(vice
                 president)</emphasis> = 40 / 999 = 0.04. This reveals the observed chance of
             observing the combination <emphasis role="italic">vice president</emphasis> is larger
-            than the expected chance. In fact we can quantify this difference for two words
-                <emphasis role="italic">W1</emphasis> and <emphasis role="italic"
-            >W2</emphasis>:</para>
+            than the expected chance. In fact we can quantify this difference in observed and
+            expected chance for any two words <emphasis role="italic">W1</emphasis> and <emphasis
+                role="italic">W2</emphasis>:</para>
         <para>
-            <screen>Prelude> <userinput>h &lt;- IO.openFile "brown.txt" IO.ReadMode</userinput>
-Prelude> <userinput>c &lt;- IO.hGetContents h</userinput></screen>
+            <equation>
+                <title>Difference between observed and expected chance</title>
+                <xi:include href="eq-obex-diff.mml"/>
+            </equation>
         </para>
+        <para>The observed chance of observing the combination <emphasis role="italic">vice
+                president</emphasis> is eight times larger than the expected chance of observing
+            this combination. The difference between the observed and expected chance will be large
+            for words that occur together a lot of times, whereas it will be small for words that
+            also occur relatively often independent of each other. </para>
+        <para>Provided this measure of difference between the observed and expected chance, we can
+            identify the strongest collocations in a corpus by means of three steps:</para>
+        <para>
+            <orderedlist>
+                <listitem>
+                    <para>Extract all the bigrams from the corpus</para>
+                </listitem>
+                <listitem>
+                    <para>Compute the difference between the observed and expected chance for each
+                        bigram</para>
+                </listitem>
+                <listitem>
+                    <para>Rank the bigrams based on these differences</para>
+                </listitem>
+            </orderedlist>
+        </para>
+        <para>The bigrams with the highest difference between observed and expected chance reflect
+            the strongest collocations. However, the difference between observed and expected
+            chances might easily become very large. To condense these difference values, we can
+            represent them in logarithmic space. By doing so, we have stumbled upon a very frequent
+            used measure of association: the so-called Pointwise Mutual Information (PMI). The PMI
+            value for the combination of the <emphasis role="italic">vice president</emphasis> is: </para>
+        <para>
+            <equation>
+                <title>Pointwise mutual information</title>
+                <xi:include href="eq-pmi.mml"/>
+            </equation>
+        </para>
+        <para>Provided this association measure, we can replace step two in three steps above with:
+            compute the PMI between the obseved and expected chance for each bigram.</para>
+        <para>Now that we know how to identify collocations, we can apply our knowledge to the Brown
+            corpus. First we have to read in the contents of this corpus like we learned in the
+            previous chapter:</para>
+        <para>
+            <screen>*Main> <userinput>h &lt;- IO.openFile "brown.txt" IO.ReadMode</userinput>
+*Main> <userinput>c &lt;- IO.hGetContents h</userinput></screen>
+        </para>
+        <para>Good! From here on, let us first obtain a list of bigrams for this corpus:</para>
+        <screen>*Main> <userinput>let bgs = bigrams (words c)</userinput>
+*Main> <userinput>head bgs</userinput>
+["The","Fulton"]</screen>
+        <para>As a sanity check, we could verify whether we indeed obtained all the bigrams in the
+            corpus. For a corpus of <emphasis role="italic">n</emphasis> words, we expect <emphasis
+                role="italic">n-1</emphasis>
+            bigrams:<screen>*Main> <userinput>length (words c)</userinput>
+1165170
+*Main> <userinput>length bgs</userinput>
+1165169</screen></para>
+        <para>That looks great! Next we need to determine the relative frequency of each of these
+            bigrams in the corpus. That is, for each bigram we need to determine the observed chance
+            of observing it. We could start by determining the frequency of each bigram. In can
+            reuse the freqList function defined in the previous chapter to
+            so:<screen>*Main> <userinput>Data.Map.lookup ["United","States"] (freqList bgs)</userinput>
+Just 392</screen></para>
+        <para>Todo: finish this section</para>
     </sect1>
-    <sect1 xml:id="chap-ngrams-to-ngrams">
+    <sect1>
         <title>From bigrams to n-grams</title>
         <para>Stub</para>
         <para>
