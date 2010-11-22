@@ -5,7 +5,7 @@
     version="5.0" xml:id="chap-classification">
     <title>Classification</title>
     
-    <sect1>
+    <sect1 xml:id="chap-classification-intro">
         <title>Introduction</title>
         <para>Many natural language processing tasks require classification, you want to find out to
             which class a particular instance belongs. To make this more concrete, we give three examples:<itemizedlist>
@@ -106,10 +106,12 @@
                 >p(tails) = 0.3</emphasis>. Winning gives you Euro 1.50, when losing, you pay 1
             Euro. The expected outcome of choosing tails is <emphasis role="italic">0.7 * -1 + 0.3 *
                 1.50 ≅ -0.25</emphasis>. Not such a good bet, huh?</para>
-        <para>What if we can do the same for features? We can calculate the feature value in the
-            training data:
-            
-            <equation><xi:include href="eq-empirical-value.mml"/></equation></para>
+        <para>If we know the expected value from the observation of repeated coin flips (the
+            training data), we can make a model that gives the same outcome. If we know the
+            payments, finding the model analytically is trivial. What if we do the same for
+            features? We can calculate the feature value in the training data: <equation>
+                <xi:include href="eq-empirical-value.mml"/>
+            </equation></para>
         <para>It's easier than it looks: the empirical value of a feature <emphasis role="italic"
                     >f<subscript>i</subscript></emphasis> is the sum of the multiplication joint
             probability of a context and an event in the training data and the value of <emphasis
@@ -140,5 +142,31 @@
             during the training of the model, such that:<equation>
                 <xi:include href="eq-maxent-constraint.mml"/>
             </equation></para>
+        <para>For any non-trivial model, the model that satisfies these constraints cannot be found
+            analytically. In fact, there is normally even an infinite number of models. So, then the
+            question becomes, which model do we use? Consider, for example, the classifiers in <xref
+                linkend="fig-competing-classifiers"/>. While both classifiers separate instances of
+            both classes neatly, <emphasis role="italic">c2</emphasis> is the better classifier; it
+            separates the classes with a wider margin than <emphasis role="italic">c1</emphasis>,
+            and as such has more tolerance with respect to unseen instances that fall outside the
+            current class boundaries. For instance, if an instance has a high value for <emphasis
+                role="italic">f1</emphasis>, and a slightly higher value for <emphasis role="italic"
+                >f2</emphasis>, <emphasis role="italic">c1</emphasis> attribute this instance to the
+            other class while there is no reason to believe that this is true. Or in other words,
+                <emphasis role="italic">c1</emphasis> has a bias. <figure
+                xml:id="fig-competing-classifiers">
+                <title>Two competing models</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="../images/classifier-quality.svg"/>
+                    </imageobject>
+                </mediaobject>
+            </figure></para>
+        <para>Now the idea is clear: we want a model that satisfies a set of constraints, but also
+            has as few assumptions as possible. The uniform distribution has no assumptions at all,
+            it assigns the same probability to every event. So our model should be uniform as
+            possible, while still obeying the constraints that are imposed. We can find the most
+            uniform model by maximizing entropy.</para>
+        <para><emphasis role="italic">More to be done...</emphasis></para>
     </sect1>
 </chapter>
