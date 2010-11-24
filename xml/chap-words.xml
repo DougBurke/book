@@ -68,7 +68,7 @@
             actually a character by asking the type with <emphasis>:type</emphasis> or its shorthand
                 <emphasis>:t</emphasis>: </para>
         <para>
-            <screen>Prelude> <userinput>:t 'h'</userinput>
+            <screen>Prelude> <userinput>:type 'h'</userinput>
 'h' :: Char    </screen>
         </para>
         <para>Great. Haskell indeed confirms that 'h' is a character, or in Haskell's words: that
@@ -88,7 +88,7 @@
             Now we are getting somewhere! Let's look at the type of this list:
         </para>
         <para>
-            <screen>Prelude> <userinput>:t ['h','e','l','l','o']</userinput>
+            <screen>Prelude> <userinput>:type ['h','e','l','l','o']</userinput>
 ['h','e','l','l','o'] :: [Char] </screen>
         </para>
         <para>Its type is <emphasis>[Char]</emphasis>, which should be read as 'list of characters'.
@@ -166,12 +166,12 @@ tail :: [a] -> [a] </screen>
             <screen>Prelude> <userinput>reverse "level"</userinput>
 "level"</screen>
         </para>
-        <para>Hold on there! We bumped into a <function>palindrome</function>: a word that is read
-            the same way, no matter whether it is read forward or backward. Now, suppose we would
-            like to write our own function to determine whether a word is a palindrome. We first
-            need to make a slightly more formal definition of a palindrome: a word is a palindrome
-            if it is equal to its reverse. In Haskell we can compare values using the
-                <function>==</function> operator: </para>
+        <para>Hold on there! We bumped into a <emphasis role="italic">palindrome</emphasis>: a word
+            that is read the same way, no matter whether it is read forward or backward. Now,
+            suppose we would like to write our own function to determine whether a word is a
+            palindrome. We first need to make a slightly more formal definition of a palindrome: a
+            word is a palindrome if it is equal to its reverse. In Haskell we can compare values
+            using the <function>==</function> operator: </para>
         <para>
             <screen>Prelude> <userinput>"hello" == "hello"</userinput>
 True
@@ -277,11 +277,11 @@ Prelude> <userinput>:type ["The", "cat", "is", "on", "the", "mat", "."]</userinp
                 <function>head</function> is not a list. </para>
         <para>Now that we know how to represent sentence, this is a good time to try to write yet
             another small program. This time, we will write a function to compute the average token
-            length in a corpus (a collection of texts, not a part of an organ). Since we did not
-            look at real corpora yet, pick any sentence you like as <emphasis>My First
-                Corpus</emphasis>™. The authors will use <emphasis>&quot;Oh, no, flying pink
-                ponies.&quot;</emphasis> The average token length is the sum of the lengths of all
-            tokens, divided by the total number of tokens in the corpus. So, stepwise, we have to: </para>
+            length in a corpus (a collection of texts). Since we did not look at real corpora yet,
+            pick any sentence you like as <emphasis>My Little Corpus</emphasis>™. The authors will
+            use <emphasis>&quot;Oh, no, flying pink ponies!&quot;</emphasis> The average token
+            length is the sum of the lengths of all tokens, divided by the total number of tokens in
+            the corpus. So, stepwise, we have to: </para>
         <orderedlist numeration="arabic">
             <listitem>
                 <para>
@@ -332,8 +332,8 @@ map :: (a -> b) -> [a] -> [b]</screen>
             function length that takes a list and returns its length as an integer, and we want to
             have a list of integers representing the lengths. Looks like we have a winner! </para>
         <para>
-            <screen>Prelude> <userinput>map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"]</userinput>
-[2,1,2,1,6,1,4,6]</screen>
+            <screen>Prelude> <userinput>map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies","!"]</userinput>
+[2,1,2,1,6,1,4,6,1]</screen>
         </para>
         <para>We have now completed our first step: we have the length of each token in the corpus.
             Next, we have to sum the lengths that we have just retrieved. Fortunately, Haskell has a
@@ -355,16 +355,16 @@ sum :: (Num a) => [a] -> a</screen>
                 <emphasis>Num</emphasis>. And after all, this makes sense, doesn't it? We cannot sum
             strings or planets, but we can sum numbers. In fact, we can only sum numbers. </para>
         <para>After this solemn introduction into typeclasses, feel free to take a cup of tea (or
-            coffee, as one of the authors prefers), and try step two: </para>
+            coffee), and try step two: </para>
         <para>
-            <screen>Prelude> <userinput>sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"])</userinput>
-23</screen>
+            <screen>Prelude> <userinput>sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"])</userinput>
+24</screen>
         </para>
         <para>By now, you will probably smell victory. The only step that remains is to divide the
             sum by the length of the sentence using the division operator (<emphasis>/</emphasis>): </para>
         <para>
-            <screen>Prelude> <userinput>sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"]) /
-  length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"]</userinput>
+            <screen>Prelude> <userinput>sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"]) /
+  length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"]</userinput>
 
 &lt;interactive>:1:0:
     No instance for (Fractional Int)
@@ -406,32 +406,32 @@ sum :: (Num a) => [a] -> a</screen>
             sum and length that we calculated clearly do not belong to this typeclass, since they
             are of the type <emphasis>Int</emphasis>: </para>
         <para>
-            <screen>Prelude> <userinput>:type sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"])</userinput>
-sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"])
+            <screen>Prelude> <userinput>:type sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"])</userinput>
+sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"])
   :: Int
-Prelude> <userinput>:type length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"]</userinput>
-length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"]
+Prelude> <userinput>:type length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"]</userinput>
+length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"]
   :: Int</screen>
         </para>
         <para>Fortunately, Haskell provides the function <function>fromIntegral</function> that
             converts an integer to any kind of number. Add <function>fromIntegral</function>, and
             you surely do get the average token length of the corpus: </para>
         <para>
-            <screen>Prelude> <userinput>fromIntegral (sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"])) /
-  fromIntegral (length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies"])</userinput>
-2.875</screen>
+            <screen>Prelude> <userinput>fromIntegral (sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"])) /
+  fromIntegral (length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"])</userinput>
+2.6666666666666665</screen>
         </para>
         <para>Well, that was a bumpier ride than you might have expected. Don't worry! During our
-            first forays into Haskell, we were convinced that were too stupid for this too (and here
-            we are writing a book). However, after more practice, you will learn that Haskell is
-            actually a very simple and logical language. </para>
+            first forays into Haskell, we were convinced that we were too stupid for this too (and
+            here we are writing a book). However, after more practice, you will learn that Haskell
+            is actually a very simple and logical language. </para>
         <para>Maybe it will feel more like a victory after generalizing this to a function. You can
             follow the same pattern as in the palindrome example: replace the sentence with a
             symbolic name and transform it into a function: </para>
         <para>
             <screen>Prelude> <userinput>let averageLength l = fromIntegral (sum (map length l)) / fromIntegral (length l)</userinput>
-Prelude> <userinput>averageLength ["Oh", ",", "no", ",", "flying", ",", "pink" ,"ponies"]</userinput>
-2.875</screen>
+Prelude> <userinput>averageLength ["Oh", ",", "no", ",", "flying", ",", "pink" ,"ponies", "!"]</userinput>
+2.6666666666666665</screen>
         </para>
         <para>Congratulations, you just wrote your second function! But wait, you actually
             accomplished more than you may expect. Check the type signature of
@@ -447,9 +447,9 @@ averageLength :: (Fractional b) => [[a]] -> b</screen>
             anything, right? What happens if we apply this function to a list of sentences? </para>
         <para>
             <screen>Prelude> <userinput>averageLength [["I", "like", "Haskell", "."],
-  ["Ruby", "rocks", "the", "too", "."],
+  ["Ruby", "rocks", "too", "."],
   ["Who", "needs", "Java", "?"]]</userinput>
-4.333333333333333</screen>
+4.0</screen>
         </para>
         <para>Woo! That's the average sentence length, expressed in number of words. It turns out
             that, although we set out to make a function to calculate the average token length, we
@@ -610,15 +610,14 @@ map words . lines :: String -> [[String]]</screen>
             <screen>Prelude> <userinput>let splitTokenize = map words . lines</userinput>
 splitTokenize :: String -> [[String]]
 Prelude> <userinput>splitTokenize "This is Jack .\nHe is a Haskeller ."</userinput>
-[["This","is","Jack","."],["He","is","a","Haskeller","."]]
-{% endhighlight %}</screen>
+[["This","is","Jack","."],["He","is","a","Haskeller","."]]</screen>
         </para>
     </sect1>
     <sect1 xml:id="sec-words-lists">
         <title>Word lists</title>
-        <para>In the following two sections, we will introduce two prototypical tasks related words.
-            The first is to make a word (or actually token) list, the second task is making a word
-            frequency list.</para>
+        <para>In the following two sections, we will introduce two prototypical tasks related to
+            words. The first is to make a word (or actually token) list, the second task is making a
+            word frequency list.</para>
         <para>A word list is a very simple data structure: it is just a list of
                 <emphasis>unique</emphasis> words or tokens that occur in a text. Our corpus is also
             just a list of words, but since it contains duplicates, it is not a word list. The
@@ -725,7 +724,7 @@ Prelude> <userinput>elemOrAdd "pony" ["foo", "bar", "baz"]</userinput>
         </para>
         <para>Good, now we need to apply this to all words in a text, starting with an empty list.
             Haskell provides a function to do this, but brace yourself, the first time it may look a
-            bit 'difficult'. It is named <function>foldl</function> (a so-called) left-fold. A left
+            bit 'difficult'. It is named <function>foldl</function> (a so-called) left fold. A left
             fold traverses a list from head to tail, applying a function to each element, just like
                 <function>map</function>. However, the difference is that it can, but does not
             necessarily return a list. As such, it is a generalization of the
@@ -911,10 +910,12 @@ fromList [1,2,5,8,23,24]</screen>
   :: (Ord a) => Data.Set.Set a -> a -> Data.Set.Set a</screen>
         </para>
         <para>It is just a function, it takes a set of some type <emphasis>a</emphasis>, a value of
-            type <emphasis>a</emphasis>, and returns <emphasis>a</emphasis>. The lambda has two
-            arguments that are bound to <emphasis>s</emphasis> and <emphasis>e</emphasis>. The
-            function body comes after the arrow. To emphasize that this is just a function, the
-            following functions are equivalent: </para>
+            type <emphasis>a</emphasis>, and returns <emphasis>a</emphasis>. Additionally,
+                <type>a</type> has the typeclass <type>Ord</type>, which means that some comparison
+            operators should be defined for <type>a</type>. The lambda has two arguments that are
+            bound to <emphasis>s</emphasis> and <emphasis>e</emphasis>. The function body comes
+            after the arrow. To emphasize that this is just a function, the following functions are
+            equivalent: </para>
         <para>
             <screen>myFun = (\s e -> Data.Set.insert e s)
 myFun s e = Data.Set.insert e ss </screen>
