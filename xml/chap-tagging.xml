@@ -415,7 +415,7 @@ backoffTagger f bt t = let pick = f t in
             performance that you would attain if the tagger was omniscient. In this task, the
                 <emphasis role="italic">oracle</emphasis> performs the task perfectly, but this is
             not true for every task.<table frame="all" xml:id="tbl-tagging-freq-performance">
-                <title>Performance of the frequency tagger.</title>
+                <title>Performance of the frequency tagger</title>
                 <tgroup cols="2">
                     <colspec colname="c1" colnum="1" colwidth="1.0*"/>
                     <colspec colname="c2" colnum="2" colwidth="1.0*"/>
@@ -653,10 +653,10 @@ Just (SurroundTagRule (Replacement "VB" "NN") "AT" "TO")</screen></para>
                 <function>safeCursor</function> function, which returns the element the cursor
             points at using <type>Maybe</type>. It will return value <type>Nothing</type> if the
             cursor points beyond the last element of the
-            zipper.<programlisting>rightCursor :: Z.Zipper (Tag, Tag) -> Maybe (Tag, Tag)
+            zipper.<programlisting>rightCursor :: Z.Zipper a -> Maybe a
 rightCursor = Z.safeCursor . Z.right
 
-leftCursor :: Z.Zipper (Tag, Tag) -> Maybe (Tag, Tag)
+leftCursor :: Z.Zipper a -> Maybe a
 leftCursor z = if Z.beginp z then
                    Nothing
                else
@@ -945,6 +945,7 @@ tenBestRules = [NextTagRule (Replacement "TO" "IN") "AT",
                 PrevTagRule (Replacement "PPS" "PPO") "VB",
                 NextTagRule (Replacement "TO" "IN") "JJ",
                 NextTagRule (Replacement "TO" "IN") "NNS"]</programlisting></para>
+        <para>The tagger itself recursively applies every rule to the proposed tags.</para>
         <sect2>
             <title>Exercises</title>
             <orderedlist>

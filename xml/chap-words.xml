@@ -992,20 +992,14 @@ wordSet = foldl (\s e -> Data.Set.insert e s) Data.Set.empty </programlisting>
     </sect1>
     <sect1 xml:id="sec-words-freq-list">
         <title>Word frequency lists</title>
-        <para>
-            The word list function that we built in the previous section works
-            is useful for various tasks, like calculating the type-token ratio
-            for a text. For some other tasks this is not good enough - we want
-            to be able to find out how often a word was used. We can expand a
-            word list with frequencies to make a
-            <emphasis>word frequency list</emphasis>.
-        </para>
-        <para>
-            To be able to store word frequencies, every word has to be
-            associated with an integer. We could store such an association as a
-            tuple. A tuple is a data type with a fixed number of elements and a
-            fixed type for an element. Examples of tuples are:
-        </para>
+        <para>The word list function that we built in the previous section works is useful for
+            various tasks, like calculating the type-token ratio for a text. For some other tasks
+            this is not good enough - we want to be able to find out how often a word was used. We
+            can expand a word list with frequencies to make a <emphasis>word frequency
+                list</emphasis>. </para>
+        <para>To be able to store word frequencies, every word has to be associated with an integer.
+            We could store such an association as a tuple. A tuple is a data type with a fixed
+            number of elements and a fixed type for an element. Examples of tuples are: </para>
         <itemizedlist>
             <listitem>
                 <para>
@@ -1023,12 +1017,9 @@ wordSet = foldl (\s e -> Data.Set.insert e s) Data.Set.empty </programlisting>
                 </para>
             </listitem>
         </itemizedlist>
-        <para>
-            As you can see, they differ from lists in that they can have values
-            of different types as elements. However, if you inspect the type
-            signatures of these tuples, you will see that the length and type
-            for each position is fixed:
-        </para>
+        <para>As you can see, they differ from lists in that they can have values of different types
+            as elements. However, if you inspect the type signatures of these tuples, you will see
+            that the length and type for each position is fixed: </para>
         <para>
             <screen>Prelude> <userinput>:type (1,2,3)</userinput>
 (1,2,3) :: (Num t, Num t1, Num t2) => (t, t1, t2)
@@ -1037,50 +1028,35 @@ Prelude> <userinput>:type ("hello","world")</userinput>
 Prelude> <userinput>:type ("hello",1)</userinput>
 ("hello",1) :: (Num t) => ([Char], t) </screen>
         </para>
-        <para>
-            To store frequencies, we could use a list of tuples of the type
-            <emphasis>[([Char], Int)]</emphasis>. The phrase &quot;to be or not
-            to be&quot; could be stored as
-        </para>
+        <para>To store frequencies, we could use a list of tuples of the type <emphasis>[([Char],
+                Int)]</emphasis>. The phrase &quot;to be or not to be&quot; could be stored as </para>
         <para>
             <screen>[("to",2),("be",2),("or",1),("not",1)]</screen>
         </para>
-        <para>
-            However, this would be even less efficient than using lists for
-            constructing word lists. First, like <function>elemOrAdd</function>
-            we would potentially have to search the complete list to locate a
-            word. Second, we would have to reconstruct the list up to the point
-            of the element. In the <function>elemOrAdd</function> function we
-            could just give the list a new head, but now we would have to
-            replace the element to update the word frequency and add all
-            preceding list items again. Since Haskell is a 'pure' language, we
-            cannot modify existing values.
-        </para>
-        <para>
-            A more appropriate data type for this task is a map (not to be
-            confused with the <function>map</function> function). A map maps a
-            key to a value. In Haskell, maps are provided in the
-            <emphasis>Data.Map</emphasis> module. Like sets, we can make an
-            empty map:
-        </para>
+        <para>However, this would be even less efficient than using lists for constructing word
+            lists. First, like <function>elemOrAdd</function> we would potentially have to search
+            the complete list to locate a word. Second, we would have to reconstruct the list up to
+            the point of the element. In the <function>elemOrAdd</function> function we could just
+            give the list a new head, but now we would have to replace the element to update the
+            word frequency and add all preceding list items again. Since Haskell is a 'pure'
+            language, we cannot modify existing values. </para>
+        <para>A more appropriate data type for this task is a map (not to be confused with the
+                <function>map</function> function). A map maps a key to a value. In Haskell, maps
+            are provided in the <emphasis>Data.Map</emphasis> module. Like sets, we can make an
+            empty map: </para>
         <para>
             <screen>Prelude> <userinput>Data.Map.empty</userinput>
 fromList []</screen>
         </para>
-        <para>
-            When you inspect the type signature of the empty map, you can see
-            that it parametrizes over two types, a type for the key and a type
-            for values:
-        </para>
+        <para>When you inspect the type signature of the empty map, you can see that it parametrizes
+            over two types, a type for the key and a type for values: </para>
         <para>
             <screen>Prelude> <userinput>:type Data.Map.empty</userinput>
 Data.Map.empty :: Data.Map.Map k a </screen>
         </para>
-        <para>
-            We can construct a <emphasis>Map</emphasis> from a list of binary
-            tuples (tuples with two elements), where the first element of the
-            tuple becomes the key, and the second the value:
-        </para>
+        <para>We can construct a <emphasis>Map</emphasis> from a list of binary tuples (tuples with
+            two elements), where the first element of the tuple becomes the key, and the second the
+            value: </para>
         <para>
             <screen>Prelude> <userinput>Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)]</userinput>
 fromList [("be",2),("not",1),("or",1),("to",2)]
@@ -1088,42 +1064,30 @@ Prelude> <userinput>:type Data.Map.fromList [("to",2),("be",2),("or",1),("not",1
 Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)]
   :: (Num t) => Data.Map.Map [Char] t</screen>
         </para>
-        <para>
-            This also binds the types for the map: we are mapping from keys of
-            type string to values of type t that belongs to the
-            <emphasis>t</emphasis> typeclass. No specific value for types is
-            used (yet), because the numbers could be integers or fractionals.
-        </para>
-        <para>
-            The <function>insert</function> function is used to add a new
-            mapping to the <emphasis>Map</emphasis>. If a mapping with the
-            given key already exists, the existing mapping is replaced:
-        </para>
+        <para>This also binds the types for the map: we are mapping from keys of type string to
+            values of type t that belongs to the <emphasis>t</emphasis> typeclass. No specific value
+            for types is used (yet), because the numbers could be integers or fractionals. </para>
+        <para>The <function>insert</function> function is used to add a new mapping to the
+                <emphasis>Map</emphasis>:</para>
         <para>
             <screen>Prelude> <userinput>Data.Map.insert "hello" 1 (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])</userinput>
-fromList [("be",2),("hello",1),("not",1),("or",1),("to",2)]
-Prelude> <userinput>Data.Map.insert "be" 1 (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])</userinput>
-fromList [("be",1),("not",1),("or",1),("to",2)]</screen>
+fromList [("be",2),("hello",1),("not",1),("or",1),("to",2)]</screen>
         </para>
-        <para>
-            Looking up values is a bit peculiar. You can lookup a value with
-            the <function>lookup</function> function. However, if you inspect
-            the type signature, you will see that the value is not returned as
-            is:
-        </para>
+        <para>If a mapping with the given key already exists, the existing mapping is replaced:
+            <screen>Prelude> <userinput>Data.Map.insert "be" 1 (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])</userinput>
+fromList [("be",1),("not",1),("or",1),("to",2)]</screen></para>
+        <para>Looking up values is a bit peculiar. You can lookup a value with the
+                <function>lookup</function> function. However, if you inspect the type signature,
+            you will see that the value is not returned as is: </para>
         <para>
             <screen>Prelude> <userinput>:type Data.Map.lookup</userinput>
 Data.Map.lookup :: (Ord k) => k -> Data.Map.Map k a -> Maybe a</screen>
         </para>
-        <para>
-            Rather than returning a value, it returns the value packed in some
-            box called <emphasis>Maybe</emphasis>. <emphasis>Maybe a</emphasis>
-            is a type that has just two possible so-called
-            <emphasis>constructors</emphasis>, <emphasis>Just a</emphasis> or
-            <emphasis>Nothing</emphasis>. You can put your own values in a
-            <emphasis>Maybe</emphasis> box using the
-            <emphasis>Just a</emphasis> constructor:
-        </para>
+        <para>Rather than returning a value, it returns the value packed in some box called
+                <emphasis>Maybe</emphasis>. <emphasis>Maybe a</emphasis> is a type that has just two
+            possible so-called <emphasis>constructors</emphasis>, <emphasis>Just a</emphasis> or
+                <emphasis>Nothing</emphasis>. You can put your own values in a
+                <emphasis>Maybe</emphasis> box using the <emphasis>Just a</emphasis> constructor: </para>
         <para>
             <screen>Prelude> <userinput>Just 22</userinput>
 Just 22
@@ -1136,17 +1100,15 @@ Just "stay calm"
 Prelude> <userinput>:type Just "stay calm"</userinput>
 Just "stay calm" :: Maybe [Char]</screen>
         </para>
-        <para>
-            You can also make a box that contains vast emptiness with the
-            <emphasis>Nothing</emphasis> constructor:
-        </para>
+        <para>You can also make a box that contains vast emptiness with the
+                <emphasis>Nothing</emphasis> constructor: </para>
         <para>
             <screen>Prelude> <userinput>Nothing</userinput>
 Nothing
 Prelude> <userinput>:type Nothing</userinput>
 Nothing :: Maybe a </screen>
         </para>
-        <para> These boxes turn out to be pretty cool: you can use them to return something or
+        <para>These boxes turn out to be pretty cool: you can use them to return something or
             nothing from functions, without resorting to all kinds of abominations as exceptions or
             null pointers (if you never heard of exceptions or pointers, do not worry, you have a
             life full of bliss). Since <emphasis>Maybe</emphasis> is so nice, the
@@ -1159,12 +1121,9 @@ Just 2
 Prelude> <userinput>Data.Map.lookup "wrong" (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])</userinput>
 Nothing </screen>
         </para>
-        <para>
-            As for handling these values - we will come to that later. Mappings
-            are deleted from a <emphasis>Map</emphasis> by key with the
-            <function>delete</function> function. If a key did not occur in the
-            <emphasis>Map</emphasis>, the original map is returned:
-        </para>
+        <para>As for handling these values - we will come to that later. Mappings are deleted from a
+                <emphasis>Map</emphasis> by key with the <function>delete</function> function. If a
+            key did not occur in the <emphasis>Map</emphasis>, the original map is returned: </para>
         <para>
             <screen>Prelude> <userinput>Data.Map.delete "to" (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])</userinput>
 fromList [("be",2),("not",1),("or",1)]
@@ -1179,7 +1138,7 @@ fromList [("be",2),("not",1),("or",1),("to",2)]</screen>
             <screen>Prelude> <userinput>Data.Map.toList (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])</userinput>
 [("be",2),("not",1),("or",1),("to",2)]</screen>
         </para>
-        <para> Alright. Back to our task at hand: constructing a word frequency list. As with word
+        <para>Alright. Back to our task at hand: constructing a word frequency list. As with word
             lists, we want to traverse a list of words, accumulating data. So, the use of
                 <function>foldl</function> is a appropriate for this task. During each folding step,
             we take the <emphasis role="italic">Map</emphasis> created in a previous step. We then
@@ -1195,7 +1154,7 @@ countElem m e = case (Data.Map.lookup e m) of
                   Just v  -> Data.Map.insert e (v + 1) m
                   Nothing -> Data.Map.insert e 1 m</programlisting>
         <para>This function introduces the <emphasis role="italic">case</emphasis> construct.
-            Remember that <function>lookup</function> uses the nify <emphasis role="italic"
+            Remember that <function>lookup</function> uses the nifty <emphasis role="italic"
                 >Maybe</emphasis> data type? The <emphasis role="italic">case</emphasis> construct
             allows us to select an expression based on a constructor. If <function>lookup</function>
             returned a value using the <emphasis role="italic">Just</emphasis> constructor, the key
@@ -1211,9 +1170,14 @@ fromList [("be",2),("not",1),("or",1),("to",2)]</screen>
         <para>While this was a nice exercise, the <emphasis role="italic"
                 >Data.Map.insertWith</emphasis> function can drastically shorten our function. This
             function uses an update function to update a value, or a specified value if the key is
-            not present in the <emphasis role="italic">Map</emphasis>. The update function gets the
-            specified value as its first argument, and the old value as its second argument. Using
-                <function>insertWith</function>, we can shorten our function to:</para>
+            not present in the <emphasis role="italic"
+            >Map</emphasis>:<screen>*Main> <userinput>:t Data.Map.insertWith</userinput>
+Data.Map.insertWith
+  :: Ord k =>
+     (a -> a -> a) -> k -> a -> Data.Map.Map k a -> Data.Map.Map k a</screen></para>
+        <para>The update function gets the specified value as its first argument, and the old value
+            as its second argument. Using <function>insertWith</function>, we can shorten our
+            function to:</para>
         <programlisting language="haskell">countElem :: (Ord k) => Data.Map.Map k Int -> k -> Data.Map.Map k Int
 countElem m e = Data.Map.insertWith (\n o -> n + o) e 1 m</programlisting>
         <para>If an element was not seen in the <emphasis role="italic">Map</emphasis> yet, a
@@ -1228,7 +1192,7 @@ freqList = foldl countElem Data.Map.empty</programlisting>
         <para>In the next section you will see how to read real text corpora using the so-called
                 <emphasis role="italic">IO monad</emphasis>. Before diving into the <emphasis
                 role="italic">IO monad</emphasis>, we will give a short introduction to <emphasis
-                role="italic">monads</emphasis>. In Haskell, it very often happens that you want to
+                role="italic">monads</emphasis>. In Haskell, it happens very often that you want to
             perform a series of computations on values that are wrapped using some type, such as
                 <type>Maybe</type> or a list. For instance, suppose that you have a <type>Map</type>
             that maps a customer name to a customer number, and yet another <type>Map</type> that
@@ -1242,7 +1206,7 @@ Prelude> <userinput>Data.Map.lookup 1001 orders</userinput>
 Just [128]</screen></para>
         <para>Now, we want to write a function that extracts a list orders for a given customer,
             wrapped in a <type>Maybe</type>, so that <type>Nothing</type> can be returned if the
-            customer is not in the list or if the custromer had no orders. Your first attempt will
+            customer is not in the list or if the customer had no orders. Your first attempt will
             probably be along the following
             lines:<programlisting>lookupOrder0 :: Data.Map.Map String Integer ->
                 Data.Map.Map Integer [Integer] ->
@@ -1277,7 +1241,8 @@ Just [128]</screen></para>
                 String -> Maybe [Integer]
 lookupOrder1 customers orders customer =
     Data.Map.lookup customer customers >>= (\m -> Data.Map.lookup m orders)</programlisting></para>
-        <para>That surely shortened the function! The function performs the following steps:<itemizedlist>
+        <para>That surely shortened the function! But what does it do? Well, the function performs
+            the following steps:<itemizedlist>
                 <listitem>
                     <para><function>Data.Map.lookup customer customers</function>: Lookup
                             <varname>customer</varname> in <varname>customers</varname>.</para>
@@ -1295,7 +1260,7 @@ lookupOrder1 customers orders customer =
                         argument in the <varname>orders</varname>
                         <type>Map</type>. The result becomes the result of
                             <function>lookupOrder1</function>. We had to use a lambda, to make the
-                        element to be looked up the last argument.</para>
+                        element to be looked up the first argument.</para>
                 </listitem>
             </itemizedlist></para>
         <para>The type signature of <type>(>>=)</type> is also very
@@ -1417,8 +1382,7 @@ hello world!</screen></para>
 IO.openFile
   :: FilePath
      -> GHC.IO.IOMode.IOMode
-     -> IO GHC.IO.Handle.Types.Handle
-</screen></para>
+     -> IO GHC.IO.Handle.Types.Handle</screen></para>
         <para>We use <emphasis role="italic">IO.ReadMode</emphasis> to open
                 <filename>brown.txt</filename> for reading:</para>
         <screen>Prelude> <userinput>let h = IO.openFile "brown.txt" IO.ReadMode</userinput>
@@ -1460,7 +1424,7 @@ Prelude> <userinput>length c</userinput>
             sentence splitting and tokenization. For instance, the first word of the corpus
             is:<screen>Prelude> <userinput>head (words (head (lines c)))</userinput>
 "The"</screen></para>
-        <para>The frequency of the word <emphasis role="italic">the</emphasis> is (nicely wrapped in
+        <para>The frequency of the word <emphasis role="italic">the</emphasis> is nicely wrapped in
             a <emphasis role="italic">Just</emphasis>
             constructor:<screen>Prelude> <userinput>Data.Map.lookup "the" (freqList (words c))</userinput>
 Just 62713</screen></para>

@@ -111,10 +111,10 @@ instSurroundTagRule0 z
           prevTag = snd $ Z.cursor $ Z.left z
           nextTag = snd $ Z.cursor $ Z.right z
 
-rightCursor :: Z.Zipper (Tag, Tag) -> Maybe (Tag, Tag)
+rightCursor :: Z.Zipper a -> Maybe a
 rightCursor = Z.safeCursor . Z.right
 
-leftCursor :: Z.Zipper (Tag, Tag) -> Maybe (Tag, Tag)
+leftCursor :: Z.Zipper a -> Maybe a
 leftCursor z = if Z.beginp z then
                    Nothing
                else
@@ -233,6 +233,47 @@ updateState r = Z.fromList . reverse . Z.foldlz' (update r) []
 
 transformationRules :: [(Z.Zipper (Tag, Tag) -> Maybe TransformationRule)] ->
                        Z.Zipper (Tag, Tag) -> [TransformationRule]
-transformationRules funs state = bestRule:(rules funs nextState)
+transformationRules funs state = bestRule:(transformationRules funs nextState)
     where (bestRule, _) = selectRule (sortRules $ instRules funs state) state
           nextState     = updateState bestRule state
+
+tenBestRules :: [TransformationRule]
+tenBestRules = [NextTagRule (Replacement "TO" "IN") "AT",
+                PrevTagRule (Replacement "NN" "VB") "TO",
+                NextTagRule (Replacement "TO" "IN") "NP",
+                PrevTagRule (Replacement "VBN" "VBD") "PPS",
+                PrevTagRule (Replacement "NN" "VB") "MD",
+                NextTagRule (Replacement "TO" "IN") "PP$",
+                PrevTagRule (Replacement "VBN" "VBD") "NP",
+                PrevTagRule (Replacement "PPS" "PPO") "VB",
+                NextTagRule (Replacement "TO" "IN") "JJ",
+                NextTagRule (Replacement "TO" "IN") "NNS"]
+
+applyRule :: TransformationRule -> Z.Zipper Tag -> Maybe Tag
+applyRule (NextTagRule (Replacement old new) next) z = do
+  proposed     <- Z.safeCursor z
+  nextProposed <- rightCursor z
+  if proposed == old && nextProposed == next then Just new else Nothing
+applyRule (PrevTagRule (Replacement old new) prev) z = do
+  proposed     <- Z.safeCursor z
+  prevProposed <- leftCursor z
+  if proposed == old && prevProposed == prev then Just new else Nothing
+applyRule (SurroundTagRule (Replacement old new) prev next) z = do
+  proposed     <- Z.safeCursor z
+  nextProposed <- rightCursor z
+  prevProposed <- leftCursor z
+  if proposed == old && prevProposed == prev &&
+      nextProposed == next then Just new else Nothing
+
+applyRuleToCorpus ::  Z.Zipper Tag -> TransformationRule -> Z.Zipper Tag
+applyRuleToCorpus z r
+    | Z.endp z = Z.start z
+    | otherwise = let newZ = case applyRule r z of
+                               Just tag -> Z.replace tag z
+                               Nothing  -> z
+                  in
+                    applyRuleToCorpus (Z.right newZ) r
+
+applyRulesToCorpus :: [TransformationRule] -> Z.Zipper Tag -> Z.Zipper Tag
+applyRulesToCorpus rules z = foldl applyRuleToCorpus z rules
+

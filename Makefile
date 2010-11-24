@@ -3,6 +3,7 @@ all: html/index.xhtml pdf/nlpwp.pdf
 XML=xml/nlpwp.xml \
 	xml/chap-words.xml \
 	xml/chap-ngrams.xml \
+	xml/chap-classification.xml \
 	xml/chap-tagging.xml
 
 BOOKXML=xml/nlpwp.xml

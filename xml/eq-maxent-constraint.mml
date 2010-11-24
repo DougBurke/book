@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <mstyle displaystyle="false" scriptlevel="0">
+        <mrow>
+            <msub>
+                <mi>E</mi>
+                <mi>p̃</mi>
+            </msub>
+            <mi>[</mi>
+            <msub>
+                <mi>f</mi>
+                <mi>i</mi>
+            </msub>
+            <mi>]</mi>
+            <mo>=</mo>
+            <msub>
+                <mi>E</mi>
+                <mi>p</mi>
+            </msub>
+            <mi>[</mi>
+            <msub>
+                <mi>f</mi>
+                <mi>i</mi>
+            </msub>
+            <mi>]</mi>
+        </mrow>
+    </mstyle>
+</math>

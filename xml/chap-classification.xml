@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mml="http://www.w3.org/1998/Math/MathML"
+    version="5.0" xml:id="chap-classification">
+    <title>Classification</title>
+    
+    <sect1 xml:id="chap-classification-intro">
+        <title>Introduction</title>
+        <para>Many natural language processing tasks require classification, you want to find out to
+            which class a particular instance belongs. To make this more concrete, we give three examples:<itemizedlist>
+                <listitem>
+                    <para><emphasis role="bold">Authorship attribution</emphasis>: suppose that you
+                        were given a text, and have to pick the correct author of the text from
+                        three proposed authors.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">Part of speech tagging</emphasis>: in part of speech
+                        tagging, words are classified morphosyntactically. For instance, we could
+                        classify the word 'loves' in the statement "John loves Mary" to be a
+                        verb.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">Fluency ranking</emphasis>: in natural language
+                        generation, we want to find out whether a sentence produced by a generation
+                        system is fluent or not fluent.</para>
+                </listitem>
+            </itemizedlist></para>
+        <para>Such classifications can be made based on specific characteristics of the instance
+            that we want to specify. These characteristics are called <emphasis role="italic"
+                >features</emphasis> in natural language processing jargon. Suppose that you were
+            asked to determine the author of a text, and know that Jack tends to write short
+            sentences, while Steven and Marie tend to write long sentences. Now, if you were given a
+            text with mainly short sentences, who would you attribute the text to? Probably Jack,
+            right? Average sentence length is one possible feature to classify the text by its
+            author.</para>
+        <para>More formally speaking, we want to estimate <inlineequation>
+                <mathphrase>p(y|x)</mathphrase>
+            </inlineequation>, the probability of an <emphasis role="italic">event</emphasis>
+            (classification), given a <emphasis role="italic">context</emphasis>. For instance, in
+            authorship attribution, the classification being a specific author is an event, while
+            the text is the context. In part of speech tagging, the classification of a word as verb
+            is an event, the word and surrounding words are the context.</para>
+        <para>In this chapter, we will look at <emphasis role="italic">linear
+            classifiers</emphasis>. A linear classification can make a classification based on a
+            linear combination of features. To give an example, consider <xref
+                linkend="fig-linear-nonlinear-classifier"/>. Here we see two classes of objects,
+            that can be separated using just two features (<emphasis role="italic">f1</emphasis> and
+                <emphasis role="italic">f2</emphasis>). One class is tends to have high <emphasis
+                role="italic">f1</emphasis> values, the other high <emphasis role="italic"
+                >f2</emphasis> values. The figure also shows two classifiers, <emphasis
+                role="italic">c1</emphasis> and <emphasis role="italic">c2</emphasis>, that
+            successfully separate both classes. <emphasis role="italic">c1</emphasis> is a linear
+            classifier, as it is a linear combination of <emphasis role="italic">f1</emphasis> and
+                <emphasis role="italic">f2</emphasis>. <emphasis role="italic">c2</emphasis>, on the
+            other hand, is not a linear classifier: the effect of <emphasis role="italic"
+                >f1</emphasis> becomes weaker as <emphasis role="italic">f2</emphasis>
+                increases.<figure xml:id="fig-linear-nonlinear-classifier">
+                <title>Linear and non-linear classifiers</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="../images/linear-classifier.svg" width="30em"/>
+                    </imageobject>
+                </mediaobject>
+            </figure></para>
+        <para>How do we find such functions? Doing it manually is not practical - realistic models
+            for natural language processing classification use thousands to millions of features.
+            Finding such functions is an art in itself, and is usually called <emphasis
+                role="italic">machine learning</emphasis>. Machine learning methods learn such
+            classifiers through training material. Machine learning methods are a topic by
+            themselves, so in this chapter we will mainly look at the application of classifiers
+            obtained through machine learning.</para>
+        <para>This may all seem somewhat abstract at this point, but things will get clearer as we
+            dive into real classifiers. The thing to remember now is that we want to attach a
+            particular class label to instances, based on features of that instance, and we will do
+            this using linear classifiers.</para>
+    </sect1>
+    <sect1>
+        <title>Naive Bayes classification</title>
+        <para>Stub</para>
+    </sect1>
+    <sect1>
+        <title>Maximum entropy classification</title>
+        <para>An important disadvantage of naive Bayes modelling is that it has strong feature
+            independence assumptions. Often, it is not clear whether features are dependent, or you
+            simply do not want to care. For instance, coming back to the task of authorship
+            attribution. Suppose that you made a model that uses the average sentence length as a
+            feature amongst others. Now you got a fantastic idea, you want to add some features
+            modeling syntactic complexity of sentences in a text. Such features may add new cues to
+            the model, but syntactic complexity also has a correlation with sentence length. In such
+            situations, naive Bayes models may fail, since they see these features as independent
+            contributors to a classification.</para>
+        <para>One class of models that do not assume independent features are maximum entropy
+            models. We can almost hear you think "isn't classification supposed to minimize
+            uncertainty"? That's a very good question, that we will come to in a moment. First, we
+            have to ask a basic question: given a collection of training instances, what is a good
+            model? Think about this for a moment, without diving into theory and
+            technicalities.</para>
+        <para>The answer is pretty simple: since the training data is (supposed to be) a
+            representative sample of reality, a good model would predict the training data. What
+            does it mean to predict the training data? You may remember from high school math that
+            you could calculate the expected value of a random variable given a probability
+            distribution. For instance, if you play a coin tossing game, you can calculate the
+            (average) profit or loss given enough tosses. Suppose that a friend has a biased coin,
+            with <emphasis role="italic">p(heads) = 0.7</emphasis> and <emphasis role="italic"
+                >p(tails) = 0.3</emphasis>. Winning gives you Euro 1.50, when losing, you pay 1
+            Euro. The expected outcome of choosing tails is <emphasis role="italic">0.7 * -1 + 0.3 *
+                1.50 ≅ -0.25</emphasis>. Not such a good bet, huh?</para>
+        <para>If we know the expected value from the observation of repeated coin flips (the
+            training data), we can make a model that gives the same outcome. If we know the
+            payments, finding the model analytically is trivial. What if we do the same for
+            features? We can calculate the feature value in the training data: <equation>
+                <xi:include href="eq-empirical-value.mml"/>
+            </equation></para>
+        <para>It's easier than it looks: the empirical value of a feature <emphasis role="italic"
+                    >f<subscript>i</subscript></emphasis> is the sum of the multiplication joint
+            probability of a context and an event in the training data and the value of <emphasis
+                role="italic">f<subscript>i</subscript></emphasis> for that context and event. We
+            can also calculate the expected value of a feature <emphasis role="italic"
+                    >f<subscript>i</subscript></emphasis> according to the conditional model p(y|x):<equation>
+                <xi:include href="eq-expected-value.mml"/>
+            </equation></para>
+        <para>Since <inlineequation>
+                <mml:math>
+                    <mml:mrow>
+                        <mml:mi>p(x,y)</mml:mi>
+                        <mml:mo>≡</mml:mo>
+                        <mml:mi>p(x)</mml:mi>
+                        <mml:mi>p(y|x)</mml:mi>
+                    </mml:mrow>
+                </mml:math>
+            </inlineequation>, and the model only estimates the conditional probability <emphasis
+                role="italic">p(y|x)</emphasis>, the probability of the context in the training
+            data, <inlineequation>
+                <mml:math>
+                    <mml:mrow>
+                        <mml:mi>p̃(x)</mml:mi>
+                    </mml:mrow>
+                </mml:math>
+            </inlineequation>, is used. To make the model predict the training data, a constraint is
+            added for each feature <emphasis role="italic">f<subscript>i</subscript></emphasis>
+            during the training of the model, such that:<equation>
+                <xi:include href="eq-maxent-constraint.mml"/>
+            </equation></para>
+        <para>For any non-trivial model, the model that satisfies these constraints cannot be found
+            analytically. In fact, there is normally even an infinite number of models. So, then the
+            question becomes, which model do we use? Consider, for example, the classifiers in <xref
+                linkend="fig-competing-classifiers"/>. While both classifiers separate instances of
+            both classes neatly, <emphasis role="italic">c2</emphasis> is the better classifier; it
+            separates the classes with a wider margin than <emphasis role="italic">c1</emphasis>,
+            and as such has more tolerance with respect to unseen instances that fall outside the
+            current class boundaries. For instance, if an instance has a high value for <emphasis
+                role="italic">f1</emphasis>, and a slightly higher value for <emphasis role="italic"
+                >f2</emphasis>, <emphasis role="italic">c1</emphasis> attribute this instance to the
+            other class while there is no reason to believe that this is true. Or in other words,
+                <emphasis role="italic">c1</emphasis> has a bias. <figure
+                xml:id="fig-competing-classifiers">
+                <title>Two competing models</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="../images/classifier-quality.svg"/>
+                    </imageobject>
+                </mediaobject>
+            </figure></para>
+        <para>Now the idea is clear: we want a model that satisfies a set of constraints, but also
+            has as few assumptions as possible. The uniform distribution has no assumptions at all,
+            it assigns the same probability to every event. So our model should be uniform as
+            possible, while still obeying the constraints that are imposed. We can find the most
+            uniform model by maximizing entropy.</para>
+        <para><emphasis role="italic">More to be done...</emphasis></para>
+    </sect1>
+</chapter>
