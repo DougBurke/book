@@ -971,11 +971,11 @@ fromList ["blue","red"]</screen>
             <screen>palindrome :: (Eq a) => [a] -> Bool
 palindrome word = word == reverse word </screen>
         </para>
-        <para>If you saved this file as <emphasis>chapter2.hs</emphasis>, you can load it in
+        <para>If you saved this file as <emphasis>example.hs</emphasis>, you can load it in
                 <emphasis role="bold">ghci</emphasis> using the <emphasis>:l</emphasis> (shorthand
             for <emphasis>:load</emphasis>) command: </para>
-            <screen>Prelude> <userinput>:l chapter1</userinput>
-[1 of 1] Compiling Main             ( chapter1.hs, interpreted )
+            <screen>Prelude> <userinput>:l example</userinput>
+[1 of 1] Compiling Main             ( example.hs, interpreted )
 Ok, modules loaded: Main.
 *Main> palindrome "racecar"
 True </screen>
