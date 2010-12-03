@@ -357,14 +357,18 @@ sum :: (Num a) => [a] -> a</screen>
         <para>After this solemn introduction into typeclasses, feel free to take a cup of tea (or
             coffee), and try step two: </para>
         <para>
-            <screen>Prelude> <userinput>sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"])</userinput>
+            <screen>Prelude> <userinput>:{
+sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"])
+:}</userinput>
 24</screen>
         </para>
         <para>By now, you will probably smell victory. The only step that remains is to divide the
             sum by the length of the sentence using the division operator (<emphasis>/</emphasis>): </para>
         <para>
-            <screen>Prelude> <userinput>sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"]) /
-  length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"]</userinput>
+            <screen>Prelude> <userinput>:{
+sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"]) /
+  length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"]
+:}</userinput>
 
 &lt;interactive>:1:0:
     No instance for (Fractional Int)
@@ -406,10 +410,16 @@ sum :: (Num a) => [a] -> a</screen>
             sum and length that we calculated clearly do not belong to this typeclass, since they
             are of the type <emphasis>Int</emphasis>: </para>
         <para>
-            <screen>Prelude> <userinput>:type sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"])</userinput>
+            <screen>Prelude> <userinput>:{
+:type
+  sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"])
+:}</userinput>
 sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"])
   :: Int
-Prelude> <userinput>:type length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"]</userinput>
+Prelude> <userinput>:{
+:type
+  length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"]
+:}</userinput>
 length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"]
   :: Int</screen>
         </para>
@@ -417,8 +427,11 @@ length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"]
             converts an integer to any kind of number. Add <function>fromIntegral</function>, and
             you surely do get the average token length of the corpus: </para>
         <para>
-            <screen>Prelude> <userinput>fromIntegral (sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"])) /
-  fromIntegral (length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"])</userinput>
+            <screen>Prelude> <userinput>:{
+fromIntegral
+  (sum (map length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"])) /
+  fromIntegral (length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"])
+:}</userinput>
 2.6666666666666665</screen>
         </para>
         <para>Well, that was a bumpier ride than you might have expected. Don't worry! During our
@@ -429,8 +442,13 @@ length ["Oh", ",", "no", ",", "flying", ",", "pink", "ponies", "!"]
             follow the same pattern as in the palindrome example: replace the sentence with a
             symbolic name and transform it into a function: </para>
         <para>
-            <screen>Prelude> <userinput>let averageLength l = fromIntegral (sum (map length l)) / fromIntegral (length l)</userinput>
-Prelude> <userinput>averageLength ["Oh", ",", "no", ",", "flying", ",", "pink" ,"ponies", "!"]</userinput>
+            <screen>Prelude> <userinput>:{
+let averageLength l =
+  fromIntegral (sum (map length l)) / fromIntegral (length l)
+:}</userinput>
+Prelude> <userinput>:{
+averageLength ["Oh", ",", "no", ",", "flying", ",", "pink" ,"ponies", "!"]
+:}</userinput>
 2.6666666666666665</screen>
         </para>
         <para>Congratulations, you just wrote your second function! But wait, you actually
@@ -874,7 +892,10 @@ False</screen>
             a value is in a list and adding it if not, we check whether it is in a
                 <emphasis>Set</emphasis> and add it in when it is not: </para>
         <para>
-            <screen>Prelude> <userinput>let elemOrAdd s e = if Data.Set.member e s then s else Data.Set.insert e s</userinput>
+            <screen>Prelude> <userinput>:{
+let elemOrAdd s e =
+  if Data.Set.member e s then s else Data.Set.insert e s
+:}</userinput>
 Prelude> <userinput>elemOrAdd (Data.Set.fromList [5,2,5,8,1,1,23]) 24</userinput>
 fromList [1,2,5,8,23,24]</screen>
         </para>
@@ -1071,11 +1092,17 @@ Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)]
         <para>The <function>insert</function> function is used to add a new mapping to the
                 <emphasis>Map</emphasis>:</para>
         <para>
-            <screen>Prelude> <userinput>Data.Map.insert "hello" 1 (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])</userinput>
+            <screen>Prelude> <userinput>:{
+  Data.Map.insert "hello" 1
+    (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])
+:}</userinput>
 fromList [("be",2),("hello",1),("not",1),("or",1),("to",2)]</screen>
         </para>
         <para>If a mapping with the given key already exists, the existing mapping is replaced:
-            <screen>Prelude> <userinput>Data.Map.insert "be" 1 (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])</userinput>
+            <screen>Prelude> <userinput>:{
+  Data.Map.insert "be" 1
+    (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])
+:}</userinput>
 fromList [("be",1),("not",1),("or",1),("to",2)]</screen></para>
         <para>Looking up values is a bit peculiar. You can lookup a value with the
                 <function>lookup</function> function. However, if you inspect the type signature,
@@ -1117,18 +1144,30 @@ Nothing :: Maybe a </screen>
             in a <emphasis>Just</emphasis> constructor if the key occurred in the map, or <emphasis
                 role="italic">Nothing</emphasis> otherwise: </para>
         <para>
-            <screen>Prelude> <userinput>Data.Map.lookup "to" (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])</userinput>
+            <screen>Prelude> <userinput>:{
+  Data.Map.lookup "to"
+    (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])
+:}</userinput>
 Just 2
-Prelude> <userinput>Data.Map.lookup "wrong" (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])</userinput>
+Prelude> <userinput>:{
+  Data.Map.lookup "wrong"
+    (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])
+:}</userinput>
 Nothing </screen>
         </para>
         <para>As for handling these values - we will come to that later. Mappings are deleted from a
                 <emphasis>Map</emphasis> by key with the <function>delete</function> function. If a
             key did not occur in the <emphasis>Map</emphasis>, the original map is returned: </para>
         <para>
-            <screen>Prelude> <userinput>Data.Map.delete "to" (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])</userinput>
+            <screen>Prelude> <userinput>:{
+  Data.Map.delete "to"
+    (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])
+:}</userinput>
 fromList [("be",2),("not",1),("or",1)]
-Prelude> <userinput>Data.Map.delete "wrong" (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])</userinput>
+Prelude> <userinput>:{
+  Data.Map.delete "wrong"
+    (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])
+:}</userinput>
 fromList [("be",2),("not",1),("or",1),("to",2)]</screen>
         </para>
         <para>
@@ -1136,7 +1175,10 @@ fromList [("be",2),("not",1),("or",1),("to",2)]</screen>
             using the <function>toList</function> function:
         </para>
         <para>
-            <screen>Prelude> <userinput>Data.Map.toList (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])</userinput>
+            <screen>Prelude> <userinput>:{
+  Data.Map.toList
+    (Data.Map.fromList [("to",2),("be",2),("or",1),("not",1)])
+:}</userinput>
 [("be",2),("not",1),("or",1),("to",2)]</screen>
         </para>
         <para>Alright. Back to our task at hand: constructing a word frequency list. As with word
