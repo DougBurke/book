@@ -5,7 +5,32 @@
     <title>Introduction</title>
     <sect1 xml:id="sec-intro-welcome">
         <title>Welcome</title>
-        <para>Stub</para>
+        <para>The Internet and the World Wide Web have changed mankind, forever. It is to early too
+            tell, but their impact may be as great as the combustion engine or the introduction of
+            electric devices. The Internet gave universal access to information, not just
+            information that broadcasters or newspapers thought that was important, but information
+            that interests the 'websurfer'. However the Internet is not a one-way street, every
+            Internet user is also a producer: people make websites, maintain blogs, post tweets, and
+            socialize via social networks.</para>
+        <para>Since a substantial part of the world has Internet access, and every user is also a
+            producer, there is an enormous amount of information available. Some of it is of
+            peer-reviewed and of a high quality, most of it is unchecked and biased. Still, every
+            single piece of information can contain valuable information. For instance, as a vacuum
+            cleaner producer, you might think that social media are not so interesting. However, the
+            contrary is true: between billions of messages there may be hundreds expressing
+            sentiment about your product. Such messages can answer questions about how your brand is
+            conceived, what problems people commonly have with your product, etc.</para>
+        <para>Obviously, it is out of anyone's reach to manually analyze a significant portion of
+            the information that is available on the Internet. The amount is just too overwhelming.
+            Classic data analysis tools may not suffice either, most of the information is seemingly
+            unstructured, and consist of blobs of natural language sentences. However, language is
+            also structure. It is just not the kind of structure that computers can normally deal
+            with. Computers deal with neat XML files, fragments of JSON, or comma separated values.
+            No, it is the structure that we humans use to convey and transfer meaning. This book is
+            about that type of information. We will go into many of the techniques that so-called
+                <emphasis role="italic">computational linguists</emphasis> use to analyze the
+            structure of human language, and transform it into a form that computers work
+            with.</para>
     </sect1>
     <sect1 xml:id="sec-intro-whats-nlp">
         <title>What is natural language processing?</title>
@@ -85,7 +110,7 @@
     </sect1>
     <sect1>
         <title>Ready, set, go!</title>
-        <para>You will probably want to get aquainted with the <command>ghci</command> Haskell
+        <para>You will probably want to get acquainted with the <command>ghci</command> Haskell
             interpreter. It allows you to try Haskell expressions and get immediate feedback. On
             UNIX systems, type <command>ghci -XNoMonomorphismRestriction</command> in a terminal to
             launch the interpreter. You will be greeted with a prompt that resembles the
