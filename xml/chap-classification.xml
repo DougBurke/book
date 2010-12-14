@@ -113,6 +113,7 @@
                 training data), we can make a model that gives the same outcome. If we know the
                 payments, finding the model analytically is trivial. What if we do the same for
                 features? We can calculate the feature value in the training data: <equation>
+                    <title>Calculating the empirical value of a feature</title>
                     <xi:include href="eq-empirical-value.mml"/>
                 </equation></para>
             <para>It's easier than it looks: the empirical value of a feature <emphasis role="italic"
@@ -121,6 +122,7 @@
                     role="italic">f<subscript>i</subscript></emphasis> for that context and event. We
                 can also calculate the expected value of a feature <emphasis role="italic"
                     >f<subscript>i</subscript></emphasis> according to the conditional model p(y|x):<equation>
+                    <title>Calculating the expected value of a feature</title>
                         <xi:include href="eq-expected-value.mml"/>
                     </equation></para>
             <para>Since <inlineequation>
@@ -143,6 +145,7 @@
                 </inlineequation>, is used. To make the model predict the training data, a constraint is
                 added for each feature <emphasis role="italic">f<subscript>i</subscript></emphasis>
                 during the training of the model, such that:<equation>
+                    <title>Constraining the expected value to the empirical value</title>
                     <xi:include href="eq-maxent-constraint.mml"/>
                 </equation></para>
             <para>For any non-trivial model, the model that satisfies these constraints cannot be found
