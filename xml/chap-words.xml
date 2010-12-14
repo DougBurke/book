@@ -1183,7 +1183,7 @@ fromList [("be",2),("not",1),("or",1),("to",2)]</screen>
         </para>
         <para>Alright. Back to our task at hand: constructing a word frequency list. As with word
             lists, we want to traverse a list of words, accumulating data. So, the use of
-                <function>foldl</function> is a appropriate for this task. During each folding step,
+                <function>foldl</function> is appropriate for this task. During each folding step,
             we take the <emphasis role="italic">Map</emphasis> created in a previous step. We then
             lookup the value for the current step in the <emphasis role="italic">Map</emphasis>. If
             it does not exist, we add it to the <emphasis role="italic">Map</emphasis> giving it a
