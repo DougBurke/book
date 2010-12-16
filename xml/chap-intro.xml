@@ -37,97 +37,21 @@
         <para>Stub</para>
     </sect1>
     <sect1 xml:id="sec-intro-whats-haskell">
-        <title>What is Haskell?</title>
-        <para>Haskell is a static, pure, lazy, functional language. Gee, that sounds an awful lot
-            like buzzword lingo! That may well be, but these properties make Haskell a very
-            effective language, and sometimes a bit odd. These properties are also opposite to most
-            mainstream languages. For instance, Java is static, impure, eager, and not functional,
-            Ruby is dynamic, impure, eager, and only functional at times. While it is hard to give
-            an accurate definition of every characteristic, we will try anyway.</para>
-        <para><emphasis role="bold">Functional:</emphasis> Haskell puts an emphasis on functions and
-            treats computation as the evaluation of functions. This in contrast to so-called
-            imperative languages, that specify an order of instructions. As such, Haskell functions
-            very often resemble mathematical functions closely. Being functional also has practical
-            implications. For instance, iteration is accomplished by means of recursion, and
-            functions are also values and can be passed to other functions.</para>
-        <para><emphasis role="bold">Pure:</emphasis> Haskell is a pure language, in that functions
-            do not have side-effects. This means that existing values cannot be changed, since
-            changing data would be a side-effect of a function. It also guarantees that the
-            evaluation of a function will always result in the same value given the same function
-            arguments.</para>
-        <para><emphasis role="bold">Lazy:</emphasis> As a lazy language, Haskell only evaluates
-            expressions when needed. Say you just implemented a function that gives a list of all
-            prime numbers. In a strict language, the function that makes the list will never
-            terminate (since there are always more prime numbers). Haskell, on the contrary, will
-            only evaluate this function when and as much as necessary. As long as you take a finite
-            number of primes from the list, the program will happily terminate.</para>
-        <para><emphasis role="bold">Static:</emphasis> Haskell programs are compiled before they can
-            run. This means that the Haskell compiler will catch many errors for you at
-            compile-time, rather than finding them when your program is used in production.
-            Additionally, Haskell does <emphasis role="italic">type-inference</emphasis>. This means
-            that the Haskell compiler can find out the types of values most of the times, and you do
-            not need to type-annotate every value.</para>
-        <para>If you have prior programming experience in an imperative or eager language, Haskell
-            can feel a bit odd in the beginning. Don't worry, you will feel warm and fuzzy
-            eventually!</para>
-        <para>You may ask why we chose Haskell as the main programming language for this book,
-            rather than a more mainstream language. During our own experiences developing natural
-            language processing tools, we noticed that very many natural language processing tasks
-            are relatively straightforward data transformations. Haskell is a language that is
-            exceptionally good at data transformations. First of all, because it has <emphasis
-                role="italic">higher order functions</emphasis> (functions that take functions as an
-            argument) that traverse lists, sets, mappings, etc. Second, Haskell makes it easy to
-            construct more complex transformations out of simple transformations.</para>
-        <para>Although this book does not provide a full introduction to the Haskell programming
-            language, we try to cover Haskell concepts extensively when required. If you require
-            more background on certain concepts, we recommend you to consult the book <emphasis
-                role="italic" xlink:href="http://learnyouahaskell.com/">Learn Haskell for Great
-                Good!</emphasis></para>
+        <title>What is Ruby?</title>
+        <para>Todo</para>
     </sect1>
     <sect1 xml:id="sec-intro-needs">
         <title>What you need</title>
-        <para>To work with this book, you need the Haskell Platform and a text editor. The Haskell
-            Platform is available for Mac OS X, Windows, and Linux at: <link
-                xlink:href="http://hackage.haskell.org/platform/"
-                >http://hackage.haskell.org/platform/</link> Download the package for your platform,
-            and install it.</para>
-        <para>If you do not use one of these platforms, not all is lost. First of all, you should
-            download the <package>ghc</package> Haskell compiler. If you operating system provides a
-            ports system or package manager, use it to locate and install a <package>ghc</package>
-            package. If your operating system does not provide a port or package for
-                <package>ghc</package>, you can still try to download a binary distribution from
-                <link xlink:href="http://www.haskell.org/ghc/">the GHC website</link>. Once you have
-            installed and set up <package>ghc</package>, install the packages of the Haskell
-            Platform.</para>
-        <para>For the text editor, pick any editor you find comfortable, as long as it saves files
-            as plain text. Programming Haskell becomes more comfortable if you have an editor with
-            syntax highlighting and interpreter integration. Your authors prefer the Emacs editor
-            with haskell-mode. haskell-mode provides good support for highlighting, and Haskell code
-            formatting. Besides that, Emacs allows you to run the <command>ghci</command> Haskell
-            interpreter within the editor.</para>
         <para>Some examples in the book use corpora. These corpora are available at: <link
                 xlink:href="http://nlpwp.org/">http://nlpwp.org/</link></para>
     </sect1>
     <sect1>
         <title>Ready, set, go!</title>
-        <para>You will probably want to get acquainted with the <command>ghci</command> Haskell
-            interpreter. It allows you to try Haskell expressions and get immediate feedback. On
-            UNIX systems, type <command>ghci -XNoMonomorphismRestriction</command> in a terminal to
-            launch the interpreter. You will be greeted with a prompt that resembles the
-            following:<screen>$ <userinput>ghci -XNoMonomorphismRestriction</userinput>
-GHCi, version 6.12.3: http://www.haskell.org/ghc/  :? for help
-Loading package ghc-prim ... linking ... done.
-Loading package integer-gmp ... linking ... done.
-Loading package base ... linking ... done.
-Loading package ffi-1.0 ... linking ... done.
-Prelude></screen>
-            On Windows, choose <emphasis role="italic">Start -> All Programs -> Haskell Platform ->
-                WinGHCi</emphasis>. The first time, you should set the <emphasis role="italic"
-                >NoMonomorphismRestriction</emphasis> option that is required for some examples. Do
-            this by going to the following item: <emphasis role="italic">File > Options > GHCi
-                Startup</emphasis>. Then append <emphasis role="italic"
-                >-XNoMonomorphismRestriction</emphasis> in the field (make sure that there is a
-            space before this addition). Click <emphasis role="italic">OK</emphasis>, and restart
-            WinGHCi.</para>
+        <para>If you are not familiar with the <command>irb</command> interactive Ruby interpreter,
+            it may be a good idea too play around with it. This book will make extensive use of it
+            to gradually build classes and methods. On UNIX systems, type <command>irb</command> in
+            a terminal to launch the interpreter. You will be greeted with a prompt that resembles
+            the following:<screen>$ <userinput>irb</userinput>
+>></screen></para>
     </sect1>
 </chapter>
