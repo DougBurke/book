@@ -427,6 +427,40 @@ ngrams n xs
     | otherwise      = []</programlisting>
         </para>
     </sect1>
+    <sect1>
+        <title>Lazy and strict evaluation</title>
+        <para>You may have noticed that something curious goes on in Haskell. For instance, consider
+            the following GHCi
+            session:<screen>Prelude> <userinput>take 10 $ [0..]</userinput>
+[0,1,2,3,4,5,6,7,8,9]</screen></para>
+        <para>The expression <function>[0..</function> is the list of numbers from zero to infinity.
+            Obviously, it is impossible to store an infinite list in finite memory. Haskell does not
+            apply some simple trick, since it also works in less trivial cases. For
+            instance:<screen>Prelude> <userinput>take 10 $ filter even [0..]</userinput>
+[0,2,4,6,8,10,12,14,16,18]</screen></para>
+        <para>This also works for your own
+            predicates:<screen>Prelude> <userinput>let infinite n = n : infinite (n + 1)</userinput>
+Prelude> <userinput>take 3 $ infinite 0</userinput>
+[0,1,2,3]</screen></para>
+        <para>In most other programming languages, this computation will never terminate, since it
+            will go into an infinite recursion. Haskell, however, won't. The reason is that Haskell
+            uses <emphasis role="italic">lazy evaluation</emphasis> - an expression is only
+            evaluated when necessary. For instance, taking three elements from
+                <function>infinite</function> results in the following
+            evaluations:<programlisting>infinite 0
+0 : infinite 1
+0 : (1 : infinite 2)
+0 : (1 : (2 : infinite 3))
+0 : (1 : (2 : (3 : infinite 4)))</programlisting></para>
+        <para>Once <function>take</function> has consumed enough elements from
+                <function>infinite</function>, the tail of the list is the expression
+                <function>infinite 4</function>. Since <function>take</function> does not need more
+            elements, the tail is never evaluated. Lazy evaluation allows you to do clever tricks,
+            such as defining infinite lists. The downside is that it is often hard to predict when
+            an expression is evaluated, and what application that has on performance of a
+            program.</para>
+        <para><emphasis role="italic">Todo: lazy evaluation and folds.</emphasis></para>
+    </sect1>
     <sect1 xml:id="chap-ngrams-suffixarrays">
         <title>Suffix arrays</title>
         <para>In this chapter, we have seen how you could extract an n-gram of a given <emphasis
