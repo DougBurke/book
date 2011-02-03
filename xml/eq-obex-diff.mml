@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block">
-    <mml:mrow>
-        <mml:mfrac>
-            <mml:mrow>
-                <mml:mo>P(W1W2)</mml:mo>
-            </mml:mrow>
-            <mml:mrow>
-                <mml:mo>P(W1)P(W2)</mml:mo>
-            </mml:mrow>
-        </mml:mfrac>
-        <mml:mo>=</mml:mo>
-		<mml:mfrac>
-            <mml:mrow>
-                <mml:mo>P(vice president)</mml:mo>
-            </mml:mrow>
-            <mml:mrow>
-                <mml:mo>P(vice)P(president)</mml:mo>
-            </mml:mrow>
-        </mml:mfrac>
-        <mml:mo>=</mml:mo>
-		<mml:mfrac>
-            <mml:mrow>
-                <mml:mo>0.04</mml:mo>
-            </mml:mrow>
-            <mml:mrow>
-                <mml:mo>0.005</mml:mo>
-            </mml:mrow>
-        </mml:mfrac>
-        <mml:mo>=</mml:mo>
-        <mml:mo>8</mml:mo>
-    </mml:mrow>    
-</mml:math>
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+    <mrow>
+        <mfrac>
+            <mrow>
+                <mo>p(W1W2)</mo>
+            </mrow>
+            <mrow>
+                <mo>p(W1)p(W2)</mo>
+            </mrow>
+        </mfrac>
+        <mo>=</mo>
+		<mfrac>
+            <mrow>
+                <mo>p(vice president)</mo>
+            </mrow>
+            <mrow>
+                <mo>p(vice)p(president)</mo>
+            </mrow>
+        </mfrac>
+        <mo>=</mo>
+		<mfrac>
+            <mrow>
+                <mo>0.04</mo>
+            </mrow>
+            <mrow>
+                <mo>0.005</mo>
+            </mrow>
+        </mfrac>
+        <mo>=</mo>
+        <mo>8</mo>
+    </mrow>    
+</math>

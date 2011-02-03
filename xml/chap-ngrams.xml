@@ -330,18 +330,18 @@ bigram xs = take 2 xs : bigram (tail xs)</programlisting>
             have a 1000 word corpus in which the word <emphasis role="italic">vice</emphasis> occurs
             50 times, and the word <emphasis role="italic">president</emphasis> 100 times. In other
             words, the chance that a randomly picked word is the word <emphasis role="italic"
-                >vice</emphasis> is <emphasis role="italic">P(vice)</emphasis> = 50/1000 = 0.05. In
+                >vice</emphasis> is <emphasis role="italic">p(vice)</emphasis> = 50/1000 = 0.05. In
             similar fashion, the chance that randomly picked word is the word president is <emphasis
-                role="italic">P(president)</emphasis> = 100/1000 = 0.1. Now what would be the chance
+                role="italic">p(president)</emphasis> = 100/1000 = 0.1. Now what would be the chance
             of observing the combination <emphasis role="italic">vice president</emphasis> if the
             word <emphasis role="italic">vice</emphasis> and <emphasis role="italic"
                 >president</emphasis> were "unrelated"? Well, this would simply be the chance of
             observing the word <emphasis role="italic">vice</emphasis> multiplied by the chance of
             observing the word <emphasis role="italic">president</emphasis>. Thus, <emphasis
-                role="italic">P(vice president)</emphasis> = 0.05 x 0.01 = 0.005. From our thousand
+                role="italic">p(vice president)</emphasis> = 0.05 x 0.01 = 0.005. From our thousand
             word corpus, we can extract 1000 - 1 = 999 bigrams. Assume that the bigram <emphasis
                 role="italic">vice president</emphasis> occurs 40 times, meaning that the chance of
-            observing this combination in our corpus is <emphasis role="italic">P(vice
+            observing this combination in our corpus is <emphasis role="italic">p(vice
                 president)</emphasis> = 40 / 999 = 0.04. This reveals the observed chance of
             observing the combination <emphasis role="italic">vice president</emphasis> is larger
             than the expected chance. In fact we can quantify this difference in observed and

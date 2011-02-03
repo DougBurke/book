@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?oxygen RNGSchema="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" type="xml"?>
 <chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mml="http://www.w3.org/1998/Math/MathML"
-    version="5.0" xml:id="chap-classification">
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="chap-classification">
     <title>Classification</title>
     
     <sect1 xml:id="chap-classification-intro">
@@ -126,22 +125,22 @@
                         <xi:include href="eq-expected-value.mml"/>
                     </equation></para>
             <para>Since <inlineequation>
-                <mml:math>
-                    <mml:mrow>
-                        <mml:mi>p(x,y)</mml:mi>
-                        <mml:mo>≡</mml:mo>
-                        <mml:mi>p(x)</mml:mi>
-                        <mml:mi>p(y|x)</mml:mi>
-                    </mml:mrow>
-                </mml:math>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                        <mi>p(x,y)</mi>
+                        <mo>≡</mo>
+                        <mi>p(x)</mi>
+                        <mi>p(y|x)</mi>
+                    </mrow>
+                </math>
             </inlineequation>, and the model only estimates the conditional probability <emphasis
                 role="italic">p(y|x)</emphasis>, the probability of the context in the training
                 data, <inlineequation>
-                    <mml:math>
-                        <mml:mrow>
-                            <mml:mi>p̃(x)</mml:mi>
-                        </mml:mrow>
-                    </mml:math>
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <mrow>
+                            <mi>p̃(x)</mi>
+                        </mrow>
+                    </math>
                 </inlineequation>, is used. To make the model predict the training data, a constraint is
                 added for each feature <emphasis role="italic">f<subscript>i</subscript></emphasis>
                 during the training of the model, such that:<equation>
@@ -179,24 +178,24 @@
                     <emphasis role="italic">uniform distribution</emphasis>, meaning that every
                 outcome is equally probable. In the uniform distribution, the probability of a
                 particular outcome is <inlineequation>
-                    <mml:math>
-                        <mml:mrow>
-                            <mml:mfrac>
-                                <mml:mrow>
-                                    <mml:mi>1</mml:mi>
-                                </mml:mrow>
-                                <mml:mrow>
-                                    <mml:mi>|O|</mml:mi>
-                                </mml:mrow>
-                            </mml:mfrac>
-                        </mml:mrow>
-                    </mml:math>
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <mrow>
+                            <mfrac>
+                                <mrow>
+                                    <mi>1</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>|O|</mi>
+                                </mrow>
+                            </mfrac>
+                        </mrow>
+                    </math>
                 </inlineequation>, where <inlineequation>
-                    <mml:math>
-                        <mml:mrow>
-                            <mml:mi>|O|</mml:mi>
-                        </mml:mrow>
-                    </mml:math>
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <mrow>
+                            <mi>|O|</mi>
+                        </mrow>
+                    </math>
                 </inlineequation> is the number of possible outcomes. In the uniform distribution,
                     <emphasis role="italic">uncertainty</emphasis> is at its maximum. If we know
                 that <emphasis role="italic">p(tails) = 0.9</emphasis>, we know pretty certain that
