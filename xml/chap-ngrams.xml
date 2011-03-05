@@ -239,8 +239,8 @@ bigram [1,2,3,4] = [1,2] : [2,3] : [3,4] : []
             matching definition of a function, and return the result its application. Hence, we can
             define patterns for the stop condition and recursive step as follows:</para>
         <programlisting>bigram :: [a] -> [[a]]
-bigram (x:[]) = []
-bigram xs = take 2 xs : bigram (tail xs)</programlisting>
+bigram [x] = []
+bigram xs  = take 2 xs : bigram (tail xs)</programlisting>
         <para>The second line represents the stop condition, and the third the familiar recursive
             step. Provided the list of words in the sentence <emphasis role="italic">Colorless green
                 ideas sleep furiously</emphasis>, Haskell will match this to the recursive step, and
@@ -256,7 +256,7 @@ bigram xs = take 2 xs : bigram (tail xs)</programlisting>
 bigram [1,2,3,4] = [1,2] : bigram (tail [1,2,3,4])
 bigram [2,3,4] = [2,3] : bigram (tail [2,3,4])
 bigram [3,4] = [3,4] : bigram (tail [3,4])
-bigram (4:[]) = []
+bigram [4] = []
 bigram [3,4] = [3,4] : []
 bigram [2,3,4] = [2,3] : [3,4] : []
 bigram [1,2,3,4] = [1,2] : [2,3] : [3,4] : []
@@ -270,8 +270,8 @@ bigram [1,2,3,4] = [1,2] : [2,3] : [3,4] : []
             represented by an underscore. Using this underscore, we can patch up the aesthetics of
             our
             function:<programlisting>bigram :: [a] -> [[a]]
-bigram (_:[]) = []
-bigram xs = take 2 xs : bigram (tail xs)</programlisting></para>
+bigram [_] = []
+bigram xs  = take 2 xs : bigram (tail xs)</programlisting></para>
         <para>Secondly, our function fails if we apply it to an empty
             list:<screen>Prelude> <userinput>bigram []</userinput>
 [[]*** Exception: Prelude.tail: empty list</screen></para>
@@ -281,9 +281,9 @@ bigram xs = take 2 xs : bigram (tail xs)</programlisting></para>
             recursive step is applied to it. We can solve this by adding a pattern for an empty
             list:</para>
         <programlisting>bigram :: [a] -> [[a]]
-bigram [] = []
-bigram (_:[]) = []
-bigram xs = take 2 xs : bigram (tail xs)</programlisting>
+bigram []  = []
+bigram [_] = []
+bigram xs  = take 2 xs : bigram (tail xs)</programlisting>
         <para>This new pattern basically states that the list of a bigrams of an empty word list is
             in turn an empty list. This assures that our function will not fail when applied to an
             empty list:</para>
@@ -291,6 +291,14 @@ bigram xs = take 2 xs : bigram (tail xs)</programlisting>
             <screen>Prelude> <userinput>bigram []</userinput>
 []</screen>
         </para>
+        <para>If you want to get really fancy, you could also use pattern matching to extract a
+            bigram, rather than using
+            <function>take</function>:<programlisting>bigram' :: [a] -> [[a]]
+bigram' (x:y:xs) = [x,y] : bigram xs
+bigram' _        = []</programlisting></para>
+        <para>Now, we only need to account for two patterns: the first pattern matches when the list
+            has at least two elements. The second pattern matches the empty list and the list
+            containing just one element.</para>
         <para>Good, we are all set! We have our bigram function now... time for some applications of
             a bigram language model!</para>
     </sect1>
@@ -420,7 +428,7 @@ Just 392</screen></para>
         <para>Stub</para>
         <para>
             <programlisting>ngrams :: Int -> [a] -> [[a]]
-ngrams 0 _ = []
+ngrams 0 _  = []
 ngrams _ [] = []
 ngrams n xs
     | length xs >= n = take n xs : ngrams n (tail xs)
