@@ -423,7 +423,7 @@ bigram' _        = []</programlisting></para>
 Just 392</screen></para>
         <para>Todo: finish this section</para>
     </sect1>
-    <sect1>
+    <sect1 xml:id="chap-ngrams-ngrams">
         <title>From bigrams to n-grams</title>
         <para>While extracting collocations from the Brown corpus, we have seen how useful bigrams
             actually are. But at this point you may be clamoring for the extraction of collocations
@@ -526,7 +526,7 @@ ngrams' n = filter ((==) n . length) . map (take n) . tails</programlisting></pa
             familiar with Haskell, it will become easier to spot such patterns in functions.</para>
         <para>Tbd: ngrams using the list monad.</para>
     </sect1>
-    <sect1>
+    <sect1 xml:id="chap-ngrams-lazy-strict">
         <title>Lazy and strict evaluation</title>
         <para>You may have noticed that something curious goes on in Haskell. For instance, consider
             the following GHCi
@@ -556,8 +556,7 @@ Prelude> <userinput>take 3 $ infinite 0</userinput>
                 <function>infinite 4</function>. Since <function>take</function> does not need more
             elements, the tail is never evaluated. Lazy evaluation allows you to do clever tricks,
             such as defining infinite lists. The downside is that it is often hard to predict when
-            an expression is evaluated, and what effect that has on performance of a
-            program.</para>
+            an expression is evaluated, and what effect that has on performance of a program.</para>
         <para><emphasis role="italic">Todo: lazy evaluation and folds.</emphasis></para>
     </sect1>
     <sect1 xml:id="chap-ngrams-suffixarrays">
@@ -1055,7 +1054,7 @@ Nothing</screen></para>
             </para>
         </sect2>
     </sect1>
-    <sect1>
+    <sect1 xml:id="chap-ngrams-markov-models">
         <title>Markov models</title>
         <para>Stub.</para>
     </sect1>
