@@ -301,6 +301,24 @@ bigram' _        = []</programlisting></para>
             containing just one element.</para>
         <para>Good, we are all set! We have our bigram function now... time for some applications of
             a bigram language model!</para>
+        <sect2>
+            <title xml:id="chap-ngrams-bigrams-exercises">Exercises</title>
+            <orderedlist>
+                <listitem>
+                    <para>A skip-bigram is any pair of words in sentence order. Write a function
+                            <function>skipBigrams</function> that extracts skip-bigrams from a
+                        sentence as a list of binary tuples, using explicit recursion. Running your
+                        function on <emphasis>["Colorless", "green", "ideas", "sleep",
+                            "furiously"]</emphasis> should give the following
+                        output:<screen>Prelude> skipBigrams ["Colorless", "green", "ideas", "sleep", "furiously"]
+[("Colorless","green"),("Colorless","ideas"),("Colorless","sleep"),
+("Colorless","furiously"),("green","ideas"),("green","sleep"),
+("green","furiously"),("ideas","sleep"),("ideas","furiously"),
+("sleep","furiously")]</screen>
+                    </para>
+                </listitem>
+            </orderedlist>
+        </sect2>
     </sect1>
     <sect1 xml:id="chap-ngrams-pattern-matching">
         <title>A few words on Pattern Matching</title>
@@ -670,6 +688,17 @@ ngrams'' n l = do
                 to implement a function. In practice you will want to pick a declaration that is
                 readable and performant. In this case, we think that the declarative definition of
                     <function>ngrams</function> is the most preferable.</para>
+        </sect2>
+        <sect2>
+            <title>Exercises</title>
+            <orderedlist>
+                <listitem>
+                    <para>Rewrite the <function>skipBigram</function> function discussed in <xref
+                            linkend="chap-ngrams-bigrams-exercises"/> without explicit recursion,
+                        either by defining it more declaratively or using the list monad. Hint: make
+                        use of the <function>Data.List.zip</function> function.</para>
+                </listitem>
+            </orderedlist>
         </sect2>
     </sect1>
     <sect1 xml:id="chap-ngrams-lazy-strict">
