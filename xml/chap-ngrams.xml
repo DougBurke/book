@@ -533,7 +533,132 @@ ngrams' n = filter ((==) n . length) . map (take n) . tails</programlisting></pa
         </sect2>
         <sect2>
             <title>A monadic definition of ngrams</title>
-            <para>Tbd: ngrams using the list monad.</para>
+            <para>As discussed in the previous chapter, each type that belongs to the
+                    <classname>Monad</classname> typeclass provides the <function>(>>=)</function>
+                function to combine expressions resulting in that type. The list type also belongs
+                to the monad type class. In GHCi, you can use the <command>:info</command> command
+                to list the type classes to which a type
+                belongs:<screen>Prelude> <userinput>:i []</userinput>
+data [] a = [] | a : [a] 	-- Defined in GHC.Types
+instance Eq a => Eq [a] -- Defined in GHC.Classes
+instance Monad [] -- Defined in GHC.Base
+instance Functor [] -- Defined in GHC.Base
+instance Ord a => Ord [a] -- Defined in GHC.Classes
+instance Read a => Read [a] -- Defined in GHC.Read
+instance Show a => Show [a] -- Defined in GHC.Show</screen></para>
+            <para>The third line of the output shows that lists belong to the
+                    <classname>Monad</classname> type class. But how does the
+                    <function>(>>=)</function> function combine expressions resulting in a list? A
+                quick peek at the definition its implementation for the list type reveals
+                this:<programlisting>instance Monad [] where
+  m >>= k = foldr ((++) . k) [] m
+  [...]</programlisting></para>
+            <para>So, the join operation takes a list <emphasis>m</emphasis>, applies a function
+                    <function>k</function> to each element and concatenates the results. Of course,
+                this concatenation implies that <function>k</function> itself should evaluate to a
+                list, making its type signature <function>k :: a -> [a]</function>.</para>
+            <para>We will illustrate this with an example. Suppose that we would want to calculate
+                the immediate predecessor and successor of every number in the list
+                    <emphasis>[0..9]</emphasis>. In this case, we could use the function
+                    <function>\x -> [x-1,x+1]</function> in the list
+                monad:<screen>Prelude> <userinput>:{
+do
+  l  &lt;- [0..9]
+  ps &lt;-  (\x -> [x-1,x+2]) l
+  return ps
+:}</userinput>
+[-1,2,0,3,1,4,2,5,3,6,4,7,5,8,6,9,7,10,8,11]
+</screen></para>
+            <para>We first bind the list to <emphasis>l</emphasis>, we then apply our function to
+                    <emphasis>l</emphasis>. Since we are using this function in the context of the
+                list monad, the function <function>(\x -> [x-1,x+1])</function> we be applied to
+                every member of <emphasis>l</emphasis>. The results of every call to this function
+                will be concatenated.</para>
+            <para>Before we move on to the extraction of n-grams, we want to show a calculation in
+                the list monad,that may surprise you at first
+                sight:<screen>Prelude> <userinput>:{
+do
+  l &lt;- [0..9]
+  m &lt;- [42,11]
+  return m
+:}</userinput>
+[42,11,42,11,42,11,42,11,42,11,42,11,42,11,42,11,42,11,42,11]</screen></para>
+            <para>Since <emphasis>[42,11]</emphasis> in <emphasis>m &lt;- [42,11]</emphasis> does
+                not use an argument, its corresponding function is <function>\_ ->
+                    [42,11]</function>. Since <function>foldr</function> still traverses the list
+                bound to <emphasis>l</emphasis>, the monadic computation is equal
+                to:<screen>Prelude> <userinput>foldr ((++) . (\_ -> [42,11])) [] [0..9]</userinput>
+[42,11,42,11,42,11,42,11,42,11,42,11,42,11,42,11,42,11,42,11]</screen></para>
+            <para>Back to ngrams. Given a list of tails, we could extract the first two words of
+                each tail using
+                <function>take</function>:<screen>Prelude> <userinput>import Data.List</userinput>
+Prelude Data.List> <userinput>let sent = ["Colorless", "green", "ideas", "sleep", "furiously"]</userinput>
+Prelude Data.List> <userinput>:{
+do
+  t &lt;- tails sent
+  l &lt;- take 2 t
+  return l
+:}</userinput>
+["Colorless","green","green","ideas","ideas","sleep","sleep","furiously","furiously"]</screen></para>
+            <para>That's close. However, since the list monad concatenates the results of every
+                    <emphasis>take 2 t</emphasis> expression, we cannot directly identify the
+                n-grams anymore. Of course, this is easily remedied by wrapping the result of this
+                expression in a
+                list:<screen>Prelude Data.List><userinput> :{
+do
+  t &lt;- tails sent
+  l &lt;- [take 2 t]
+  return l
+:}</userinput>
+[["Colorless","green"],["green","ideas"],["ideas","sleep"],["sleep","furiously"],["furiously"],[]]</screen></para>
+            <para>This is a familiar problem by now: we have to exclude lists that do not have the
+                requested number of elements. We could, as in the previous section, filter out these
+                instances using
+                <function>filter</function>:<screen>Prelude Data.List> <userinput>:{
+filter ((==) 2 . length) $ do
+  t &lt;- tails sent
+  l &lt;- [take 2 t]
+  return l
+:}</userinput>
+[["Colorless","green"],["green","ideas"],["ideas","sleep"],["sleep","furiously"]]</screen></para>
+            <para>But that would not be a very monadic way to perform this task, would it? It would
+                be nice if we could just choose elements to our liking. Such a (monadic) choice
+                function exists, namely
+                <function>Control.Monad.guard</function>:<screen>Prelude Data.List> <userinput>import Control.Monad</userinput>
+Prelude Data.List Control.Monad> <userinput>:type guard</userinput>
+guard :: MonadPlus m => Bool -> m ()</screen></para>
+            <para><function>guard</function> is a function that takes a boolean, and returns
+                something that is a <classname>MonadPlus</classname>. Whoa! For now, accept that the
+                list type belongs to the <classname>MonadPlus</classname> type class (after
+                importing <emphasis>Control.Monad</emphasis>) And do a behavioral study of
+                    <function>guard</function>:<screen>Prelude Data.List Control.Monad> <userinput>:{
+do
+  l &lt;- [0..9]
+  guard (even l)
+  return l
+:}</userinput>
+[0,2,4,6,8]</screen></para>
+            <para>Funky huh? We used <function>guard</function> to enumerate just those numbers from
+                    <emphasis>[0..9]</emphasis> that are even. Of course, we could as well use
+                    <function>guard</function> in our bigram extraction to filter lists that are not
+                of a certain
+                length:<screen>Prelude Data.List Control.Monad> <userinput>:{
+do
+  t &lt;- tails sent
+  l &lt;- [take 2 t]
+  guard (length l == 2)
+  return l
+:}</userinput>
+[["Colorless","green"],["green","ideas"],["ideas","sleep"],["sleep","furiously"]]</screen></para>
+            <para>Ain't that beautiful? We applied a guard to pick just those elements that are of
+                length <emphasis>2</emphasis>, or as you might as well say, we put a constraint on
+                the list. Transforming this to a full-blown function is now
+                easy:<programlisting>ngrams'' :: Int -> [a] -> [[a]]
+ngrams'' n l = do
+  t &lt;- tails l
+  l &lt;- [take n t]
+  guard (length l == n)
+  return l </programlisting></para>
         </sect2>
     </sect1>
     <sect1 xml:id="chap-ngrams-lazy-strict">
