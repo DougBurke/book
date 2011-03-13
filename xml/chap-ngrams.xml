@@ -234,7 +234,7 @@ bigram [1,2,3,4] = [1,2] : [2,3] : [3,4] : []
             works, it is aesthetically unpleasing. That is, we used an if..then..else structure to
             define our stop condition, but Haskell provides a more elegant way to do this through
             so-called <emphasis role="italic">pattern matching</emphasis>. Pattern matching can be
-            though of as defining multiple definition of the same functions, each tailored and honed
+            thought of as defining multiple definition of the same functions, each tailored and honed
             for a specific argument pattern. Provided an argument, Haskell will then pick the first
             matching definition of a function, and return the result its application. Hence, we can
             define patterns for the stop condition and recursive step as follows:</para>
