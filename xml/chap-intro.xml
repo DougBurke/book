@@ -115,12 +115,12 @@
             UNIX systems, type <command>ghci -XNoMonomorphismRestriction</command> in a terminal to
             launch the interpreter. You will be greeted with a prompt that resembles the
             following:<screen>$ <userinput>ghci -XNoMonomorphismRestriction</userinput>
-GHCi, version 6.12.3: http://www.haskell.org/ghc/  :? for help
+GHCi, version 7.0.2: http://www.haskell.org/ghc/  :? for help
 Loading package ghc-prim ... linking ... done.
 Loading package integer-gmp ... linking ... done.
 Loading package base ... linking ... done.
 Loading package ffi-1.0 ... linking ... done.
-Prelude></screen>
+Prelude> </screen>
             On Windows, choose <emphasis role="italic">Start -> All Programs -> Haskell Platform ->
                 WinGHCi</emphasis>. The first time, you should set the <emphasis role="italic"
                 >NoMonomorphismRestriction</emphasis> option that is required for some examples. Do
