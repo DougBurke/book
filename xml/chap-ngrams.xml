@@ -425,7 +425,13 @@ Just 392</screen></para>
     </sect1>
     <sect1>
         <title>From bigrams to n-grams</title>
-        <para>Stub</para>
+        <para>While extracting collocations from the Brown corpus, we have seen how useful bigrams
+            actually are. But at this point you may be clamoring for the extraction of collocations
+            of three or more words. For this and many other tasks, it is useful to extract so-called
+                <emphasis role="italic">n-grams</emphasis> for an arbitrary <emphasis role="italic"
+                >n</emphasis>. We can easily modify our definition of bigrams to extract n-grams a
+            specified length. Rather than always <function>take</function>ing two elements, we make
+            the number of items to take an argument to the function: </para>
         <para>
             <programlisting>ngrams :: Int -> [a] -> [[a]]
 ngrams 0 _  = []
@@ -434,6 +440,91 @@ ngrams n xs
     | length xs >= n = take n xs : ngrams n (tail xs)
     | otherwise      = []</programlisting>
         </para>
+        <para>And this function works as you would expect:</para>
+        <para>Since this is barely worth a section, we will take this opportunity to show two other
+            implementations of the <function>ngrams</function> function. The first will be more
+            declarative than the definition above, the second will make use of a monad that we have
+            not used yet: the list monad.</para>
+        <para>In the recursive definition of <function>ngrams</function> we can clearly detect some
+            patterns that compare to other functions:<orderedlist>
+                <listitem>
+                    <para>Every recursive call uses the tail of the list. In other words, we
+                        enumerate every tail of the list, including the complete list. This is
+                        exactly the functionality that the <function>Data.List.tails</function>
+                        function provides.</para>
+                </listitem>
+                <listitem>
+                    <para>We extract the first <emphasis>n</emphasis> elements from every tail. This
+                        is a mapping over the data that could be performed with the
+                            <function>map</function> function.</para>
+                </listitem>
+                <listitem>
+                    <para>The guards in the recursive case amount to filtering elements that do not
+                        have length <emphasis>n</emphasis>.</para>
+                </listitem>
+            </orderedlist></para>
+        <para>Let's go through each of these patterns to compose a declarative definition of
+                <function>ngrams</function>. First, we extract all the tails from the list, using
+            the <function>tails</function>
+            function:<screen>Prelude> <userinput>import Data.List</userinput>
+Prelude Data.List> <userinput>let sent = ["Colorless", "green", "ideas", "sleep", "furiously"]</userinput>
+Prelude Data.List> <userinput>tails sent</userinput>
+[["Colorless","green","ideas","sleep","furiously"],
+["green","ideas","sleep","furiously"],["ideas","sleep","furiously"],
+["sleep","furiously"],["furiously"],[]]</screen></para>
+        <para>Alright, we get a list of tails, including the complete sentence. Now, we
+                <function>map</function>
+            <function>take</function> over each element of this list. Since
+                <function>take</function> requires two arguments, we use currying to bind the first
+            argument. For now, we will extract bigrams, and use <function>take
+            2</function>:<screen>Prelude Data.List> <userinput>map (take 2) $ tails sent</userinput>
+[["Colorless","green"],["green","ideas"],["ideas","sleep"],["sleep","furiously"],["furiously"],[]]</screen></para>
+        <para>That comes close to a list of bigrams, except that we have an empty list and a list
+            with just one argument dangling at the end. These anomalies are perfect candidates to be
+            filtered out, so we use the <function>filter</function> function in conjunction with the
+                <function>length</function> function to exclude any element that is not of the given
+            length. Bear with us, since we are going to apply some currying awesomeness. Remember
+            that we can convert infix operators to prefix operators by adding
+            parentheses:<screen>Prelude> <userinput>(==) 2 2</userinput>
+True
+Prelude> <userinput>(==) 2 3</userinput>
+False</screen></para>
+        <para>This shows that <function>==</function> is just an ordinary function, that happens to
+            use infix notation for convenience. Since this is an ordinary function, we can also
+            apply
+            currying:<screen>Prelude> <userinput>let isTwo = (==) 2</userinput>
+Prelude> <userinput>isTwo 2</userinput>
+True
+Prelude> <userinput>isTwo 3</userinput>
+False</screen></para>
+        <para>Ok, so we want to check whether a list has two arguments, so we could just apply
+                <function>isTwo</function> to the result of the <function>length</function>
+            function:<screen>Prelude Data.List> <userinput>isTwo (length ["Colorless","green"])</userinput>
+True
+Prelude Data.List> <userinput>isTwo (length [])</userinput>
+False</screen></para>
+        <para>We can rewrite this to a function as
+            well:<programlisting>hasLengthTwo l = isTwo (length l)</programlisting></para>
+        <para>Since this function follows the canonical form <emphasis>f (g x)</emphasis>, we can
+            use function
+            composition:<screen>Prelude Data.List> <userinput>let hasLengthTwo = isTwo . length</userinput>
+Prelude Data.List> <userinput>hasLengthTwo ["Colorless","green"]</userinput>
+True</screen></para>
+        <para>Our filtering function turns, <emphasis>(==) 2 . genericLength</emphasis>, turns out
+            to be quite compact. Time to test this with our not-yet-correct list of
+            bigrams:<screen>Prelude Data.List> <userinput>filter ((==) 2 . genericLength) $ map (take 2) $ tails sent</userinput>
+[["Colorless","green"],["green","ideas"],["ideas","sleep"],["sleep","furiously"]]</screen></para>
+        <para>And this corresponds to the output we expected. So, we can now wrap this up in a nice
+            function, replacing <emphasis>2</emphasis> by
+            <emphasis>n</emphasis>:<programlisting>ngrams' :: Int -> [b] -> [[b]]
+ngrams' n = filter ((==) n . length) . map (take n) . tails</programlisting></para>
+        <para>This function is equivalent to <function>ngrams</function> for all given lists. You
+            may wonder why we went through this exercise. The reason is that the declerativeness of
+                <function>ngrams'</function> makes the function much easier to read. We can almost
+            immediately see what this function does by reading its body right-to-left, while the
+            recursive definition requires more analysis. You will notice that, as you get more
+            familiar with Haskell, it will become easier to spot such patterns in functions.</para>
+        <para>Tbd: ngrams using the list monad.</para>
     </sect1>
     <sect1>
         <title>Lazy and strict evaluation</title>
