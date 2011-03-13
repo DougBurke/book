@@ -465,7 +465,7 @@ Prelude> <userinput>take 3 $ infinite 0</userinput>
                 <function>infinite 4</function>. Since <function>take</function> does not need more
             elements, the tail is never evaluated. Lazy evaluation allows you to do clever tricks,
             such as defining infinite lists. The downside is that it is often hard to predict when
-            an expression is evaluated, and what application that has on performance of a
+            an expression is evaluated, and what effect that has on performance of a
             program.</para>
         <para><emphasis role="italic">Todo: lazy evaluation and folds.</emphasis></para>
     </sect1>
