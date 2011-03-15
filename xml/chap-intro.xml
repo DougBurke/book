@@ -102,7 +102,8 @@
         <para>For the text editor, pick any editor you find comfortable, as long as it saves files
             as plain text. Programming Haskell becomes more comfortable if you have an editor with
             syntax highlighting and interpreter integration. Your authors prefer the Emacs editor
-            with haskell-mode. haskell-mode provides good support for highlighting, and Haskell code
+            with <emphasis role="italic">haskell-mode</emphasis>. <emphasis role="italic"
+                >haskell-mode</emphasis> provides good support for highlighting, and Haskell code
             formatting. Besides that, Emacs allows you to run the <command>ghci</command> Haskell
             interpreter within the editor.</para>
         <para>Some examples in the book use corpora. These corpora are available at: <link
