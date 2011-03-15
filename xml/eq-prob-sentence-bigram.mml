@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+    <mrow>
+        <mi>p(</mi>
+        <msub>
+            <mi>w</mi>
+            <mrow>
+                <mi>0</mi>
+                <mo>..</mo>
+                <mi>n</mi>
+            </mrow>
+        </msub>
+        <mi>)</mi>
+        <mo>=</mo>
+        <mrow>
+            <munderover>
+                <mo>&#x220F;</mo>
+                <mrow>
+                    <mi>i</mi>
+                    <mo>=</mo>
+                    <mi>0</mi>
+                </mrow>
+                <mi>n</mi>
+            </munderover>
+        </mrow>
+        <mrow>
+            <mi>p</mi>
+            <mo>(</mo>
+            <msub>
+                <mi>w</mi>
+                <mi>n</mi>
+            </msub>
+            <mo>|</mo>
+            <msub>
+                <mi>w</mi>
+                <mrow>
+                    <mi>n</mi>
+                    <mo>-</mo>
+                    <mi>1</mi>
+                </mrow>
+            </msub>
+            <mo>)</mo>
+        </mrow>
+    </mrow>    
+</math>

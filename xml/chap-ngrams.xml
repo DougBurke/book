@@ -1261,7 +1261,7 @@ Nothing</screen></para>
             grammatical or more fluent. So, how do we estimate the probability of such a sentence?
             Good question, at first sight it seems pretty easy. We simply count how often a sentence
             occurs in a text corpus, and divide it by the total number of sentences in a corpus:<equation>
-                <title>Estimating the probability of a sentence.</title>
+                <title>Estimating the probability of a sentence</title>
                 <xi:include href="eq-prob-sentence.mml"/>
             </equation></para>
         <para>Here <emphasis>C</emphasis> is a counter function, and <emphasis>N</emphasis> is the
@@ -1278,8 +1278,8 @@ Nothing</screen></para>
             to the solution, we have to make an intermediate step. This intermediate step does not
             immediately solve our problem, but sets the stage for the solution. We can decompose the
             probability of a sentence <emphasis>p(w<subscript>0..n</subscript>)</emphasis> into a
-            series of conditional probabilities (a so-called <emphasis>Markov chain</emphasis>):<equation>
-                <title>The probability of a sentence as a Markov chain.</title>
+            series of conditional probabilities:<equation>
+                <title>The probability of a sentence as a Markov chain</title>
                 <xi:include href="eq-prob-markov-chain.mml"/>
             </equation></para>
         <para>Before this gets too confusing, let's write down how you would estimate the
@@ -1297,6 +1297,29 @@ Nothing</screen></para>
                 sleep</emphasis> and <emphasis>Colorless green ideas sleep furiously</emphasis>.
             Even if we decompose the probability of a sentence into conditional probabilities, we
             need counts for the complete sentence.</para>
-        <para><emphasis role="italic">Todo: Markov assumption</emphasis></para>
+        <para>However, if we look at the conditional probability of a word, the following often
+            holds:<equation>
+                <title>Approximation using the Markov assumption</title>
+                <xi:include href="eq-prob-chain-approximation.mml"/>
+            </equation></para>
+        <para>More formally, this is a process with the <emphasis>Markov property</emphasis>:
+            prediction of the next <emphasis role="italic">state</emphasis> (word) is only dependent
+            on the current state. Of course, we can easily calculate our revised conditional
+            probability:<equation>
+                <title>The conditional probability of a word using the Markov assumption</title>
+                <xi:include href="eq-prob-bigram-conditional.mml"/>
+            </equation></para>
+        <para>That spell worked! We only need counts of... unigrams (1-grams) and bigrams to
+            estimate the conditional probability of each word. This is a <emphasis>bigram language
+                model</emphasis>, which we can use to estimate to probability of a
+            sentence:<equation>
+                <title>The probability of a sentence using a bigram model</title>
+                <xi:include href="eq-prob-sentence-bigram.mml"/>
+            </equation></para>
+        <para>In practice it turns out that knowledge of previous states can help a bit in
+            estimating the conditional probability of a word. However, if we increase the context
+            too much, we run into the same data sparseness problems that we solved by drastically
+            cutting the context. The consensus is that for most applications a trigram language
+            model provides a good trade-off between data availability and estimator quality.</para>
     </sect1>
 </chapter>

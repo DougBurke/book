@@ -509,10 +509,13 @@
         <file name="xml/eq-empirical-value.mml"/>
         <file name="xml/eq-expected-value.mml"/>
         <file name="xml/eq-maxent-constraint.mml"/>
+        <file name="xml/eq-prob-bigram-conditional.mml"/>
+        <file name="xml/eq-prob-chain-approximation.mml"/>
         <file name="xml/eq-prob-chain-conditional.mml"/>
         <file name="xml/eq-prob-markov-chain.mml"/>
         <file name="xml/eq-prob-phrases.mml"/>
         <file name="xml/eq-prob-sentence.mml"/>
+        <file name="xml/eq-prob-sentence-bigram.mml"/>
         <file name="xml/eq-prob-sentences.mml"/>
         <file name="xml/eq-tbl-rule-score.mml"/>
         <file name="xml/eq-tt-ratio.mml"/>
