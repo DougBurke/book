@@ -234,10 +234,10 @@ bigram [1,2,3,4] = [1,2] : [2,3] : [3,4] : []
             works, it is aesthetically unpleasing. That is, we used an if..then..else structure to
             define our stop condition, but Haskell provides a more elegant way to do this through
             so-called <emphasis role="italic">pattern matching</emphasis>. Pattern matching can be
-            thought of as defining multiple definition of the same functions, each tailored and honed
-            for a specific argument pattern. Provided an argument, Haskell will then pick the first
-            matching definition of a function, and return the result its application. Hence, we can
-            define patterns for the stop condition and recursive step as follows:</para>
+            thought of as defining multiple definition of the same functions, each tailored and
+            honed for a specific argument pattern. Provided an argument, Haskell will then pick the
+            first matching definition of a function, and return the result its application. Hence,
+            we can define patterns for the stop condition and recursive step as follows:</para>
         <programlisting>bigram :: [a] -> [[a]]
 bigram [x] = []
 bigram xs  = take 2 xs : bigram (tail xs)</programlisting>
@@ -896,7 +896,7 @@ Data.List.sortBy :: (a -> a -> Ordering) -> [a] -> [a]</screen></para>
 suffixArray = suffixArrayBy compare</programlisting>
         <para>Neat! But as you have noticed by now, every serious data type has
                 <function>fromList</function> and <function>toList</function> functions, so ours
-            should have those as well. <function>fromList</function> is really simple;  we can
+            should have those as well. <function>fromList</function> is really simple; we can
             already construct a suffix array from a <type>Vector</type> using the
                 <function>suffixArray</function> function. So, we just need to convert a list to a
                 <type>Vector</type>, and pass it to
@@ -1231,6 +1231,72 @@ Nothing</screen></para>
     </sect1>
     <sect1 xml:id="chap-ngrams-markov-models">
         <title>Markov models</title>
-        <para>Stub.</para>
+        <para>At the beginning of this chapter we mentioned that n-grams can be exploited to model
+            language. While they may not be so apt as computational grammars, n-grams do encode some
+            syntax albeit local. For instance, consider the following to phrases:<itemizedlist>
+                <listitem>
+                    <para>the plan was</para>
+                </listitem>
+                <listitem>
+                    <para>* plan the was</para>
+                </listitem>
+            </itemizedlist></para>
+        <para>The first phrase is clearly grammatical, while the second is not. We could neatly
+            encode this using a syntax rule, but we could also count how often both combinations of
+            words occur in a large text corpus. The first phrase is likely to occur a few times,
+            while the second phrase is not likely to occur. Or more formally, the probability that
+            we encounter <emphasis>this plan was</emphasis> occurs in a random text is higher than
+            the probability that <emphasis>plan this was</emphasis> occurs:<equation>
+                <xi:include href="eq-prob-phrases.mml"/>
+            </equation></para>
+        <para>Of course, we could also try to find the most grammatical of two sentences by
+            comparing the probabilities of the sentences. So, if we have a sentence consisting of
+            the words w<subscript>0..n</subscript> and a sentence consisting of the words
+                v<subscript>0..m</subscript> that both aim to express the same meaning and the
+            following is true:<equation>
+                <xi:include href="eq-prob-sentences.mml"/>
+            </equation></para>
+        <para>We could conclude that the use of w<subscript>0..n</subscript> is preferred over
+                v<subscript>0..m</subscript>, since w<subscript>0..n</subscript> is either more
+            grammatical or more fluent. So, how do we estimate the probability of such a sentence?
+            Good question, at first sight it seems pretty easy. We simply count how often a sentence
+            occurs in a text corpus, and divide it by the total number of sentences in a corpus:<equation>
+                <title>Estimating the probability of a sentence.</title>
+                <xi:include href="eq-prob-sentence.mml"/>
+            </equation></para>
+        <para>Here <emphasis>C</emphasis> is a counter function, and <emphasis>N</emphasis> is the
+            total number of sentences in a corpus. While this is a theoretically sound method for
+            estimating the probability, it does not work in practice. As ingenious as human language
+            is, we can construct an infinite number of grammatical sentences. So, to be able to
+            estimate the probability we would need an infinite text corpus, since not every
+            grammatical sentence will occur in a finite corpus. Given that we only have a finite
+            text corpus, we would simply give a probability of zero to many perfectly grammatical
+            sentences. We encounter so-called <emphasis>data sparseness</emphasis>. This is nasty,
+            because it interferes with our goal to compare the quality of sentences.</para>
+        <para>Fortunately for us, some smart people have thought about this problem, and came up
+            with a pretty elegant solution (or `workaround' as we programmers like call it). To get
+            to the solution, we have to make an intermediate step. This intermediate step does not
+            immediately solve our problem, but sets the stage for the solution. We can decompose the
+            probability of a sentence <emphasis>p(w<subscript>0..n</subscript>)</emphasis> into a
+            series of conditional probabilities (a so-called <emphasis>Markov chain</emphasis>):<equation>
+                <title>The probability of a sentence as a Markov chain.</title>
+                <xi:include href="eq-prob-markov-chain.mml"/>
+            </equation></para>
+        <para>Before this gets too confusing, let's write down how you would estimate the
+            probability of the sentence <emphasis>Colorless green ideas sleep furiously</emphasis>
+            in this manner: <emphasis>p(Colorless) p(green|Colorless) p(ideas|Colorless green)
+                p(sleep|Colorless green ideas) p(furiously|Colorless green ideas
+            sleep)</emphasis>.</para>
+        <para>Simple huh? Now, how do we estimate such a conditional probability? Formally, this is
+            estimated in the following manner:<equation>
+                <xi:include href="eq-prob-chain-conditional.mml"/>
+            </equation></para>
+        <para>That is all nice and dandy, but as you may already see, this does not solve our
+            problem with data sparseness. For if we want to estimate <emphasis>p(furiously|Colorless
+                green ideas sleep)</emphasis>, we need counts of <emphasis>Colorless green ideas
+                sleep</emphasis> and <emphasis>Colorless green ideas sleep furiously</emphasis>.
+            Even if we decompose the probability of a sentence into conditional probabilities, we
+            need counts for the complete sentence.</para>
+        <para><emphasis role="italic">Todo: Markov assumption</emphasis></para>
     </sect1>
 </chapter>

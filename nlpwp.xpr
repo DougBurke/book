@@ -28,29 +28,18 @@
                                     <String xml:space="preserve">XSL</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">xml/chap-tagging.xml</String>
+                                    <String xml:space="preserve">xsl/fo.xsl</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="name">
-                                    <String xml:space="preserve">docbook/docbook5.framework/DocBook 5/Docbook XHTML</String>
+                                    <String xml:space="preserve">NLPWP PDF</String>
                                 </field>
                                 <field name="type">
                                     <String xml:space="preserve">XSL</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">xsl/untitled.xml</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">docbook/docbook5.framework/DocBook 5/Docbook PDF</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XSL</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">chap-words.xml</String>
+                                    <String xml:space="preserve">xml/chap-intro.xml</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -61,7 +50,7 @@
                                     <String xml:space="preserve">XSL</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">xsl/html-chunk.xsl</String>
+                                    <String xml:space="preserve">xml/nlpwp.xml</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -83,7 +72,29 @@
                                     <String xml:space="preserve">XSL</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">xml/nlpwp.xml</String>
+                                    <String xml:space="preserve">xsl/html-chunk.xsl</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">docbook/docbook5.framework/DocBook 5/Docbook PDF</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XSL</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">chap-words.xml</String>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="name">
+                                    <String xml:space="preserve">docbook/docbook5.framework/DocBook 5/Docbook XHTML</String>
+                                </field>
+                                <field name="type">
+                                    <String xml:space="preserve">XSL</String>
+                                </field>
+                                <field name="url">
+                                    <String xml:space="preserve">xsl/untitled.xml</String>
                                 </field>
                             </scenarioAssociation>
                             <scenarioAssociation>
@@ -94,18 +105,7 @@
                                     <String xml:space="preserve">XSL</String>
                                 </field>
                                 <field name="url">
-                                    <String xml:space="preserve">xml/chap-intro.xml</String>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="name">
-                                    <String xml:space="preserve">NLPWP PDF</String>
-                                </field>
-                                <field name="type">
-                                    <String xml:space="preserve">XSL</String>
-                                </field>
-                                <field name="url">
-                                    <String xml:space="preserve">xsl/fo.xsl</String>
+                                    <String xml:space="preserve">xml/chap-tagging.xml</String>
                                 </field>
                             </scenarioAssociation>
                         </scenarioAssociation-array>
@@ -509,6 +509,11 @@
         <file name="xml/eq-empirical-value.mml"/>
         <file name="xml/eq-expected-value.mml"/>
         <file name="xml/eq-maxent-constraint.mml"/>
+        <file name="xml/eq-prob-chain-conditional.mml"/>
+        <file name="xml/eq-prob-markov-chain.mml"/>
+        <file name="xml/eq-prob-phrases.mml"/>
+        <file name="xml/eq-prob-sentence.mml"/>
+        <file name="xml/eq-prob-sentences.mml"/>
         <file name="xml/eq-tbl-rule-score.mml"/>
         <file name="xml/eq-tt-ratio.mml"/>
         <file name="xsl/fo.xsl"/>
