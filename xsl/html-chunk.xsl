@@ -33,7 +33,7 @@
     <!-- Add 'head' elements. -->
     <xsl:template name="user.head.content">
         <xsl:if test="$nlpwpWebsite = 1">
-            <script type="text/javascript" src="/MathJax/MathJax.js"/>
+            <script type="text/javascript" src="/MathJax/MathJax.js?config=default"/>
         </xsl:if>
     </xsl:template>
     
