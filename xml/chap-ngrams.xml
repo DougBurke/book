@@ -1321,5 +1321,73 @@ Nothing</screen></para>
             too much, we run into the same data sparseness problems that we solved by drastically
             cutting the context. The consensus is that for most applications a trigram language
             model provides a good trade-off between data availability and estimator quality.</para>
+        <sect2>
+            <title>Implementation</title>
+            <para>The implementation of a bigram Markov model in Haskell should now be trivial. If
+                we have a frequency map of unigrams and bigrams of the type <type>(Ord a, Integral
+                    n) => Map [a] n</type>, we could write a function that calculates <inlineequation>
+                    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                        <mrow>
+                            <mi>p</mi>
+                            <mo>(</mo>
+                            <msub>
+                                <mi>w</mi>
+                                <mi>n</mi>
+                            </msub>
+                            <mo>|</mo>
+                            <msub>
+                                <mi>w</mi>
+                                <mrow>
+                                    <mi>n</mi>
+                                    <mo>-</mo>
+                                    <mi>1</mi>
+                                </mrow>
+                            </msub>
+                            <mo>)</mo>
+                        </mrow>
+                    </math>
+                </inlineequation>, or more generally <inlineequation>
+                    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                        <mrow>
+                            <mi>p</mi>
+                            <mo>(</mo>
+                            <msub>
+                                <mi>state</mi>
+                                <mi>n</mi>
+                            </msub>
+                            <mo>|</mo>
+                            <msub>
+                                <mi>state</mi>
+                                <mrow>
+                                    <mi>n</mi>
+                                    <mo>-</mo>
+                                    <mi>1</mi>
+                                </mrow>
+                            </msub>
+                            <mo>)</mo>
+                        </mrow>
+                    </math>
+                </inlineequation>:<programlisting>import qualified Data.Map as M
+import Data.Maybe (fromMaybe)
+
+pTransition :: (Ord a, Integral n, Fractional f) =>
+  M.Map [a] n -> a -> a -> f
+pTransition ngramFreqs state nextState = fromMaybe 0.0 $ do
+  stateFreq &lt;- M.lookup [state] ngramFreqs
+  transFreq &lt;- M.lookup [state, nextState] ngramFreqs
+  return $ (fromIntegral transFreq) / (fromIntegral stateFreq)</programlisting></para>
+            <para>Now we write a function that extracts all bigrams, calculates the transition
+                probabilities and takes the product of the transition
+                probabilities:<programlisting>pMarkov :: (Ord a, Integral n, Fractional f) =>
+  M.Map [a] n -> [a] -> f
+pMarkov ngramFreqs =
+  product . map (\[s1,s2] -> pTransition ngramFreqs s1 s2) . ngrams 2</programlisting></para>
+            <para>This function is straightforward, except perhaps the <function>product</function>
+                function. <function>product</function> calculates the product of a
+                list:<screen>Prelude> <userinput>:type product</userinput>
+product :: Num a => [a] -> a
+Prelude> <userinput>product [1,2,3]</userinput>
+6</screen></para>
+        </sect2>
     </sect1>
 </chapter>
