@@ -900,8 +900,8 @@ suffixArray = suffixArrayBy compare</programlisting>
             already construct a suffix array from a <type>Vector</type> using the
                 <function>suffixArray</function> function. So, we just need to convert a list to a
                 <type>Vector</type>, and pass it to
-            <function>suffixArray</function>:<screen>fromList :: Ord a => [a] -> SuffixArray a
-fromList = suffixArray . V.fromList</screen></para>
+            <function>suffixArray</function>:<programlisting>fromList :: Ord a => [a] -> SuffixArray a
+fromList = suffixArray . V.fromList</programlisting></para>
         <para>Easy huh? The <function>toList</function> is a bit more involved. First we have to
             decide what it should actually return. Providing the data vector as a list is not very
             useful, it's probably what someone started with. Returning a list of indices is more
@@ -1016,7 +1016,7 @@ Data.Vector.map :: (a -> b) -> V.Vector a -> V.Vector b</screen></para>
             index of an element in a <type>Vector</type>, wrapped in <type>Maybe</type>. If the
             element has multiple occurrences in the <type>Vector</type>, just one index is returned.
             If the element is not in the <type>Vector</type>, <type>Nothing</type> is
-            returned.<screen>binarySearchByBounded :: (Ord a) => (a -> a -> Ordering) -> V.Vector a ->
+            returned.<programlisting>binarySearchByBounded :: (Ord a) => (a -> a -> Ordering) -> V.Vector a ->
                          a -> Int -> Int -> Maybe Int
 binarySearchByBounded cmp v e lower upper
     | V.null v      = Nothing
@@ -1025,7 +1025,7 @@ binarySearchByBounded cmp v e lower upper
                         LT -> binarySearchByBounded cmp v e lower (middle - 1)
                         EQ -> Just middle
                         GT -> binarySearchByBounded cmp v e (middle + 1) upper
-    where middle    = (lower + upper) `div` 2</screen></para>
+    where middle    = (lower + upper) `div` 2</programlisting></para>
         <para><function>binarySearchByBounded</function> takes a host of arguments: a comparison
             function, the (sorted) vector (<varname>v</varname>, the element to search for
                 (<varname>e</varname>), and lower (<varname>lower</varname>) and upper bound
