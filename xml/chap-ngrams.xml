@@ -595,7 +595,7 @@ do
                 concatenated.</para>
             <note>
                 <para>Experimenting with list monads may give you results that may be surprising at
-                    first sigh. For
+                    first sight. For
                     instance:<screen>Prelude> <userinput>:{
 do
   l &lt;- [0..9]
