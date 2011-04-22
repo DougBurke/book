@@ -455,10 +455,20 @@ Just 392</screen></para>
 ngrams 0 _  = []
 ngrams _ [] = []
 ngrams n xs
-    | length xs >= n = take n xs : ngrams n (tail xs)
-    | otherwise      = []</programlisting>
+  | length ngram == n = ngram : ngrams n (tail xs)
+  | otherwise         = []
+  where
+    ngram = take n xs</programlisting>
         </para>
-        <para>And this function works as you would expect:</para>
+        <para>We also cannot use pattern matching to exclude the tail when it is shorter than
+                <emphasis>n</emphasis>. Instead, we add a guard that ends the recursion if we cannot
+            get the proper number of elements from the list. This function works as you would
+            expect:<screen>Prelude> <userinput>ngrams 3 [1..10]</userinput>
+[[1,2,3],[2,3,4],[3,4,5],[4,5,6],
+ [5,6,7],[6,7,8],[7,8,9],[8,9,10]]
+Prelude> <userinput>ngrams 8 [1..10]</userinput>
+[[1,2,3,4,5,6,7,8],[2,3,4,5,6,7,8,9],
+ [3,4,5,6,7,8,9,10]]</screen></para>
         <para>Since this is barely worth a section, we will take this opportunity to show two other
             implementations of the <function>ngrams</function> function. The first will be more
             declarative than the definition above, the second will make use of a monad that we have
