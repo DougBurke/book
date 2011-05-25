@@ -294,7 +294,7 @@ bigram xs  = take 2 xs : bigram (tail xs)</programlisting>
         <para>If you want to get really fancy, you could also use pattern matching to extract a
             bigram, rather than using
             <function>take</function>:<programlisting>bigram' :: [a] -> [[a]]
-bigram' (x:y:xs) = [x,y] : bigram xs
+bigram' (x:y:xs) = [x,y] : bigram' (y:xs)
 bigram' _        = []</programlisting></para>
         <para>Now, we only need to account for two patterns: the first pattern matches when the list
             has at least two elements. The second pattern matches the empty list and the list
